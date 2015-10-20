@@ -1,0 +1,34 @@
+﻿@using Contests.Models
+@model Contests.App.Models.ViewModels.UserInfoViewModel
+
+
+<h2>User</h2>
+<hr />
+@*<div class="form-horizontal col-md-3">*@
+<div class="media">
+    @if (Model.Files.Any(f => f.FileType == FileType.Photo))
+    {
+
+        <div class="media-top">
+            <a href="#">
+                <img src="~/File?id=@Model.Files.First(f => f.FileType == FileType.Photo).FileId" class="media-object" width="250px" alt="profile picture">
+            </a>
+        </div>
+    }
+    <div class="media-body">
+        <div class="form-group">
+            @Html.LabelFor(m => m.UserName)
+            @Html.DisplayFor(m => m.UserName)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Email)
+            @Html.DisplayFor(m => m.Email)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.PhoneNumber)
+            @Html.DisplayFor(m => m.PhoneNumber)
+        </div>
+    </div>
+</div>
+@*</div>*@
+<br />
