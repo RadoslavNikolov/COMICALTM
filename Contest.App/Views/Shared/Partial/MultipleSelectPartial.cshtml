@@ -1,0 +1,24 @@
+﻿@using Contests.Models
+@model IEnumerable<Contests.App.Models.ViewModels.UserInfoViewModel>
+           
+<table style='width:600px;'>
+    <tr>
+        <td style='width:160px;'>
+            <b>Group 1:</b><br />
+            <select multiple="multiple" id='lstBox1' style="width: 250px; min-height: 150px">
+                @foreach (var user in Model)
+                {
+                    <option value="@user.Id">@user.UserName</option>
+                }
+            </select>
+        </td>
+        <td style='width:50px;text-align:center;vertical-align:middle;'>
+            <input type='button' id='btnRight' value='  >  ' />
+            <br /><input type='button' id='btnLeft' value='  <  ' />
+        </td>
+        <td style='width:160px;'>
+            <b>Group 2: </b><br />
+            <select multiple="multiple" id='lstBox2' style="width: 250px; min-height: 150px"></select>
+        </td>
+    </tr>
+</table>

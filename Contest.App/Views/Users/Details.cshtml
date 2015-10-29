@@ -1,0 +1,82 @@
+﻿@*@model Contests.App.Models.ViewModels.UserProfileViewModel*@
+@model Contests.App.Models.ViewModels.UserInfoViewModel
+@{
+    ViewBag.Title = "User page";
+}
+
+<h2>Profile</h2>
+
+<div class="aside col-md-3">
+   @if (Request.IsAuthenticated && this.User.Identity.Name == @Model.UserName)
+   {
+    @Html.Partial("Partial/UserInfo", @Model);
+   } 
+</div>
+
+<div class="body-main col-md-9">
+    <div id="categories"></div>
+</div>
+
+
+@section scripts{
+    @*<script src="~/Scripts/twitter.js"></script>
+    <script src="~/Scripts/infiniteScroll.js"></script>*@
+
+    <script type="text/javascript">
+        //var prepend = true;
+        //$(function () {
+        //    $("div#loading").hide();
+        //});
+        //var moreRowsUrl = ""; //the URL to your ActionMethod
+        ////var moreRowsUrl = ' Url.RouteUrl("CustomerList")'; //if you have a route defined, you can use an Html helper like Url.RouteUrl
+        //$(window).scroll(scrollHandler);
+
+
+
+        $(document).ready(function () {
+            
+            $(document).on('click', '#btnRight', function (e) {
+                var selectedOpts = $('#lstBox1 option:selected');
+                if (selectedOpts.length == 0) {
+                    alert("Nothing to move.");
+                    e.preventDefault();
+                }
+
+                $('#lstBox2').append($(selectedOpts).clone());
+                $(selectedOpts).remove();
+                e.preventDefault();
+            });
+
+            $(document).on('click', '#btnLeft', function (e) {
+                var selectedOpts = $('#lstBox2 option:selected');
+                if (selectedOpts.length == 0) {
+                    alert("Nothing to move.");
+                    e.preventDefault();
+                }
+
+                $('#lstBox1').append($(selectedOpts).clone());
+                $(selectedOpts).remove();
+                e.preventDefault();
+            });
+
+            function fillCategories() {
+                $.ajax({
+                    type: "GET",
+                    url: "/Users/GetAllUsers"
+                })
+                    .done(function (data) {
+                        //var items = [];
+                        //$.each(data, function (i, item) {
+                        //    items.push('<option value="' + item.Name + '">' + item.Name + '</option>');
+                        //});
+                        //$('#lstBox1').prepend(items.join(''));
+
+                        $('#categories').html(data);
+                    });
+            };
+
+            fillCategories();
+        });
+
+    </script>
+}
