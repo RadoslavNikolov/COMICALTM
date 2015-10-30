@@ -17,10 +17,10 @@
         public int Id { get; set; }
 
         [StringLength(255)]
-        public string Path { get; set; }
+        public string Url { get; set; }
 
         [StringLength(255)]
-        public string ThumbnailPath { get; set; }
+        public string ThumbnailUrl { get; set; }
 
         [Required]
         public DateTime CreatedOn { get; set; }

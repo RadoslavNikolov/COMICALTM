@@ -16,15 +16,20 @@
         [Display(Name = "User name: ")]
         public string UserName { get; set; }
 
+        [Display(Name = "Full name: ")]
+        public string FullName { get; set; }
+
         [Display(Name = "Email: ")]
         public string Email { get; set; }
 
         [Display(Name = "Phone number: ")]
         public string PhoneNumber { get; set; }
 
-        public string ProfileImageUrl { get; set; }
+        public string ProfilePhotoUrl { get; set; }
 
-        public string ThumbProfileUrl { get; set; }
+        public string ThumbnailUrl { get; set; }
+
+        public DateTime RegisteredOn { get; set; }
 
         //public void CreateMappings(IConfiguration configuration)
         //{

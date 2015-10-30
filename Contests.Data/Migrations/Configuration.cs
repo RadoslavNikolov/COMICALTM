@@ -40,7 +40,7 @@ namespace Contests.Data.Migrations
             {
                 var store = new UserStore<User>(context);
                 var manager = new UserManager<User>(store);
-                var user = new User { UserName = "admin", Email = "admin@admin.com" };
+                var user = new User { UserName = "admin", FullName = "adminFullName", Email = "admin@admin.com" };
 
                 manager.Create(user, "password");
                 manager.AddToRole(user.Id, "Admin");

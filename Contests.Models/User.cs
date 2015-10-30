@@ -1,6 +1,8 @@
 ﻿namespace Contests.Models
 {
+    using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using System.Security.Claims;
     using System.Threading.Tasks;
     using Microsoft.AspNet.Identity;
@@ -13,11 +15,26 @@
         public User()
         {
             this.photos = new HashSet<Photo>();
+            this.RegisteredOn = DateTime.Now;
         }
 
-        public int? ProfileImageId { get; set; }
+        [Required]
+        public string FullName { get; set; }
 
-        public virtual Photo ProfileImage { get; set; }
+        public string ProfilePhotoPath { get; set; }
+
+        public string ThumbnailPath { get; set; }
+
+        public string ProfilePhotoUrl { get; set; }
+
+        public string ThumbnailUrl { get; set; }
+
+        [Required]
+        public DateTime RegisteredOn { get; set; }
+
+        //public int? ProfileImageId { get; set; }
+
+        //public virtual Photo ProfileImage { get; set; }
 
         public virtual ICollection<Photo> Photos
         {

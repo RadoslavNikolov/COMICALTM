@@ -11,8 +11,8 @@ using Contests.Models;
 
 namespace Contests.App.Controllers
 {
+    using System.Threading;
     using System.Threading.Tasks;
-    using AutoMapper;
     using AutoMapper.QueryableExtensions;
     using Contest.App;
     using Contests.Data.UnitOfWork;
@@ -21,6 +21,7 @@ namespace Contests.App.Controllers
     using Microsoft.AspNet.Identity.Owin;
     using Models.BindingModels;
     using Models.ViewModels;
+    using Toastr;
 
     [Authorize]
     public class UsersController : BaseController
@@ -115,14 +116,7 @@ namespace Contests.App.Controllers
             var viewModel = this.ContestsData.Users.All().Where(u => u.Id == id)
                 .Project()
                 .To<UserInfoViewModel>().FirstOrDefault();
-
-            if (user.ProfileImage != null)
-            {
-                viewModel.ProfileImageUrl = Dropbox.Download(user.ProfileImage.Path);
-                viewModel.ThumbProfileUrl = Dropbox.Download(user.ProfileImage.ThumbnailPath, "Thumbnails");
-            }
-            
-                 
+                        
             return this.View(viewModel);
         }
 
@@ -149,68 +143,67 @@ namespace Contests.App.Controllers
             return View(user);
         }
 
-        // GET: Users/Edit/5
-        public ActionResult Edit()
-        {
-            var userName = this.User.Identity.Name;
-            var user = this.ContestsData.Users.All().Where(u => u.UserName == userName)
-                .Project()
-                .To<UserEditViewModel>().FirstOrDefault();
+ 
 
-            if (user != null && user.ProfileImage != null)
+        // GET: Users/Edit/Guid
+        [HttpGet]
+        public ActionResult Edit(string id)
+        {
+            var userToEdit = this.UserProfile;
+
+            if (userToEdit == null)
             {
-                user.ProfileImageUrl = Dropbox.Download(user.ProfileImage.Path);
-                user.ThumbsProfileImageUrl = Dropbox.Download(user.ProfileImage.ThumbnailPath, "Thumbnails");
-            }         
-            return View(user);
+                this.AddToastMessage("Error", "Non existing user!", ToastType.Error);
+                return this.RedirectToAction("Index", "Users");
+            }
+            var model = UserEditBindingModel.CreateFromUser(userToEdit);
+             
+            return View(model);
         }
 
         // POST: Users/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(UserEditBindingModel model)
+        public async Task<ActionResult> Edit(string id, UserEditBindingModel model)
         {
- 
-            var user = await this.UserManager.FindByIdAsync(this.User.Identity.GetUserId());
-            //user.Fullname = model.Fullname;
-            user.Email = model.Email;
-            user.PhoneNumber = model.PhoneNumber;
-            //user.Files.Add(model.Upload);
+
+            if (!this.ModelState.IsValid)
+            {
+                this.AddToastMessage("Error", "There is invalid input data!", ToastType.Error);
+            }
+
+            //var user = this.UserProfile;
+            var currentUserId = this.User.Identity.GetUserId();
+            var userToEdit = this.ContestsData.Users.Find(currentUserId);
+
+            userToEdit.FullName = model.FullName;
+            userToEdit.Email = model.Email;
+            userToEdit.PhoneNumber = model.PhoneNumber;
+
+            var oldProfilePhotoPath = userToEdit.ProfilePhotoPath;
+            var oldProfilePhotoThumbPath = userToEdit.ThumbnailPath;
 
 
             if (model.Upload != null && model.Upload.ContentLength > 0)
             {
 
-                var paths = Helpers.UploadImages.UploadImage(model.Upload, true);
+                var photoPaths =   Helpers.UploadImages.UploadImage(model.Upload, true);
+                var profilePhotoUrl = Dropbox.Download(photoPaths[0]);           
+                var profileThumbnailUrl = Dropbox.Download(photoPaths[1], "Thumbnails");
 
-                var newPhoto = new Photo
-                {
-                    CreatedOn = DateTime.Now,
-                    Owner = user,
-                    Path = paths[0],
-                    ThumbnailPath = paths[1]
-                };
-
-                user.ProfileImage = newPhoto;
+                userToEdit.ProfilePhotoPath = photoPaths[0];
+                userToEdit.ThumbnailPath = photoPaths[1];
+                userToEdit.ProfilePhotoUrl = profilePhotoUrl;
+                userToEdit.ThumbnailUrl = profileThumbnailUrl;
             }
           
-            var result = await this.UserManager.UpdateAsync(user);
+            this.ContestsData.SaveChanges();
 
-            if (result.Succeeded)
-            {                  
-                this.TempData["Success"] = new[] {"Edit successfull"};
-                model.ProfileImage = user.ProfileImage;
-                model.ProfileImageUrl = Dropbox.Download(user.ProfileImage.Path);
-                model.ThumbsProfileImageUrl = Dropbox.Download(user.ProfileImage.ThumbnailPath, "Thumbnails");
-
-            }
-            else
-            {
-                this.AddErrors(result);
-            }
+            //Delete old profile photo. 
+            //Todo implement async method for this
+            Dropbox.Delete(oldProfilePhotoPath);
+            Dropbox.DeleteThumbnail(oldProfilePhotoThumbPath);          
 
             return View(model);
         }

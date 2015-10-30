@@ -30,7 +30,6 @@ namespace Contests.App.Controllers
 
 
         [AllowAnonymous]
-        [HttpGet]
         public ActionResult GetAllCategories()
         {
             var result = this.ContestsData.Categories.All()

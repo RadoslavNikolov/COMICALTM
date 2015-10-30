@@ -18,6 +18,7 @@ namespace Contests.App.Controllers
     using Contest.App;
     using Contests.Data.UnitOfWork;
     using Contests.Models;
+    using Helpers;
 
     [Authorize]
     public class AccountController : BaseController
@@ -157,26 +158,21 @@ namespace Contests.App.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var user = new User { UserName = model.UserName, Email = model.Email };
+                    var user = new User { UserName = model.UserName, FullName = model.FullName, Email = model.Email };
                     var result = await UserManager.CreateAsync(user, model.Password);
 
                     if (upload != null && upload.ContentLength > 0)
                     {
-                        var paths = Helpers.UploadImages.UploadImage(upload, true);
+                        var photoPaths =  Helpers.UploadImages.UploadImage(upload, true);
+                        var profilPhotoUrl = Dropbox.Download(photoPaths[0]);
+                        var profilThumbnailUrl = Dropbox.Download(photoPaths[1], "Thumbnails");
 
-                        var newPhoto = new Photo
-                        {
-                            CreatedOn = DateTime.Now,
-                            Owner = user,
-                            Path = paths[0],
-                            ThumbnailPath = paths[1]
-                        };
-
-                        user.ProfileImage = newPhoto;
+                        user.ProfilePhotoPath = photoPaths[0];
+                        user.ThumbnailPath = photoPaths[1];
+                        user.ProfilePhotoUrl = profilPhotoUrl;
+                        user.ThumbnailUrl = profilThumbnailUrl;
                     }
-
-                    
-
+                  
                     result = await this.UserManager.UpdateAsync(user);
 
                     if (result.Succeeded)

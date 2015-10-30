@@ -15,7 +15,7 @@
             }
             var fileExtension = System.IO.Path.GetExtension(file.FileName);
 
-            var imgExtList = new[] { ".jpg", ".jpeg", ".png", ".bmp" };
+            var imgExtList = new[] { ".jpg", ".jpeg", ".png", ".bmp", ".gif" };
 
             if(!imgExtList.Contains(fileExtension.ToLower()))
             {

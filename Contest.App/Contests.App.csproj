@@ -515,6 +515,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Temp\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>

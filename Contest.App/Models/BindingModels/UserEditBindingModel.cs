@@ -10,13 +10,17 @@
 
     public class UserEditBindingModel
     {
-        public string Id { get; set; }
-
         [Required]
         [RegularExpression(@"^[\dA-Za-z_]{2,30}$",
             ErrorMessage = "The {0} must be between 2 and 30 characters long and contains letters, numbers or _")]
-        [Display(Name = "UserName")]
+        [Display(Name = "User Name")]
         public string UserName { get; set; }
+
+        [Required]
+        //[RegularExpression(@"^[\dA-Za-z_]{2,30}$",
+        //    ErrorMessage = "The {0} must be between 2 and 30 characters long and contains letters, numbers or _")]
+        [Display(Name = "Full name")]
+        public string FullName { get; set; }
 
         [Required]
         [EmailAddress]
@@ -29,13 +33,35 @@
         [ValidateImage(ErrorMessage = "Please select an image smaller than 4MB")]
         public HttpPostedFileBase Upload { get; set; }
 
-        public int? ProfileImageId { get; set; }
+        [Required]
+        public DateTime RegisteredOn { get; set; }
 
-        public virtual Photo ProfileImage { get; set; }
+        public string ProfilePhotoPath { get; set; }
 
-        public string ProfileImageUrl { get; set; }
+        public string ThumbnailPath { get; set; }
 
-        public string ThumbsProfileImageUrl { get; set; }
-        
+        public string ProfilePhotoUrl { get; set; }
+
+        public string ThumbnailUrl { get; set; }
+
+
+        public static UserEditBindingModel CreateFromUser(User user)
+        {
+            var newUser = new UserEditBindingModel()
+            {
+                UserName = user.UserName,
+                FullName = user.FullName,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                Upload = null,
+                RegisteredOn = user.RegisteredOn,
+                ProfilePhotoPath = user.ProfilePhotoPath,
+                ThumbnailPath = user.ThumbnailPath,
+                ProfilePhotoUrl = user.ProfilePhotoUrl,
+                ThumbnailUrl = user.ThumbnailUrl
+            };
+
+            return newUser;
+        }       
     }
 }

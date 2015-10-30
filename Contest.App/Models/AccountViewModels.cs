@@ -70,6 +70,11 @@ namespace Contests.App.Models
         public string UserName { get; set; }
 
         [Required]
+        [Display(Name = "Full name")]
+        [StringLength(50, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 3)]
+        public string FullName { get; set; }
+
+        [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }

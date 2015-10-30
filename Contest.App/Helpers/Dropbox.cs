@@ -2,9 +2,12 @@
 {
     using System;
     using System.IO;
+    using System.Web.Http.Results;
     using Data;
     using DropNet;
     using Infrastructure;
+    using Microsoft.Ajax.Utilities;
+    using RestSharp;
 
     public static class Dropbox
     {
@@ -36,6 +39,16 @@
         internal static string Download(string path)
         {
             return client.GetMedia("/" + AppKeys.DropboxFolder + "/" + path).Url;
+        }
+
+        internal static void Delete(string path)
+        {
+            client.Delete("/" + AppKeys.DropboxFolder + "/" + path);
+        }
+
+        internal static void DeleteThumbnail(string path)
+        {
+            client.Delete("/" + AppKeys.DropboxFolder + "/Thumbnails/" + path);
         }
 
         internal static string Download(string path, string subFolder)

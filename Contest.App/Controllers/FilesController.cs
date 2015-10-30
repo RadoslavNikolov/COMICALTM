@@ -12,6 +12,7 @@ namespace Contests.App.Controllers
     using System.Web;
     using System.Web.Hosting;
     using System.Web.Mvc;
+    using AutoMapper.QueryableExtensions;
     using Contest.App;
     using Contests.Models;
     using Data.UnitOfWork;
@@ -70,12 +71,13 @@ namespace Contests.App.Controllers
                 if (model.Upload != null)
                 {
                     var paths = Helpers.UploadImages.UploadImage(model.Upload, false);
+
                     var newPhoto = new Photo
                     {
                         CreatedOn = DateTime.Now,
                         Owner = this.UserProfile,
-                        Path = paths[0],
-                        ThumbnailPath = paths[1]
+                        Url = Dropbox.Download(paths[0]),
+                        ThumbnailUrl = Dropbox.Download(paths[1], "Thumbnails")
                     };
                     
                     this.UserProfile.Photos.Add(newPhoto);
@@ -95,23 +97,12 @@ namespace Contests.App.Controllers
         [Authorize]
         public ActionResult List()
         {
-            var photos = this.UserProfile.Photos;
-            List<PhotoViewModel> photoModels = new List<PhotoViewModel>();
+            var photoModels = this.UserProfile.Photos.AsQueryable()
+                .OrderByDescending(p => p.CreatedOn)
+                .Project()
+                .To<PhotoViewModel>();
 
-            foreach (var photo in photos)
-            {
-                photoModels.Add(new PhotoViewModel()
-                {
-                    Url = Dropbox.Download(photo.Path),
-                    CreatedOn = photo.CreatedOn
-                });
-            }
-
-            //this.ViewBag.Photos = photoUrls.OrderByDescending(p => p.CreatedOn)
-            //    .Select(u => Dropbox.Download(u.Url));
-
-            var result = photoModels.OrderByDescending(m => m.CreatedOn);
-            return this.View(result);
+            return this.View(photoModels);
         }
     }
 }
