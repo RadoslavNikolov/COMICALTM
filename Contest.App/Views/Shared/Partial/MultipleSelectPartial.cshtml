@@ -5,7 +5,7 @@
     <tr>
         <td style='width:160px;'>
             <b>Group 1:</b><br />
-            <select multiple="multiple" id='lstBox1' style="width: 250px; min-height: 150px">
+            <select multiple="multiple" id='lstBox1'  class="form-control" style="width: 250px; min-height: 150px">
                 @foreach (var user in Model)
                 {
                     <option value="@user.Id">@user.UserName</option>
@@ -13,12 +13,12 @@
             </select>
         </td>
         <td style='width:50px;text-align:center;vertical-align:middle;'>
-            <input type='button' id='btnRight' value='  >  ' />
-            <br /><input type='button' id='btnLeft' value='  <  ' />
+            <input type='button' id='btnRight' class="btn btn-default" value='>'/>
+            <input type='button' id='btnLeft' class="btn btn-default" value='<'/>
         </td>
         <td style='width:160px;'>
             <b>Group 2: </b><br />
-            <select multiple="multiple" id='lstBox2' style="width: 250px; min-height: 150px"></select>
+            <select multiple="multiple" id='lstBox2' class="form-control"  style="width: 250px; min-height: 150px"></select>
         </td>
     </tr>
 </table>

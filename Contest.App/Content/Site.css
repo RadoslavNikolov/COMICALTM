@@ -39,3 +39,11 @@ textarea {
 .admin-navbar .navbar-brand {
     color:#eeeeee;
 }
+
+.hidden-element {
+    display: none;
+}
+
+html {
+    overflow-y: scroll;
+}
