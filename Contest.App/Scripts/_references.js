@@ -12,3 +12,4 @@
 /// <reference path="moment.min.js" />
 /// <reference path="bootstrap-datetimepicker.min.js" />
 /// <reference path="customscripts/new-contest-options.js" />
+/// <reference path="toastr.min.js" />

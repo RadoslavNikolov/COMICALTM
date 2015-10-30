@@ -1,22 +1,21 @@
-[assembly: WebActivator.PreApplicationStartMethod(typeof(Contest.App.App_Start.NinjectWebCommon), "Start")]
-[assembly: WebActivator.ApplicationShutdownMethodAttribute(typeof(Contest.App.App_Start.NinjectWebCommon), "Stop")]
+using System;
+using System.Web;
+using Contests.App;
+using Contests.Data;
+using Contests.Data.UnitOfWork;
+using Contests.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.Owin.Security;
+using Microsoft.Web.Infrastructure.DynamicModuleHelper;
+using Ninject;
+using Ninject.Web.Common;
 
-namespace Contest.App.App_Start
+[assembly: WebActivator.PreApplicationStartMethod(typeof(NinjectWebCommon), "Start")]
+[assembly: WebActivator.ApplicationShutdownMethodAttribute(typeof(NinjectWebCommon), "Stop")]
+
+namespace Contests.App
 {
-    using System;
-    using System.Web;
-    using Contests.Data;
-    using Contests.Data.Interfaces;
-    using Contests.Data.UnitOfWork;
-    using Contests.Models;
-    using Microsoft.AspNet.Identity;
-    using Microsoft.AspNet.Identity.EntityFramework;
-    using Microsoft.Owin.Security;
-    using Microsoft.Web.Infrastructure.DynamicModuleHelper;
-
-    using Ninject;
-    using Ninject.Web.Common;
-
     public static class NinjectWebCommon 
     {
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();

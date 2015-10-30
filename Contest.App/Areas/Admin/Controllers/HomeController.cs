@@ -1,9 +1,9 @@
-﻿namespace Contests.App.Controllers
-{
-    using System.Web.Mvc;
-    using Data.UnitOfWork;
+﻿using System.Web.Mvc;
+using Contests.Data.UnitOfWork;
 
-    public class HomeController : BaseController
+namespace Contests.App.Areas.Admin.Controllers
+{
+    public class HomeController : BaseAdminController
     {
         public HomeController(IContestsData data)
             : base(data)

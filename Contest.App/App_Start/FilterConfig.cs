@@ -1,7 +1,6 @@
-﻿using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
-namespace Contest.App
+namespace Contests.App
 {
     public class FilterConfig
     {

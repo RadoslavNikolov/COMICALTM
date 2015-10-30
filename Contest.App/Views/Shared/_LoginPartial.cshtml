@@ -25,6 +25,12 @@
         <li>
             @Html.ActionLink("Change password", "ChangePassword", "Manage", routeValues: null, htmlAttributes: new { title = "Change password" })
         </li>
+        @if (this.User.IsInRole("Admin"))
+        {
+            <li>
+                @Html.ActionLink("Admin panel", "Index", "Home", new { Area = "Admin" }, htmlAttributes: null)
+            </li>
+        }
         <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
     </ul>
     }

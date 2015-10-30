@@ -1,7 +1,6 @@
-﻿using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
-namespace Contest.App
+namespace Contests.App
 {
     public class BundleConfig
     {
@@ -30,10 +29,17 @@ namespace Contest.App
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
+                      "~/Content/style.css",
                       "~/Content/bootstrap-datetimepicker.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/custom").Include(
                 "~/Scripts/CustomScripts/new-contest-options.js"));
+
+            bundles.Add(new StyleBundle("~/content/toastr", "http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css")
+                .Include("~/Content/toastr.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/toastr", "http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js")
+                            .Include("~/Scripts/toastr.js"));
         }
     }
 }

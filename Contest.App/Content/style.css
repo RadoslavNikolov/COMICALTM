@@ -78,3 +78,7 @@ div.photo-contest-category {
     top: 7px;
     right: 10px
 }
+
+.category-active-False {
+    background-color: #e8e8e8;
+}

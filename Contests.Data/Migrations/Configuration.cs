@@ -62,7 +62,8 @@ namespace Contests.Data.Migrations
                 {
                     var newCategory = new Category
                     {
-                        Name = line
+                        Name = line,
+                        IsActive = true
                     };
 
                     context.Categories.Add(newCategory);
