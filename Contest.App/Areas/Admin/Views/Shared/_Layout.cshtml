@@ -9,7 +9,7 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="navbar navbar-default navbar-fixed-top admin-navbar">
+    <div class="navbar navbar-default navbar-static-top admin-navbar">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -21,10 +21,9 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Categories", "Index", "Categories", routeValues: new { area = "Admin" }, htmlAttributes: null)
-                    </li>
+                    <li>@Html.ActionLink("Home", "Index", "Home", routeValues: new { area = "Admin" }, htmlAttributes: null)</li>
+                    <li>@Html.ActionLink("Categories", "Index", "Categories", routeValues: new { area = "Admin" }, htmlAttributes: null)</li>
                 </ul>
-
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
@@ -33,15 +32,13 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - SoftUni Blog</p>
+            <p>&copy; @DateTime.Now.Year - Photo Contests</p>
         </footer>
     </div>
-
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/toastr")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
-
     @Html.Partial("_Toastr")
 </body>
 </html>

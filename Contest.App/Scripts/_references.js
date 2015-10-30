@@ -13,3 +13,6 @@
 /// <reference path="bootstrap-datetimepicker.min.js" />
 /// <reference path="customscripts/new-contest-options.js" />
 /// <reference path="toastr.min.js" />
+/// <reference path="customscripts/multiselect.js" />
+/// <reference path="jquery.multi-select.js" />
+/// <reference path="jquery.quicksearch.js" />

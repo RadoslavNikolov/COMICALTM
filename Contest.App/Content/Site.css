@@ -1,5 +1,5 @@
 ﻿body {
-    padding-top: 50px;
+    /*padding-top: 50px;*/
     padding-bottom: 20px;
 }
 
@@ -46,4 +46,17 @@ textarea {
 
 html {
     overflow-y: scroll;
+}
+
+input.search-input{
+    border-radius: 3px;
+    box-sizing: border-box;
+    -moz-box-sizing:border-box;
+    width: 100%;
+    margin-bottom: 5px;
+    height: auto;
+    border: 1px solid #ccc;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    background-color: #fff;
+    padding: 4px 6px;
 }

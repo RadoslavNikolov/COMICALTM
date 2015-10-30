@@ -40,6 +40,14 @@ namespace Contests.App
 
             bundles.Add(new ScriptBundle("~/bundles/toastr", "http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js")
                             .Include("~/Scripts/toastr.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/multiselect").Include(
+                "~/Scripts/jquery.quicksearch.js",
+                "~/Scripts/jquery.multi-select.js",
+                "~/Scripts/CustomScripts/multiselect.js"));
+
+            bundles.Add(new StyleBundle("~/Content/multiselect").Include(
+                      "~/Content/multi-select.css"));
         }
     }
 }

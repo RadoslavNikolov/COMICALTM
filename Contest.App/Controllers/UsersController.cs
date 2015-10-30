@@ -188,7 +188,7 @@ namespace Contests.App.Controllers
             if (model.Upload != null && model.Upload.ContentLength > 0)
             {
 
-                var photoPaths =   Helpers.UploadImages.UploadImage(model.Upload, true);
+                var photoPaths = Helpers.UploadImages.UploadImage(model.Upload, true);
                 var profilePhotoUrl = Dropbox.Download(photoPaths[0]);           
                 var profileThumbnailUrl = Dropbox.Download(photoPaths[1], "Thumbnails");
 

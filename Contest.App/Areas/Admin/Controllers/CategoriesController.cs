@@ -1,11 +1,9 @@
-﻿using System.Linq;
-using AutoMapper.QueryableExtensions;
-using Contests.App.Areas.Admin.Models.ViewModels;
-
-namespace Contests.App.Areas.Admin.Controllers
+﻿namespace Contests.App.Areas.Admin.Controllers
 {
-    using System;
+    using System.Linq;
     using System.Web.Mvc;
+    using AutoMapper.QueryableExtensions;
+    using Models.ViewModels;
     using Contests.Models;
     using Data.UnitOfWork;
     using Models.BindingModels;
@@ -13,7 +11,7 @@ namespace Contests.App.Areas.Admin.Controllers
 
     public class CategoriesController : BaseAdminController
     {
-        public CategoriesController(IContestsData data) 
+        public CategoriesController(IContestsData data)
             : base(data)
         {
         }
@@ -83,7 +81,7 @@ namespace Contests.App.Areas.Admin.Controllers
 
                 return this.RedirectToAction("Index");
             }
-            
+
             return View(category);
         }
 
