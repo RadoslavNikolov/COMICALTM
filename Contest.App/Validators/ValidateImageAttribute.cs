@@ -9,22 +9,21 @@
         public override bool IsValid(object value)
         {
             var file = value as HttpPostedFileBase;
-            if (file == null)
+            if (file != null)
             {
-                return false;
-            }
-            var fileExtension = System.IO.Path.GetExtension(file.FileName);
+                var fileExtension = System.IO.Path.GetExtension(file.FileName);
 
-            var imgExtList = new[] { ".jpg", ".jpeg", ".png", ".bmp", ".gif" };
+                var imgExtList = new[] { ".jpg", ".jpeg", ".png", ".bmp", ".gif" };
 
-            if(!imgExtList.Contains(fileExtension.ToLower()))
-            {
-                return false;
-            }
+                if (!imgExtList.Contains(fileExtension.ToLower()))
+                {
+                    return false;
+                }
 
-            if (file.ContentLength > 1 * 3048 * 3048)
-            {
-                return false;
+                if (file.ContentLength > 1 * 3048 * 3048)
+                {
+                    return false;
+                }
             }
 
             return true;

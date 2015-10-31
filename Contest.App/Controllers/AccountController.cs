@@ -1,7 +1,4 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
-using System.Security.Claims;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -12,13 +9,14 @@ using Contests.App.Models;
 
 namespace Contests.App.Controllers
 {
-    using System.Collections.Generic;
     using System.Data.Entity.Validation;
     using System.Diagnostics;
     using Contest.App;
-    using Contests.Data.UnitOfWork;
+    using Data.UnitOfWork;
     using Contests.Models;
+    using Data;
     using Helpers;
+    using Microsoft.AspNet.Identity.EntityFramework;
 
     [Authorize]
     public class AccountController : BaseController
@@ -160,6 +158,7 @@ namespace Contests.App.Controllers
                 {
                     var user = new User { UserName = model.UserName, FullName = model.FullName, Email = model.Email };
                     var result = await UserManager.CreateAsync(user, model.Password);
+                    this.UserManager.AddToRole(user.Id, "User");
 
                     if (upload != null && upload.ContentLength > 0)
                     {
@@ -402,8 +401,10 @@ namespace Contests.App.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new User { UserName = model.Email, Email = model.Email };
+                var user = new User { UserName = model.Email, Email = model.Email, FullName = model.Email};
                 var result = await UserManager.CreateAsync(user);
+                this.UserManager.AddToRole(user.Id, "User");
+
                 if (result.Succeeded)
                 {
                     result = await UserManager.AddLoginAsync(user.Id, info.Login);

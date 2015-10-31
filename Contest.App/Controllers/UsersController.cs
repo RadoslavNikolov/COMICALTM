@@ -29,7 +29,6 @@ namespace Contests.App.Controllers
         private ApplicationSignInManager _signInManager;
         private UserManager _userManager;
 
-
         public UsersController(IContestsData data, UserManager userManager, ApplicationSignInManager signInManager)
             :this(data)
         {
@@ -168,42 +167,42 @@ namespace Contests.App.Controllers
         public async Task<ActionResult> Edit(string id, UserEditBindingModel model)
         {
 
-            if (!this.ModelState.IsValid)
+            if (this.ModelState.IsValid)
             {
-                this.AddToastMessage("Error", "There is invalid input data!", ToastType.Error);
+                //var user = this.UserProfile;
+                var currentUserId = this.User.Identity.GetUserId();
+                var userToEdit = this.ContestsData.Users.Find(currentUserId);
+
+                userToEdit.FullName = model.FullName;
+                userToEdit.Email = model.Email;
+                userToEdit.PhoneNumber = model.PhoneNumber;
+
+                var oldProfilePhotoPath = userToEdit.ProfilePhotoPath;
+                var oldProfilePhotoThumbPath = userToEdit.ThumbnailPath;
+
+
+                if (model.Upload != null && model.Upload.ContentLength > 0)
+                {
+
+                    var photoPaths = Helpers.UploadImages.UploadImage(model.Upload, true);
+                    var profilePhotoUrl = Dropbox.Download(photoPaths[0]);
+                    var profileThumbnailUrl = Dropbox.Download(photoPaths[1], "Thumbnails");
+
+                    userToEdit.ProfilePhotoPath = photoPaths[0];
+                    userToEdit.ThumbnailPath = photoPaths[1];
+                    userToEdit.ProfilePhotoUrl = profilePhotoUrl;
+                    userToEdit.ThumbnailUrl = profileThumbnailUrl;
+                }
+
+                this.ContestsData.SaveChanges();
+
+                //Delete old profile photo. 
+                //Todo implement async method for this
+                //Dropbox.Delete(oldProfilePhotoPath);
+                //Dropbox.DeleteThumbnail(oldProfilePhotoThumbPath);  
+
+                this.AddToastMessage("Success", "Profile edited.", ToastType.Success);
             }
-
-            //var user = this.UserProfile;
-            var currentUserId = this.User.Identity.GetUserId();
-            var userToEdit = this.ContestsData.Users.Find(currentUserId);
-
-            userToEdit.FullName = model.FullName;
-            userToEdit.Email = model.Email;
-            userToEdit.PhoneNumber = model.PhoneNumber;
-
-            var oldProfilePhotoPath = userToEdit.ProfilePhotoPath;
-            var oldProfilePhotoThumbPath = userToEdit.ThumbnailPath;
-
-
-            if (model.Upload != null && model.Upload.ContentLength > 0)
-            {
-
-                var photoPaths = Helpers.UploadImages.UploadImage(model.Upload, true);
-                var profilePhotoUrl = Dropbox.Download(photoPaths[0]);           
-                var profileThumbnailUrl = Dropbox.Download(photoPaths[1], "Thumbnails");
-
-                userToEdit.ProfilePhotoPath = photoPaths[0];
-                userToEdit.ThumbnailPath = photoPaths[1];
-                userToEdit.ProfilePhotoUrl = profilePhotoUrl;
-                userToEdit.ThumbnailUrl = profileThumbnailUrl;
-            }
-          
-            this.ContestsData.SaveChanges();
-
-            //Delete old profile photo. 
-            //Todo implement async method for this
-            Dropbox.Delete(oldProfilePhotoPath);
-            Dropbox.DeleteThumbnail(oldProfilePhotoThumbPath);          
 
             return View(model);
         }

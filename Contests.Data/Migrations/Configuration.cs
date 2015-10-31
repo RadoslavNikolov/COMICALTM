@@ -35,16 +35,25 @@ namespace Contests.Data.Migrations
                 manager.Create(role);
             }
 
+            // makes an admin role if one doesn't exist
+            if (!context.Roles.Any(r => r.Name == "User"))
+            {
+                var store = new RoleStore<IdentityRole>(context);
+                var manager = new RoleManager<IdentityRole>(store);
+                var role = new IdentityRole { Name = "User" };
+
+                manager.Create(role);
+            }
+
             // if user doesn't exist, create one and add it to the admin role
             if (!context.Users.Any(u => u.UserName == "admin"))
             {
                 var store = new UserStore<User>(context);
                 var manager = new UserManager<User>(store);
-                var user = new User { UserName = "admin", FullName = "adminFullName", Email = "admin@admin.com" };
+                var user = new User { UserName = "admin", FullName = "Administrator", Email = "admin@admin.com" };
 
                 manager.Create(user, "password");
                 manager.AddToRole(user.Id, "Admin");
-
             }
         }
 
