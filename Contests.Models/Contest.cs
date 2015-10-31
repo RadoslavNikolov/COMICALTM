@@ -10,7 +10,7 @@
         private ICollection<Photo> photos;
         private ICollection<User> winners;
         private ICollection<Vote> votes;
-        
+
         public Contest()
         {
             this.photos = new HashSet<Photo>();

@@ -1,29 +1,29 @@
-﻿@model Contests.App.Areas.Admin.Models.ViewModels.AdminsAndUsersViewModel
+﻿@model IEnumerable<Contests.App.Areas.Admin.Models.ViewModels.UserViewModel>
 
 @{
     ViewBag.Title = "User page";
 }
 
-<h1>Admin users page</h1>
+<h1>Users</h1>
 
-<h4>Admins:</h4>
 <table class="table table-striped">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Admins.FirstOrDefault().FullName)
+                @Html.DisplayNameFor(model => model.FullName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Admins.FirstOrDefault().UserName)
+                @Html.DisplayNameFor(model => model.UserName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Admins.FirstOrDefault().Email)
+                @Html.DisplayNameFor(model => model.Email)
             </th>
+            <th>@Html.DisplayNameFor(model => model.Role)</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Admins)
+        @foreach (var item in Model)
         {
             <tr>
                 <td>
@@ -35,50 +35,14 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Email)
                 </td>
-
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+                    @Html.DisplayFor(modelItem => item.Role)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit details", "EditDetails", new {id = item.Id}) |
+                    @Html.ActionLink("Change Role", "ChangeRole", new { id = item.Id })
                 </td>
             </tr>
         }
-    </tbody>
-   
-</table>
-
-<h4>Users:</h4>
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Admins.FirstOrDefault().FullName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Admins.FirstOrDefault().UserName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Admins.FirstOrDefault().Email)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-    @foreach (var item in Model.Users)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FullName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id })
-            </td>
-        </tr>
-    }
     </tbody>
 </table>

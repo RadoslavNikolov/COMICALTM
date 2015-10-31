@@ -1,12 +1,10 @@
-﻿namespace Contests.App.Areas.Admin.Models.ViewModels
+﻿namespace Contests.App.Areas.Admin.Models.BindingModels
 {
-    using Infrastructure.Mapping;
     using Contests.Models;
+    using Infrastructure.Mapping;
 
-    public class UserViewModel : IMapFrom<User>
+    public class ChangeRoleBindingModel : IMapFrom<User>
     {
-        public string Id { get; set; }
-
         public string UserName { get; set; }
 
         public string FullName { get; set; }

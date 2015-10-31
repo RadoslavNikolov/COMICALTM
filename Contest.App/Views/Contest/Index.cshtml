@@ -28,24 +28,24 @@
         @Html.LabelFor(m => m.RewardType, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
             <label> @Html.RadioButtonFor(m => m.RewardType, "SingleWinner", new { id = "single-winner", @checked = "checked", @class = "open-button" }) Single winner </label>
-            <label> @Html.RadioButtonFor(m => m.RewardType, "TopNWinners", new {id = "multiple-winners", @class = "close-button" }) Many winners </label>
+            <label> @Html.RadioButtonFor(m => m.RewardType, "TopNWinners", new { id = "multiple-winners", @class = "close-button" }) Many winners </label>
             <div id="participants-section" class="form-group hidden-element slide-toggle">
                 <label for="participants-input">First N win:</label>
-                <input type="number" name="winnersNumber" id="participants-input" class="form-control" min="2" max="10"/>
+                <input type="number" name="winnersNumber" id="participants-input" class="form-control" min="2" max="10" />
             </div>
         </div>
     </div>
     <div class="form-group" id="voting-type">
-        @Html.LabelFor(m => m.VotingType, new {@class = "col-md-2 control-label"})
+        @Html.LabelFor(m => m.VotingType, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            <label> @Html.RadioButtonFor(m => m.VotingType, "Open", new {id = "voting-open", @checked = "checked", @class="open-button" }) Open </label>
+            <label> @Html.RadioButtonFor(m => m.VotingType, "Open", new { id = "voting-open", @checked = "checked", @class = "open-button" }) Open </label>
             <label> @Html.RadioButtonFor(m => m.VotingType, "Close", new { id = "voting-close", @class = "close-button" }) Closed </label>
             <div id="voters" class="hidden-element slide-toggle"></div>
         </div>
-    </div> 
+    </div>
 
     <div class="form-group" id="participation-type">
-        @Html.LabelFor(m => m.ParticipationType, new {@class = "col-md-2 control-label"})
+        @Html.LabelFor(m => m.ParticipationType, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
             <label> @Html.RadioButtonFor(m => m.ParticipationType, "Open", new { id = "voting-open", @checked = "checked", @class = "open-button" }) Open </label>
             <label> @Html.RadioButtonFor(m => m.ParticipationType, "Close", new { id = "voting-close", @class = "close-button" }) Closed </label>
@@ -62,13 +62,13 @@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Create"/>
+            <input type="submit" class="btn btn-default" value="Create" />
         </div>
     </div>
 
     @*<div class="body-main col-md-9">
-        <div id="categories"></div>
-    </div>*@
+            <div id="categories"></div>
+        </div>*@
 }
 
 @section scripts{
@@ -76,7 +76,7 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
-            
+
             $(document).on('click', '#btnRight', function (e) {
                 var selectedOpts = $('#lstBox1 option:selected');
                 if (selectedOpts.length === 0) {
@@ -102,8 +102,8 @@
                 e.preventDefault();
             });
 
-            
-            $(document).on('click', '.close-button', function(e) {
+
+            $(document).on('click', '.close-button', function (e) {
                 var parent = $(this).parent().parent();
                 parent.find('.slide-toggle').show();
             });

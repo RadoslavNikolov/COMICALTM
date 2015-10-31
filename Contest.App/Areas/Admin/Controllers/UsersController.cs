@@ -1,16 +1,12 @@
 ﻿namespace Contests.App.Areas.Admin.Controllers
 {
-    using System.Data.Entity;
     using System.Linq;
     using System.Web;
     using System.Web.Mvc;
-    using System.Web.Security;
     using AutoMapper.QueryableExtensions;
     using Contest.App;
-    using Data;
     using Data.UnitOfWork;
     using Microsoft.AspNet.Identity;
-    using Microsoft.AspNet.Identity.EntityFramework;
     using Microsoft.AspNet.Identity.Owin;
     using Models.BindingModels;
     using Models.ViewModels;
@@ -39,9 +35,9 @@
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -56,44 +52,32 @@
                 _userManager = value;
             }
         }
-        
+
         // GET: Admin/Users
         public ActionResult Index()
         {
-            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ContestsDbContext()));
-
-            var adminsIds = roleManager
-                .FindByName("Admin")
-                .Users
-                .Select(u => u.UserId);
-
-            var usersIds = roleManager
-                .FindByName("User")
-                .Users
-                .Select(u => u.UserId);
-
-            var admins = this.ContestsData.Users.All()
-                .Where(u => adminsIds.Contains(u.Id))
+            var users = this.ContestsData.Users.All()
+                .Where(u => u.Id != this.UserProfile.Id)
                 .Project()
                 .To<UserViewModel>()
-                .AsEnumerable();
+                .ToList();
 
-            var users = this.ContestsData.Users.All()
-                .Where(u => usersIds.Contains(u.Id))
-                .Project()
-                .To<UserViewModel>();
-
-            var adminsAndUsers = new AdminsAndUsersViewModel
+            foreach (var user in users)
             {
-                Admins = admins,
-                Users = users
-            };
+                var role = this.UserManager.GetRoles(user.Id).FirstOrDefault();
+                user.Role = role;
+            }
 
-            return View(adminsAndUsers);
+            users = users
+                .OrderBy(u => u.Role)
+                .ThenBy(u => u.FullName)
+                .ToList();
+
+            return View(users);
         }
 
         // GET: Admin/Users/Edit
-        public ActionResult Edit(string id)
+        public ActionResult EditDetails(string id)
         {
             var user = this.ContestsData.Users.All()
                 .Where(u => u.Id == id)
@@ -104,11 +88,8 @@
             if (user == null)
             {
                 this.AddToastMessage("Error", "Non-existing user.", ToastType.Error);
-                this.RedirectToAction("Index");
+                return this.RedirectToAction("Index");
             }
-
-            var role = this.UserManager.GetRoles(id).FirstOrDefault();
-            user.Role = role;
 
             return View(user);
         }
@@ -116,9 +97,90 @@
         // POST: Admin/Users/Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit()
+        public ActionResult EditDetails(string id, UserEditBindingModel model)
         {
-            return View();
+            if (this.ModelState.IsValid)
+            {
+                var user = this.ContestsData.Users.Find(id);
+                if (user == null)
+                {
+                    this.AddToastMessage("Error", "Non-existing user.", ToastType.Error);
+                    return this.RedirectToAction("Index");
+                }
+
+                user.FullName = model.FullName;
+                user.Email = model.Email;
+                user.PhoneNumber = model.PhoneNumber;
+
+                var result = this.UserManager.Update(user);
+
+                //this.ContestsData.SaveChanges();
+                
+                this.AddToastMessage("Success", "User edited.", ToastType.Success);
+                return this.RedirectToAction("Index");
+            }
+
+            return View(model);
+        }
+
+        // GET: Admin/Users/Edit
+        public ActionResult ChangeRole(string id)
+        {
+            var user = this.ContestsData.Users.All()
+                .Where(u => u.Id == id)
+                .Project()
+                .To<ChangeRoleBindingModel>()
+                .FirstOrDefault();
+
+            if (user == null)
+            {
+                this.AddToastMessage("Error", "Non-existing user.", ToastType.Error);
+                return this.RedirectToAction("Index");
+            }
+
+            user.Role = this.UserManager.GetRoles(id).FirstOrDefault();
+
+            return View(user);
+        }
+
+        // GET: Admin/Users/Edit
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ChangeRole(string id, ChangeRoleBindingModel model)
+        {
+            var user = this.ContestsData.Users.Find(id);
+
+            if (user == null)
+            {
+                this.AddToastMessage("Error", "Non-existing user.", ToastType.Error);
+                return this.RedirectToAction("Index");
+            }
+
+            var roles = this.UserManager.GetRoles(id);
+
+            if (roles.Contains(model.Role))
+            {
+                this.AddToastMessage("Info", "No role change needed.", ToastType.Info);
+                return this.RedirectToAction("Index");
+            }
+
+            foreach (var role in roles)
+            {
+                var a = this.UserManager.RemoveFromRole(user.Id, role);
+            }
+
+            var result = this.UserManager.AddToRole(user.Id, model.Role);
+
+            if (result.Succeeded)
+            {
+                this.AddToastMessage("Success", "Role changed.", ToastType.Success);
+            }
+            else
+            {
+                this.AddToastMessage("Error", "Error changing user role.", ToastType.Error);
+            }
+
+            return this.RedirectToAction("Index");
         }
     }
 }

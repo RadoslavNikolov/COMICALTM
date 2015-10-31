@@ -134,6 +134,10 @@
       <HintPath>..\packages\Microsoft.Owin.Security.Twitter.3.0.1\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="MvcPaging, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MVC4.Paging.3.1.1\lib\net40\MvcPaging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -252,9 +256,9 @@
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
     <Compile Include="Areas\Admin\Models\BindingModels\CategoryBindingModel.cs" />
+    <Compile Include="Areas\Admin\Models\BindingModels\ChangeRoleBindingModel.cs" />
     <Compile Include="Areas\Admin\Models\BindingModels\TestBindingModel.cs" />
     <Compile Include="Areas\Admin\Models\BindingModels\UserEditBindingModel.cs" />
-    <Compile Include="Areas\Admin\Models\ViewModels\AdminsAndUsersViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ViewModels\UserViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ViewModels\CategoryViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -274,6 +278,7 @@
     <Compile Include="Infrastructure\AppConfig.cs" />
     <Compile Include="Infrastructure\Mapping\IHaveCustomMappings.cs" />
     <Compile Include="Infrastructure\Mapping\IMapFrom.cs" />
+    <Compile Include="Infrastructure\Messages.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BindingModels\ContestBindingModel.cs" />
     <Compile Include="Models\BindingModels\PhotoBindingModel.cs" />
@@ -438,7 +443,8 @@
     <Content Include="Content\toastr.less" />
     <Content Include="App_Code\ToastrBuilder.cshtml" />
     <Content Include="Areas\Admin\Views\Users\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Users\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\EditDetails.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\ChangeRole.cshtml" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
