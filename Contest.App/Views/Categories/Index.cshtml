@@ -1,0 +1,9 @@
+﻿@model IEnumerable<Contests.App.Models.ViewModels.ContestViewModel>
+
+@{
+    ViewBag.Title = "List contests by category";
+}
+
+<h2>Category: @Model.First().Category</h2>
+
+@Html.DisplayForModel()

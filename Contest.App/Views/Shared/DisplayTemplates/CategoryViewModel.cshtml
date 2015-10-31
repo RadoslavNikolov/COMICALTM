@@ -1,0 +1,5 @@
+﻿@model Contests.App.Models.ViewModels.CategoryViewModel
+
+<li class="categories">
+    @Html.ActionLink(@Model.Name, "Index", "Categories", new { id = @Model.Id , area = ""}, null)
+</li>

@@ -1,0 +1,53 @@
+﻿@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                @Html.ActionLink("Upload Photo", "Upload", "Files", routeValues: null, htmlAttributes: new { title = "Upload Photo" })
+            </li>
+            <li>
+                @Html.ActionLink("List Photo", "List", "Files", routeValues: null, htmlAttributes: new { title = "List Photos" })
+            </li>
+            
+            @if (this.User.IsInRole("Admin"))
+            {
+                <li>
+                    @Html.ActionLink("Admin panel", "Index", "Home", new { Area = "Admin" }, htmlAttributes: null)
+                </li>
+            }
+            <li role="presentation" class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                    Contest <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" id="categories-menu">
+                    <li>@Html.ActionLink("Create contest", "Index", "Contest", routeValues: null, htmlAttributes: new {title = "Create contest"})</li>
+                    <li>@Html.ActionLink("My contests", "My", "Contest", routeValues: null, htmlAttributes: new { title = "List my contests" })</li>
+                </ul>
+            </li>
+            <li role="presentation" class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                    Hello @User.Identity.Name! <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" id="categories-menu">
+                    <li> @Html.ActionLink("My profile", "Details", "Users", routeValues: new { id = User.Identity.GetUserId() }, htmlAttributes: new { title = "User info" })</li>
+                    <li>@Html.ActionLink("Edit my profile", "Edit", "Users", routeValues: null, htmlAttributes: new { title = "Edit profile" })</li>
+                    <li> @Html.ActionLink("Change password", "ChangePassword", "Manage", routeValues: null, htmlAttributes: new { title = "Change password" })</li>
+                    <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+                </ul>
+            </li>
+        </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    </ul>
+}
+
+
