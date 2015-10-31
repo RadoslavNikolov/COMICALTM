@@ -1,14 +1,13 @@
-﻿namespace Contests.App.Models.BindingModels
+﻿namespace Contests.App.Areas.Admin.Models.BindingModels
 {
     using System;
     using System.ComponentModel.DataAnnotations;
-    using System.Linq;
-    using System.Linq.Expressions;
     using System.Web;
     using Contests.Models;
+    using Infrastructure.Mapping;
     using Validators;
 
-    public class UserEditBindingModel
+    public class UserEditBindingModel : IMapFrom<User>
     {
         [Required]
         //[RegularExpression(@"^[\dA-Za-z_]{2,30}$",
@@ -43,6 +42,8 @@
         public string ProfilePhotoUrl { get; set; }
 
         public string ThumbnailUrl { get; set; }
+
+        public string Role { get; set; }
 
 
         public static UserEditBindingModel CreateFromUser(User user)

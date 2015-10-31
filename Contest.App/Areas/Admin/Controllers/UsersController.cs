@@ -12,7 +12,9 @@
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
     using Microsoft.AspNet.Identity.Owin;
+    using Models.BindingModels;
     using Models.ViewModels;
+    using Toastr;
 
     public class UsersController : BaseAdminController
     {
@@ -86,14 +88,37 @@
                 Admins = admins,
                 Users = users
             };
-                //.AsQueryable()
-                //.Project()
-                //.To<UserViewModel>()
-                //.AsEnumerable();
-
-            //var users = roleManager.FindByName("Users").Users;
 
             return View(adminsAndUsers);
+        }
+
+        // GET: Admin/Users/Edit
+        public ActionResult Edit(string id)
+        {
+            var user = this.ContestsData.Users.All()
+                .Where(u => u.Id == id)
+                .Project()
+                .To<UserEditBindingModel>()
+                .FirstOrDefault();
+
+            if (user == null)
+            {
+                this.AddToastMessage("Error", "Non-existing user.", ToastType.Error);
+                this.RedirectToAction("Index");
+            }
+
+            var role = this.UserManager.GetRoles(id).FirstOrDefault();
+            user.Role = role;
+
+            return View(user);
+        }
+
+        // POST: Admin/Users/Edit
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit()
+        {
+            return View();
         }
     }
 }

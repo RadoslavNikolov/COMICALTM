@@ -7,9 +7,7 @@
 <h2>@ViewBag.Title</h2>
 @Html.Partial("_Messages", TempData)
 
-
-
-@using (Html.BeginForm("Edit", "Users", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Edit", "Users", new { area = "" }, FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     <hr />

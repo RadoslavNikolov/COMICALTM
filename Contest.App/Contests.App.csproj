@@ -253,6 +253,7 @@
     <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
     <Compile Include="Areas\Admin\Models\BindingModels\CategoryBindingModel.cs" />
     <Compile Include="Areas\Admin\Models\BindingModels\TestBindingModel.cs" />
+    <Compile Include="Areas\Admin\Models\BindingModels\UserEditBindingModel.cs" />
     <Compile Include="Areas\Admin\Models\ViewModels\AdminsAndUsersViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ViewModels\UserViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ViewModels\CategoryViewModel.cs" />
@@ -437,6 +438,7 @@
     <Content Include="Content\toastr.less" />
     <Content Include="App_Code\ToastrBuilder.cshtml" />
     <Content Include="Areas\Admin\Views\Users\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Edit.cshtml" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
