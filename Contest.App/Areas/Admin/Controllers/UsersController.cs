@@ -101,7 +101,7 @@
         {
             if (this.ModelState.IsValid)
             {
-                var user = this.ContestsData.Users.Find(id);
+                var user = this.UserManager.FindById(id);
                 if (user == null)
                 {
                     this.AddToastMessage("Error", "Non-existing user.", ToastType.Error);
@@ -114,10 +114,13 @@
 
                 var result = this.UserManager.Update(user);
 
-                //this.ContestsData.SaveChanges();
-                
-                this.AddToastMessage("Success", "User edited.", ToastType.Success);
-                return this.RedirectToAction("Index");
+                if (result.Succeeded)
+                {
+                    this.AddToastMessage("Success", "User edited.", ToastType.Success);
+                    return this.RedirectToAction("Index");
+                }
+
+                this.AddErrors(result);
             }
 
             return View(model);
@@ -181,6 +184,14 @@
             }
 
             return this.RedirectToAction("Index");
+        }
+
+        private void AddErrors(IdentityResult result)
+        {
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error);
+            }
         }
     }
 }

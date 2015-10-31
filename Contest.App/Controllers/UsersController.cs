@@ -171,7 +171,8 @@ namespace Contests.App.Controllers
             {
                 //var user = this.UserProfile;
                 var currentUserId = this.User.Identity.GetUserId();
-                var userToEdit = this.ContestsData.Users.Find(currentUserId);
+                var userToEdit = this.UserManager.FindById(currentUserId);
+                //var userToEdit = this.ContestsData.Users.Find(currentUserId);
 
                 userToEdit.FullName = model.FullName;
                 userToEdit.Email = model.Email;
@@ -194,14 +195,24 @@ namespace Contests.App.Controllers
                     userToEdit.ThumbnailUrl = profileThumbnailUrl;
                 }
 
-                this.ContestsData.SaveChanges();
+                var result = this.UserManager.Update(userToEdit);
+
+                //this.ContestsData.SaveChanges();
+
+                if (result.Succeeded)
+                {
+                    this.AddToastMessage("Success", "Profile edited.", ToastType.Success);
+                    return this.RedirectToAction("Index", "Home", new {area = ""});
+                }
+
+                this.AddErrors(result);
 
                 //Delete old profile photo. 
                 //Todo implement async method for this
                 //Dropbox.Delete(oldProfilePhotoPath);
                 //Dropbox.DeleteThumbnail(oldProfilePhotoThumbPath);  
 
-                this.AddToastMessage("Success", "Profile edited.", ToastType.Success);
+                
             }
 
             return View(model);
