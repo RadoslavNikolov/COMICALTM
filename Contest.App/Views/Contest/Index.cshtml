@@ -24,15 +24,6 @@
             @Html.TextBoxFor(m => m.Description, new { @class = "form-control" })
         </div>
     </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.StartDate, new { @class = "col-md-2 control-label" })
-        <div class='input-group col-md-10 date date-input' id='datetimepicker'>
-            @Html.TextBoxFor(m => m.StartDate, new { @class = "form-control" })
-            <span class="input-group-addon pull-left datepicker-icon">
-                <span class="glyphicon glyphicon-calendar"></span>
-            </span>
-        </div>
-    </div>
     <div class="form-group" id="reward-type">
         @Html.LabelFor(m => m.RewardType, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
@@ -40,7 +31,7 @@
             <label> @Html.RadioButtonFor(m => m.RewardType, "TopNWinners", new {id = "multiple-winners", @class = "close-button" }) Many winners </label>
             <div id="participants-section" class="form-group hidden-element slide-toggle">
                 <label for="participants-input">First N win:</label>
-                <input type="number" name="participants" id="participants-input" class="form-control" min="2" max="10"/>
+                <input type="number" name="winnersNumber" id="participants-input" class="form-control" min="2" max="10"/>
             </div>
         </div>
     </div>
@@ -95,7 +86,8 @@
 
                 $('#lstBox2').append($(selectedOpts).clone());
                 $(selectedOpts).remove();
-                e.preventDefault();
+                e.preventDefault()
+                $('#lstBox2 option').prop('selected', true);
             });
 
             $(document).on('click', '#btnLeft', function (e) {

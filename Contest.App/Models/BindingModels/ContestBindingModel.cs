@@ -15,10 +15,6 @@
         public string Description { get; set; }
 
         [Required]
-        [DisplayName(@"Start Date")]
-        public DateTime StartDate { get; set; }
-
-        [Required]
         public RewardType RewardType { get; set; }
 
         [Required]
@@ -30,6 +26,16 @@
         [Required]
         public ParticipationType ParticipationType { get; set; }
 
+        public byte? WinnersNumber { get; set; }
+
+        public int? ParticipantsNumberDeadline { get; set; }
+
         public ICollection<string> Participants { get; set; }
+
+        public DateTime? DeadLine { get; set; }
+
+        public string[] Voters { get; set; }
+
+
     }
 }
