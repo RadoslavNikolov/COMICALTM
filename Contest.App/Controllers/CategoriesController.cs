@@ -13,7 +13,8 @@ namespace Contests.App.Controllers
 
     public class CategoriesController : BaseController
     {
-        public CategoriesController(IContestsData data) : base(data)
+        public CategoriesController(IContestsData data) 
+            : base(data)
         {
         }
 

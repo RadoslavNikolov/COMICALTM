@@ -16,6 +16,7 @@ namespace Contests.App.Controllers
     using Contests.Models;
     using Data;
     using Helpers;
+    using Infrastructure;
     using Microsoft.AspNet.Identity.EntityFramework;
 
     [Authorize]
@@ -23,6 +24,11 @@ namespace Contests.App.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private UserManager _userManager;
+
+        public AccountController(IContestsData data) 
+            : base(data)
+        {
+        }
 
         public AccountController(IContestsData data, UserManager userManager, ApplicationSignInManager signInManager)
             : base(data)
@@ -154,11 +160,9 @@ namespace Contests.App.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
+                if (this.ModelState.IsValid)
                 {
                     var user = new User { UserName = model.UserName, FullName = model.FullName, Email = model.Email };
-                    var result = await UserManager.CreateAsync(user, model.Password);
-                    this.UserManager.AddToRole(user.Id, "User");
 
                     if (upload != null && upload.ContentLength > 0)
                     {
@@ -176,12 +180,14 @@ namespace Contests.App.Controllers
                         user.ProfilePhotoUrl = AppKeys.ProfilePicUrl;
                         user.ThumbnailUrl = AppKeys.ProfilePicThumbUrl;
                     }
-                  
-                    result = await this.UserManager.UpdateAsync(user);
+
+                    var result = await UserManager.CreateAsync(user, model.Password);
+                    //result = await this.UserManager.UpdateAsync(user);
 
                     if (result.Succeeded)
                     {
-                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                        await this.SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                        await this.UserManager.AddToRoleAsync(user.Id, AppConfig.UserRole);
 
                         // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                         // Send an email with this link
@@ -191,6 +197,7 @@ namespace Contests.App.Controllers
 
                         return RedirectToAction("Index", "Home");
                     }
+
                     AddErrors(result);
                 }
             }
