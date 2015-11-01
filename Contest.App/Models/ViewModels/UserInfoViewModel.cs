@@ -9,7 +9,7 @@
     using Helpers;
     using Infrastructure.Mapping;
 
-    public class UserInfoViewModel : IMapFrom<User>
+    public class UserInfoViewModel : IMapFrom<User>, IHaveCustomMappings
     {
         public string Id { get; set; }
 
@@ -31,5 +31,14 @@
 
         public DateTime RegisteredOn { get; set; }
 
+        public IEnumerable<ContestViewModel> Contest { get; set; }
+
+
+        public void CreateMappings(IConfiguration configuration)
+        {
+            configuration.CreateMap<User, UserInfoViewModel>()
+                .ForMember(u => u.Contest, opt => opt.MapFrom(u => u.ContestsCreated))
+                .ReverseMap();
+        }
     }
 }

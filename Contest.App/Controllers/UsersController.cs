@@ -105,6 +105,7 @@ namespace Contests.App.Controllers
                 }
                 
             }
+
             User user = this.ContestsData.Users.Find(id);
 
             if (user == null)

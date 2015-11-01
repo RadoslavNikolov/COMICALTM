@@ -13,22 +13,7 @@
         </div>
         <div class="span10">
             <h2>@Model.User.UserName</h2>
-
             <hr />
-
-            
-
-            @*@if (Request.IsAuthenticated && this.User.Identity.Name == @Model.User.Username)
-            {
-                @Html.Partial("Partial/AddTweet", new TweetBindingModel());
-            }
-
-
-            <div class="tweets">
-                @Html.Partial("DisplayTemplates/TweetViewModel", @Model.Tweets)
-            </div>*@
-
-
         </div>
     </div>
 </div>

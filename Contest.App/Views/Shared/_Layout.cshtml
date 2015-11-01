@@ -48,7 +48,8 @@
                                 Html.RenderAction("GetAllCategories", "Categories", routeValues: new {area = ""});
                             }
                             <li class="divider" role="separator"></li>
-                            <li>@Html.ActionLink("LATEST", "Index", "Categories", routeValues: new {area = ""}, htmlAttributes: new {title = "Create contest"})</li>
+                            <li>@Html.ActionLink("LATEST", "All", "Contest", routeValues: new {latest = true, area = ""}, htmlAttributes: new {title = "Create contest"})</li>
+                            <li>@Html.ActionLink("ALL", "All", "Contest", routeValues: new { latest = false, area = "" }, htmlAttributes: new { title = "Create contest" })</li>
                         </ul>
                     </li>
 
@@ -69,12 +70,12 @@
     </div>
     <div class="container body-content">
         @RenderBody()
-
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Photo Contests </p>
-        </footer>
     </div>
+
+<footer>
+    <hr />
+    <p>&copy; @DateTime.Now.Year - Photo Contests </p>
+</footer>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/toastr")
     @Scripts.Render("~/bundles/custom")

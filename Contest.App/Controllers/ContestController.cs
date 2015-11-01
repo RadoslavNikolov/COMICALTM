@@ -46,23 +46,55 @@
             return View(contests);
         }
 
-
         [HttpGet]
-        public ActionResult GetAllCategories(int? catId)
+        [AllowAnonymous]
+        public ActionResult All(bool latest)
         {
-            var categories = this.ContestsData.Categories.All()
-                .Where(c => c.IsActive && c.Id != catId)
-                .OrderBy(c => c.Name)
-                .Select(c => new SelectListItem
-                {
-                    Text = c.Name,
-                    Value = c.Id.ToString()
-                });
+            var contest = this.ContestsData.Contests.All()
+                .Where(c => c.IsActive)
+                .OrderByDescending(c => c.CreatedOn)
+                .Project()
+                .To<ContestViewModel>();
 
-            return this.PartialView("Partial/_CategoriesSelect", categories);
+            if (latest)
+            {
+                this.ViewBag.Latest = "Latest contests";
+                contest = contest.Take(5);
+            }
+
+            this.ViewBag.Latest = "All contests";
+            return View(contest);
         }
 
-        public ActionResult CreateContest(ContestBindingModel model, HttpPostedFileBase upload)
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult Details(int? id)
+        {
+            var contest = this.ContestsData.Contests.All()
+                .Where(c => c.Id == id)
+                .Project()
+                .To<ContestViewModel>();
+
+            if (contest == null)
+            {
+                this.AddToastMessage("Info", "No such contest found", ToastType.Info);
+                return RedirectToAction("Index", "Home");
+            }
+
+            return this.View(contest);
+
+        }
+        
+
+        [HttpGet]
+        public ActionResult Create()
+        {
+            return this.View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(ContestBindingModel model, HttpPostedFileBase upload)
         {
             if (this.ModelState != null && this.ModelState.IsValid)
             {
@@ -104,7 +136,7 @@
                 this.ContestsData.Contests.Add(contest);
                 this.ContestsData.SaveChanges();
                 this.AddToastMessage("Success", "Contest created.", ToastType.Success);
-                return this.RedirectToAction("Index");
+                return this.RedirectToAction("My");
             }
 
             return this.View();
@@ -113,6 +145,12 @@
         private ICollection<IUser> GetParticipants(ICollection<string> participantsUsernames)
         {
             ICollection<IUser> participants = new List<IUser>();
+
+            if (participantsUsernames == null)
+            {
+                return participants;
+            }
+
             foreach (var username in participantsUsernames)
             {
                 var user = this.ContestsData.Users.All().FirstOrDefault(u => u.UserName == username);
@@ -131,6 +169,11 @@
         {
             ICollection<User> users = new HashSet<User>();
 
+            if (usersId == null)
+            {
+                return users;
+            }
+
             foreach (string id in usersId)
             {
                 User wantedUser = this.ContestsData.Users.Find(id);
@@ -143,6 +186,22 @@
             }
 
             return users;
+        }
+
+
+        [HttpGet]
+        public ActionResult GetAllCategories(int? catId)
+        {
+            var categories = this.ContestsData.Categories.All()
+                .Where(c => c.IsActive && c.Id != catId)
+                .OrderBy(c => c.Name)
+                .Select(c => new SelectListItem
+                {
+                    Text = c.Name,
+                    Value = c.Id.ToString()
+                });
+
+            return this.PartialView("Partial/_CategoriesSelect", categories);
         }
     }
 }

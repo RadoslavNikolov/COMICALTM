@@ -23,6 +23,8 @@
         [Display(Name = "Organizator`s Name")]
         public string OrganizatorName { get; set; }
 
+        public string OrganozatorId { get; set; }
+
         public string Category { get; set; }
 
         public void CreateMappings(IConfiguration configuration)
@@ -30,6 +32,7 @@
  
             configuration.CreateMap<Contest, ContestViewModel>()
                 .ForMember(n => n.OrganizatorName, opt => opt.MapFrom(n => n.Organizator.FullName))
+                .ForMember(n => n.OrganozatorId, opt => opt.MapFrom(n => n.OrganizatorId))
                 .ForMember(n => n.Category, opt => opt.MapFrom(n => n.Category.Name))
                 .ReverseMap();
         }

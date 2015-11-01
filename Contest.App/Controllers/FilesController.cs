@@ -25,6 +25,7 @@ namespace Contests.App.Controllers
     using Models.ViewModels;
     using Toastr;
 
+    [Authorize]
     public class FilesController : BaseController
     {
         private ApplicationSignInManager _signInManager;
@@ -62,8 +63,7 @@ namespace Contests.App.Controllers
         }
 
         [HttpPost]
-        [Authorize]
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public ActionResult Upload(PhotoBindingModel model)
         {
 
@@ -99,7 +99,6 @@ namespace Contests.App.Controllers
 
 
         [HttpGet]
-        [Authorize]
         public ActionResult List()
         {
             var photoModels = this.UserProfile.Photos.AsQueryable()

@@ -7,7 +7,7 @@
         <img src="@Model.Url" class="gallery-item" width="300"/>
     </div>
     <div class="photo-contest-photographer">
-        @Html.ActionLink("Put Photographer name", "Details", "Users", routeValues: null, htmlAttributes: new {title = "Photographer profile"})
+        @Html.ActionLink("Put Photographer name", "Details", "Users", routeValues: new { area = "" }, htmlAttributes: new { title = "Photographer profile" })
         <div class="photo-contest-category">Put category</div>
     </div>
 </div>
