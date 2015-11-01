@@ -9,13 +9,15 @@
     {
         private ICollection<Photo> photos;
         private ICollection<User> winners;
+        private ICollection<User> participants;
+        private ICollection<User> voters;
         private ICollection<Vote> votes;
 
         public Contest()
         {
             this.photos = new HashSet<Photo>();
-            this.Participants = new HashSet<string>();
-            this.Voters = new HashSet<string>();
+            this.participants = new HashSet<User>();
+            this.voters = new HashSet<User>();
             this.winners = new HashSet<User>();
             this.votes = new HashSet<Vote>();
             this.IsActive = true;
@@ -76,9 +78,17 @@
             set { this.winners = value; }
         }
 
-        public ICollection<string> Participants { get; set; }
+        public virtual ICollection<User> Voters
+        {
+            get { return this.voters; }
+            set { this.voters = value; }
+        }
 
-        public ICollection<string> Voters { get; set; }
+        public virtual ICollection<User> Participants
+        {
+            get { return this.participants; }
+            set { this.participants = value; }
+        }
 
         public virtual ICollection<Vote> Votes
         {

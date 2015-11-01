@@ -10,11 +10,15 @@
 
     public class User : IdentityUser
     {
-        private ICollection<Photo> photos; 
+        private ICollection<Photo> photos;
+        private ICollection<Contest> contestsCreated;
+        private ICollection<Contest> contestsParticipated;
 
         public User()
         {
             this.photos = new HashSet<Photo>();
+            this.contestsCreated = new HashSet<Contest>();
+            this.contestsParticipated = new HashSet<Contest>();
             this.RegisteredOn = DateTime.Now;
         }
 
@@ -40,6 +44,18 @@
         {
             get { return this.photos; }
             set { this.photos = value; }
+        }
+
+        public virtual ICollection<Contest> ContestsCreated
+        {
+            get { return this.contestsCreated; }
+            set { this.contestsCreated = value; }
+        }
+
+        public virtual ICollection<Contest> ContestsParticipated
+        {
+            get { return this.contestsParticipated; }
+            set { this.contestsParticipated = value; }
         }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager)

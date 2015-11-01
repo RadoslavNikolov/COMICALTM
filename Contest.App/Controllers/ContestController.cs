@@ -66,6 +66,8 @@
         {
             if (this.ModelState != null && this.ModelState.IsValid)
             {
+                ICollection<User> voters = this.GetUsers(model.Voters);
+
                 var contest = new Contest
                 {
                     Title = model.Title,
@@ -75,12 +77,11 @@
                     DeadlineType = model.DeadlineType,
                     ParticipationType = model.ParticipationType,
                     VotingType = model.VotingType,
-                    Voters = model.Voters,
+                    Voters = voters,
                     WinnersCount = model.WinnersNumber,
                     ParticipantsNumberDeadline = model.ParticipantsNumberDeadline,
                     DeadLine = model.DeadLine,
-                    CategoryId = Int32.Parse(model.Category),
-                    Category = this.ContestsData.Categories.Find(Int32.Parse(model.Category))
+                    CategoryId = Int32.Parse(model.Category)
                 };
 
                 if (upload != null && upload.ContentLength > 0)
@@ -124,6 +125,24 @@
             }
 
             return participants;
+        }
+
+        private ICollection<User> GetUsers(string[] usersId)
+        {
+            ICollection<User> users = new HashSet<User>();
+
+            foreach (string id in usersId)
+            {
+                User wantedUser = this.ContestsData.Users.Find(id);
+                if (wantedUser == null)
+                {
+                    throw new NullReferenceException();
+                }
+
+                users.Add(wantedUser);
+            }
+
+            return users;
         }
     }
 }
