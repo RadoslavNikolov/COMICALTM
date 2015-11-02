@@ -539,6 +539,8 @@
     <Content Include="Views\Contest\All.cshtml" />
     <Content Include="Views\Contest\Details.cshtml" />
     <Content Include="Seed\users.json" />
+    <Content Include="Views\Contest\Upload.cshtml" />
+    <Content Include="Views\Shared\Partial\_UploadPhoto.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

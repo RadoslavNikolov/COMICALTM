@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Net;
     using System.Web;
     using System.Web.Mvc;
     using AutoMapper.QueryableExtensions;
@@ -68,7 +69,7 @@
 
         [HttpGet]
         [AllowAnonymous]
-        public ActionResult Details(int? id)
+        public ActionResult Details(int id)
         {
             var contest = this.ContestsData.Contests.All()
                 .Where(c => c.Id == id)
@@ -83,6 +84,69 @@
 
             return this.View(contest);
 
+        }
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult Upload(int contestId)
+        {
+            var contest = this.ContestsData.Contests.Find(contestId);
+
+            if (contest == null)
+            {
+                this.AddToastMessage("Error", "Non existing contest!", ToastType.Error);
+                return this.RedirectToAction("Index", "Contest");
+            }
+
+            var model = PhotoBindingModel.CreateFrom(contest);
+
+            return View(model);
+
+        }
+
+
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public ActionResult Upload(PhotoBindingModel model, int contestId)
+        {
+            var test = contestId;
+
+            if (ModelState.IsValid)
+            {
+                if (model.Upload != null)
+                {
+                    var paths = Helpers.UploadImages.UploadImage(model.Upload, false);
+                    var contest = this.ContestsData.Contests.Find(contestId);
+
+                    if (contest == null)
+                    {
+                        this.AddToastMessage("Error", "Non existing contest!", ToastType.Error);
+                        return this.RedirectToAction("Index", "Contest");
+                    }
+
+                    var newPhoto = new Photo
+                    {
+                        CreatedOn = DateTime.Now,
+                        Owner = this.UserProfile,
+                        Path = paths[0],
+                        ThumbPath = paths[1],
+                        Url = Dropbox.Download(paths[0]),
+                        ThumbnailUrl = Dropbox.Download(paths[1], "Thumbnails"),
+                        ContestId = contestId
+                    };
+
+                    contest.Photos.Add(newPhoto);
+                    this.ContestsData.SaveChanges();
+                    //this.TempData["Success"] = new[] { "Upload successfull" };
+                    this.AddToastMessage("Success", "Photo uploaded.", ToastType.Success);
+                }
+
+                return this.RedirectToAction("Details", routeValues: new {id = contestId});
+            }
+
+            this.AddToastMessage("Error", "Error while uploading", ToastType.Error);
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Invalid model");
         }
         
 

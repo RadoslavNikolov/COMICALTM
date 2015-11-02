@@ -1,10 +1,26 @@
 ﻿@model Contests.App.Models.ViewModels.ContestViewModel
 
 <div class="col-md-3 photo-contests-photo-wrapper">
-    <div class="photo-contest-photo">       
+    <div class="photo-contest-photo">
         <a href="@Url.Action("Details", "Contest", routeValues: new {id = @Model.Id})" id="@Model.Id">
-            <img src="@Model.WallpaperUrl" class="gallery-item" width="300"/>
+            <img src="@Model.WallpaperUrl" class="gallery-item" width="100%"/>
         </a>
+
+        @if (@Model.CanVote)
+        {
+            <div class="photo-contest-canvote">
+                >> Can Vote
+            </div>
+        }
+
+        @if (Model.CanParticipate)
+        {         
+            <a href="@Url.Action("Details", "Contest", routeValues: new {id = @Model.Id})" id="@Model.Id">
+                <div class="photo-contest-participate">
+                    >> Participate
+                </div>
+            </a>
+        }        
     </div>
     <div class="photo-contest-photographer">
         @Html.ActionLink(@Model.OrganizatorName, "Details", "Users", routeValues: new { id = Model.OrganozatorId, area = ""}, htmlAttributes: new { title = "Photographer profile" })

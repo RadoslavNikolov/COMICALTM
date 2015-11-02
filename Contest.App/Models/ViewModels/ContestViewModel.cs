@@ -1,10 +1,16 @@
 ﻿namespace Contests.App.Models.ViewModels
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.Linq;
+    using System.Web;
     using AutoMapper;
     using Contests.Models;
+    using Contests.Models.Enums;
     using Infrastructure.Mapping;
+    using Microsoft.AspNet.Identity;
+    using RestSharp.Extensions;
 
     public class ContestViewModel : IMapFrom<Contest>, IHaveCustomMappings
     {
@@ -27,13 +33,23 @@
 
         public string Category { get; set; }
 
+        public bool CanParticipate { get; set; }
+
+        public bool CanVote { get; set; }
+
+        public IEnumerable<PhotoViewModel> Photos { get; set; }
+
         public void CreateMappings(IConfiguration configuration)
         {
- 
             configuration.CreateMap<Contest, ContestViewModel>()
                 .ForMember(n => n.OrganizatorName, opt => opt.MapFrom(n => n.Organizator.FullName))
                 .ForMember(n => n.OrganozatorId, opt => opt.MapFrom(n => n.OrganizatorId))
                 .ForMember(n => n.Category, opt => opt.MapFrom(n => n.Category.Name))
+                .ForMember(n => n.CanParticipate, opt => opt.MapFrom(src => (src.ParticipationType == ParticipationType.Open && HttpContext.Current.User.Identity.IsAuthenticated) || 
+                    (src.ParticipationType == ParticipationType.Close && src.Participants.Any(p => p.UserName == HttpContext.Current.User.Identity.Name))))
+                .ForMember(n => n.CanVote, opt => opt.MapFrom(src => (src.VotingType == VotingType.Open && HttpContext.Current.User.Identity.IsAuthenticated) || 
+                    (src.VotingType == VotingType.Close && src.Voters.Any(p => p.UserName == HttpContext.Current.User.Identity.Name))))
+                .ForMember(n => n.Photos, opt => opt.MapFrom(n => n.Photos))
                 .ReverseMap();
         }
     }

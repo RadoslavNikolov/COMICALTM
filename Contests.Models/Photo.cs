@@ -34,6 +34,11 @@
         [Required]
         public string OwnerId { get; set; }
 
+        [Required]
+        public int ContestId { get; set; }
+
+        public Contest Contest { get; set; }
+
         public virtual User Owner { get; set; }
 
         public virtual ICollection<Vote> Votes

@@ -1,8 +1,33 @@
-﻿@model IEnumerable<Contests.App.Models.ViewModels.ContestViewModel>
+﻿@using System.Security.Cryptography
+@using Microsoft.AspNet.Identity
+@model IEnumerable<Contests.App.Models.ViewModels.ContestViewModel>
 @{
     ViewBag.Title = "Contest details";
 }
 
 <h2>Contest details</h2>
-@Html.DisplayForModel()
+
+
+
+<div class="container col-xs-5">
+   @Html.DisplayForModel()
+</div>
+
+
+<div class="container col-xs-7">
+
+    @if (Model.First().CanParticipate)
+    {
+        @Html.ActionLink("Upload photo", "Upload", "Contest", routeValues: new { contestId = Model.First().Id, area = "" }, htmlAttributes: new { @class="btn btn-default", title = "Upload photo" })
+    }
+
+    @if (Model.First().CanVote)
+    {
+        <h2>Can vote</h2>
+    }
+
+    @Html.DisplayFor(x => x.First().Photos)
+
+
+</div>
 

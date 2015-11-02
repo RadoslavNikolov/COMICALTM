@@ -83,45 +83,26 @@ div.photo-contest-category {
     background-color: #e8e8e8;
 }
 
-
-/* Search-box */
-
-#custom-search-input{
-    /*padding: 3px;*/
-    border: solid 1px #E4E4E4;
-    border-radius: 6px;
-    background-color: #fff;
+div.photo-contest-participate {
+    color: white;
+    background-color: #1bc8e2;
+    font-weight: bold;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0;
+    position: absolute;
+    bottom: 0;
+    right: 0;
 }
 
-#custom-search-input input{
-    border: 0;
-    box-shadow: none;
-    max-width: 100% !important;
+div.photo-contest-canvote {
+    color: white;
+    background-color: #008000;
+    font-weight: bold;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0;
+    position: absolute;
+    bottom: 0;
+    left: 0;
 }
-
-#custom-search-input button, #custom-search-input .search-clear{
-    margin: 2px 0 0 0;
-    background: none;
-    box-shadow: none;
-    border: 0;
-    color: #666666;
-    padding: 0 8px 0 10px;
-    border-left: solid 1px #ccc;
-    outline:none;
-}
-
-#custom-search-input button:hover, #custom-search-input .search-clear:hover{
-    border: 0;
-    box-shadow: none;
-    border-left: solid 1px #ccc;
-    color: rgb(242, 130, 130);
-}
-
-#custom-search-input .glyphicon-search{
-    font-size: 23px;
-}
-
-/*.search-clear {
-    border: none;
-    border-left: solid 1px #ccc;
-}*/
