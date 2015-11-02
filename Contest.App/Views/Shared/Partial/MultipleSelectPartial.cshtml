@@ -1,7 +1,12 @@
 ﻿@using Contests.Models
 @model IEnumerable<Contests.App.Models.ViewModels.UserInfoViewModel>
 
-<table style='width:600px;'>
+@foreach (var user in @Model)
+{
+    <option value='@user.Id'>@user.UserName</option>
+}
+
+@*<table style='width:600px;'>
     <tr>
         <td style='width:160px;'>
             <b>Group 1:</b><br />
@@ -21,4 +26,4 @@
             <select multiple="multiple" id='lstBox2' name="voters" class="form-control" style="width: 250px; min-height: 150px"></select>
         </td>
     </tr>
-</table>
+</table>*@

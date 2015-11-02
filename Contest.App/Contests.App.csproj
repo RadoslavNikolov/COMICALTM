@@ -307,6 +307,7 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\images\glyphicons-halflings-white.png" />
     <Content Include="Content\images\glyphicons-halflings.png" />
+    <Content Include="Content\images\switch.png" />
     <Content Include="Content\multi-select.css" />
     <Content Include="Content\pager.css" />
     <Content Include="Content\style.css" />

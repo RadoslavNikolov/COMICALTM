@@ -8,6 +8,7 @@
     using System.Web.Mvc;
     using AutoMapper.QueryableExtensions;
     using Contests.Models;
+    using Contests.Models.Enums;
     using Contests.Models.Strategies.RewardStrategy;
     using Data.UnitOfWork;
     using Helpers;
@@ -31,7 +32,7 @@
 
         public ActionResult My()
         {
-            var currentUserId = UserProfile.Id;
+            var currentUserId = this.UserProfile.Id;
             var contests = this.ContestsData.Contests.All()
                .Where(c => c.OrganizatorId == currentUserId && c.IsActive)
                .OrderByDescending(c => c.CreatedOn)
@@ -162,7 +163,8 @@
         {
             if (this.ModelState != null && this.ModelState.IsValid)
             {
-                ICollection<User> voters = this.GetUsers(model.Voters);
+                ICollection<User> voters = model.VotingType == VotingType.Close ? this.GetUsers(model.Voters) : new HashSet<User>();
+                ICollection<User> participants = model.ParticipationType == ParticipationType.Close ? this.GetUsers(model.Participants) : new HashSet<User>();
 
                 var contest = new Contest
                 {
@@ -176,8 +178,9 @@
                     Voters = voters,
                     WinnersCount = model.WinnersNumber,
                     ParticipantsNumberDeadline = model.ParticipantsNumberDeadline,
+                    Participants = participants,
                     DeadLine = model.DeadLine,
-                    CategoryId = Int32.Parse(model.Category)
+                    CategoryId = model.Category
                 };
 
                 if (upload != null && upload.ContentLength > 0)
@@ -228,32 +231,7 @@
 
             return participants;
         }
-
-        private ICollection<User> GetUsers(string[] usersId)
-        {
-            ICollection<User> users = new HashSet<User>();
-
-            if (usersId == null)
-            {
-                return users;
-            }
-
-            foreach (string id in usersId)
-            {
-                User wantedUser = this.ContestsData.Users.Find(id);
-                if (wantedUser == null)
-                {
-                    throw new NullReferenceException();
-                }
-
-                users.Add(wantedUser);
-            }
-
-            return users;
-        }
-
-
-        [HttpGet]
+        
         public ActionResult GetAllCategories(int? catId)
         {
             var categories = this.ContestsData.Categories.All()
@@ -266,6 +244,27 @@
                 });
 
             return this.PartialView("Partial/_CategoriesSelect", categories);
+        }
+
+        private ICollection<User> GetUsers(string[] usersId)
+        {
+            ICollection<User> users = new HashSet<User>();
+
+            if (usersId != null)
+            {
+                foreach (string id in usersId)
+                {
+                    User wantedUser = this.ContestsData.Users.Find(id);
+                    if (wantedUser == null)
+                    {
+                        throw new NullReferenceException();
+                    }
+
+                    users.Add(wantedUser);
+                }
+            }
+
+            return users;
         }
     }
 }
