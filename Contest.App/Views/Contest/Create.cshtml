@@ -46,11 +46,27 @@
     </div>
 
     <div class="form-group" id="participation-type">
-        @Html.LabelFor(m => m.ParticipationType, new { @class = "col-md-2 control-label" })
+        @Html.LabelFor(m => m.ParticipationType, new {@class = "col-md-2 control-label"})
         <div class="col-md-10">
-            <label> @Html.RadioButtonFor(m => m.ParticipationType, "Open", new { id = "voting-open", @checked = "checked", @class = "open-button" }) Open </label>
-            <label> @Html.RadioButtonFor(m => m.ParticipationType, "Close", new { id = "voting-close", @class = "close-button" }) Closed </label>
+            <label> @Html.RadioButtonFor(m => m.ParticipationType, "Open", new {id = "voting-open", @checked = "checked", @class = "open-button"}) Open </label>
+            <label> @Html.RadioButtonFor(m => m.ParticipationType, "Close", new {id = "voting-close", @class = "close-button"}) Closed </label>
             <div id="participators" class="hidden-element slide-toggle"></div>
+        </div>
+    </div>
+    <div class="form-group" id="deadline-type">
+        @Html.LabelFor(m => m.DeadlineType, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            <label> @Html.RadioButtonFor(m => m.DeadlineType, "Open", new { id = "deadline-by-time", @checked = "checked" }) By Time </label>
+            <label> @Html.RadioButtonFor(m => m.DeadlineType, "Close", new { id = "deadline-by-participants" }) By Participants Number </label>
+        </div>
+    </div>
+    <div class="form-group" id="deadline-section">
+        <label for="endTime" id="deadline-time-label" class="col-md-2 control-label">End Date:</label>
+        <div id="endTime" class="col-md-10 input-group date date-input">
+            <input type="text" name="deadline" id="deadline-input" class="form-control" />
+            <span class="input-group-addon pull-left datepicker-icon">
+                <span class="glyphicon glyphicon-calendar"></span>
+            </span>
         </div>
     </div>
 

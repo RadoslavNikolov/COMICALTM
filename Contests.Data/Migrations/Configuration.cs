@@ -108,7 +108,6 @@ namespace Contests.Data.Migrations
                         if (!addToRoleResult.Succeeded)
                         {
                             userManager.Delete(user);
-                            
                         }
                     }
                 }

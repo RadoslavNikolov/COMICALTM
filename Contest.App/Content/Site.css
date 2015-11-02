@@ -68,3 +68,12 @@ input.search-input{
 #imgprw {
     max-width: 500px;
 }
+
+.datepicker-icon {
+    width: 4%;
+    line-height: 1.45;
+}
+
+#endTime {
+    padding-left: 15px !important;
+}

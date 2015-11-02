@@ -1,6 +1,71 @@
 ﻿$(function () {
-    $('#datetimepicker').datetimepicker({
-        locale: 'en'
+    $(document).on('click', '#endTime', function (e) {
+        var date = new Date();
+        var tomorrow = new Date(date.getTime() + 24 * 60 * 60 * 1000);
+        $(this).datetimepicker({
+            minDate: tomorrow
+        });
+    });
+
+    $(document).on('click', '#deadline-by-participants', function (e) {
+        $('#deadline-section').remove();
+        $('#deadline-time-label').remove();
+        $('#deadline-input').remove();
+
+        var deadlineType = $('#deadline-type');
+        var participantsDeadlineDiv = $('<div>')
+            .attr({ id: 'deadline-section' })
+            .addClass('form-group')
+            .insertAfter(deadlineType);
+
+        $('<label>')
+            .attr({ id: 'deadline-participants-label' })
+            .addClass('col-md-2 control-label')
+            .text('Number of participants:')
+            .appendTo(participantsDeadlineDiv);
+
+        var inputDiv = $('<div>')
+            .addClass('col-md-10')
+            .appendTo(participantsDeadlineDiv);
+
+        $('<input/>')
+            .attr({ type: 'number', name: 'participantsNumberDeadline', autofocus: true, id: 'deadline-input' })
+            .addClass('form-control')
+            .appendTo(inputDiv);
+    });
+
+    $(document).on('click', '#deadline-by-time', function (e) {
+        $('#deadline-section').remove();
+        $('#deadline-participants-label').remove();
+        $('#deadline-input').remove();
+
+        var deadlineType = $('#deadline-type');
+        var timeDeadlineDiv = $('<div>')
+            .attr({ id: 'deadline-section' })
+            .addClass('form-group')
+            .insertAfter(deadlineType);
+
+        $('<label>')
+           .attr({ id: 'deadline-time-label' })
+           .addClass('col-md-2 control-label')
+           .text('End Date:')
+           .appendTo(timeDeadlineDiv);
+
+        var inputDiv = $('<div>')
+           .attr({ id: "endTime" })
+           .addClass('col-md-10 input-group date date-input')
+           .appendTo(timeDeadlineDiv);
+
+        $('<input/>')
+            .attr({ type: 'text', name: 'deadline', autofocus: true, id: 'deadline-input' })
+            .addClass('form-control')
+            .appendTo(inputDiv);
+
+        var iconSpan = $('<span>').addClass("input-group-addon pull-left datepicker-icon");
+        $('<span>')
+            .addClass('glyphicon glyphicon-calendar')
+            .appendTo(iconSpan);
+        iconSpan.appendTo(inputDiv);
     });
 
     //$('#multiple-winners').click(function () {
