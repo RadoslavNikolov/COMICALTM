@@ -2,3 +2,21 @@ Nature
 People
 Common
 Future
+Animals
+Cars
+Aviation
+Sports
+Universe
+Cityscapes
+Portrait
+Art
+Sky
+Computers
+Food
+Fashion
+Interior
+Macro
+Nude
+Underwater
+Other
+HDRI(High-Dinamic Range Imaging)

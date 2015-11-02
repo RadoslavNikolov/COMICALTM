@@ -305,7 +305,10 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\images\glyphicons-halflings-white.png" />
+    <Content Include="Content\images\glyphicons-halflings.png" />
     <Content Include="Content\multi-select.css" />
+    <Content Include="Content\pager.css" />
     <Content Include="Content\style.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
@@ -535,6 +538,7 @@
     <Content Include="Views\Shared\Partial\_Contests.cshtml" />
     <Content Include="Views\Contest\All.cshtml" />
     <Content Include="Views\Contest\Details.cshtml" />
+    <Content Include="Seed\users.json" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

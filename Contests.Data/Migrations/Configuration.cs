@@ -1,18 +1,22 @@
 namespace Contests.Data.Migrations
 {
     using System;
+    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.IO;
     using System.Linq;
     using System.Web;
+    using DAO;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
     using Models;
+    using Newtonsoft.Json;
 
     public sealed class Configuration : DbMigrationsConfiguration<Contests.Data.ContestsDbContext>
     {
         private string categoriesImportPath;
+        private string usersImportPath;
 
         public Configuration()
         {
@@ -23,8 +27,14 @@ namespace Contests.Data.Migrations
 
         protected override void Seed(ContestsDbContext context)
         {
+            this.SeedRoles(context);
+            this.SeedUsers(context);
             this.SeedCategories(context);
+        }
 
+
+        private void SeedRoles(ContestsDbContext context)
+        {
             // makes an admin role if one doesn't exist
             if (!context.Roles.Any(r => r.Name == "Admin"))
             {
@@ -35,7 +45,7 @@ namespace Contests.Data.Migrations
                 manager.Create(role);
             }
 
-            // makes an admin role if one doesn't exist
+            // makes an user role if one doesn't exist
             if (!context.Roles.Any(r => r.Name == "User"))
             {
                 var store = new RoleStore<IdentityRole>(context);
@@ -44,19 +54,7 @@ namespace Contests.Data.Migrations
 
                 manager.Create(role);
             }
-
-            // if user doesn't exist, create one and add it to the admin role
-            if (!context.Users.Any(u => u.UserName == "admin"))
-            {
-                var store = new UserStore<User>(context);
-                var manager = new UserManager<User>(store);
-                var user = new User { UserName = "admin", FullName = "Administrator", Email = "admin@admin.com" };
-
-                manager.Create(user, "password");
-                manager.AddToRole(user.Id, "Admin");
-            }
         }
-
 
         private void SeedCategories(ContestsDbContext context)
         {
@@ -76,6 +74,43 @@ namespace Contests.Data.Migrations
                     };
 
                     context.Categories.Add(newCategory);
+                }
+            }
+        }
+
+        private void SeedUsers(ContestsDbContext context)
+        {
+            if (!context.Users.Any())
+            {
+                this.usersImportPath = HttpContext.Current.Server.MapPath(@"~\") + @"Seed\users.json";
+
+                var json = File.ReadAllText(this.usersImportPath);
+
+                var users = JsonConvert.DeserializeObject<IList<UserModel>>(json);
+
+                var userStore = new UserStore<User>(context);
+                var userManager = new UserManager<User>(userStore);
+
+                foreach (var userModel in users)
+                {
+                    var user = new User
+                    {
+                        UserName = userModel.UserName,
+                        Email = userModel.Email,
+                        FullName = userModel.FullName,
+                        PhoneNumber = userModel.PhoneNumber
+                    };
+
+                    var createUserResult = userManager.Create(user, userModel.Password);
+                    if (createUserResult.Succeeded)
+                    {
+                        var addToRoleResult = userManager.AddToRole(user.Id, userModel.Role);
+                        if (!addToRoleResult.Succeeded)
+                        {
+                            userManager.Delete(user);
+                            
+                        }
+                    }
                 }
             }
         }

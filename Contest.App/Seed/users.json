@@ -1,0 +1,155 @@
+[
+    {
+        "UserName": "nikola",
+        "Password": "nikola",
+        "Fullname": "Nikola Nikolov",
+        "Email": "nikola@email.com",
+        "PhoneNumber":  "0876542154",
+        "Role": "Admin"
+    },
+    {
+        "UserName": "radoslav",
+        "Password": "radoslav",
+        "Fullname": "Radoslav Nikolov",
+        "Email": "radoslav@email.com",
+        "PhoneNumber":  "0852013256",
+        "Role": "Admin"
+    },
+    {
+        "UserName": "martin",
+        "Password": "martin",
+        "Fullname": "Martin Andreev",
+        "Email": "martin@email.com",
+        "PhoneNumber":  "087645213",
+        "Role": "Admin"
+    },
+    {
+        "UserName": "administrator",
+        "Password": "password",
+        "Fullname": "Administrator",
+        "Email": "Administrator@email.com",
+        "PhoneNumber":  "0247624",
+        "Role": "Admin"
+    },
+    {
+        "UserName": "sivanov",
+        "Password": "sivanov",
+        "Fullname": "Stefan Ivanov",
+        "Email": "sivanov@email.com",
+        "PhoneNumber":  "05479325",
+        "Role": "User"
+    },
+    {
+        "UserName": "tpetrov",
+        "Password": "tpetrov",
+        "Fullname": "Todor Petrov",
+        "Email": "tpetrov@email.com",
+        "PhoneNumber":  "0865431254",
+        "Role": "User"
+    },
+    {
+        "UserName": "jsmith",
+        "Password": "jsmith",
+        "Fullname": "Jack Smith",
+        "Email": "jsmith@email.com",
+        "PhoneNumber":  "0555444799",
+        "Role": "User"
+    },
+    {
+        "UserName": "phubchev",
+        "Password": "phubchev",
+        "Fullname": "Petar Hubchev",
+        "Email": "phubchev@email.com",
+        "PhoneNumber":  "054311120",
+        "Role": "User"
+    },
+
+    {
+        "UserName": "iivanov",
+        "Password": "iivanov",
+        "Fullname": "Ivan Ivanov",
+        "Email": "iivanov@email.com",
+        "PhoneNumber":  "075554622",
+        "Role": "User"
+    },
+    {
+        "UserName": "skostadinov",
+        "Password": "skostadinov",
+        "Fullname": "Stefan Kostadinov",
+        "Email": "skostadinov@email.com",
+        "PhoneNumber":  "0876541524",
+        "Role": "User"
+    },
+    {
+        "UserName": "givanov",
+        "Password": "givanov",
+        "Fullname": "Georgi Ivanov",
+        "Email": "givanov@email.com",
+        "PhoneNumber":  "07423011",
+        "Role": "User"
+    },
+    {
+        "UserName": "gpetrova",
+        "Password": "gpetrova",
+        "Fullname": "Gergana Petrova",
+        "Email": "gpetrova@email.com",
+        "PhoneNumber":  "072588452",
+        "Role": "User"
+    },
+    {
+        "UserName": "inikolova",
+        "Password": "inikolova",
+        "Fullname": "Ivaniva Nikolova",
+        "Email": "inikolova@email.com",
+        "PhoneNumber":  "04656454",
+        "Role": "User"
+    },
+    {
+        "UserName": "istoyanov",
+        "Password": "istoyanov",
+        "Fullname": "Ivaylo Stoyanov",
+        "Email": "istoyanov@email.com",
+        "PhoneNumber":  "00787565464",
+        "Role": "User"
+    },
+    {
+        "UserName": "stjobs",
+        "Password": "stjobs",
+        "Fullname": "Steve Jobs",
+        "Email": "stjobs@email.com",
+        "PhoneNumber":  "05656486",
+        "Role": "User"
+    },
+    {
+        "UserName": "bgates",
+        "Password": "bgates",
+        "Fullname": "Bill Gates",
+        "Email": "bgates@email.com",
+        "PhoneNumber":  "056456423135",
+        "Role": "User"
+    },
+    {
+        "UserName": "mangelov",
+        "Password": "mangelov",
+        "Fullname": "Mihail Angelov",
+        "Email": "mangelov@email.com",
+        "PhoneNumber":  "0458732123",
+        "Role": "User"
+    },
+    {
+        "UserName": "syasenov",
+        "Password": "syasenov",
+        "Fullname": "Stanimir Yasenov",
+        "Email": "syasenov@email.com",
+        "PhoneNumber":  "047545656",
+        "Role": "User"
+    },
+    {
+        "UserName": "snakov",
+        "Password": "snakov",
+        "Fullname": "Svetlin Nakov",
+        "Email": "snakov@email.com",
+        "PhoneNumber":  "0888465215",
+        "Role": "User"
+    }
+]
