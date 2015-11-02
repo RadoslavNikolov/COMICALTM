@@ -6,7 +6,9 @@
     using Models.ViewModels;
     using Contests.Models;
     using Data.UnitOfWork;
+    using Infrastructure;
     using Models.BindingModels;
+    using MvcPaging;
     using Toastr;
 
     public class CategoriesController : BaseAdminController
@@ -17,14 +19,25 @@
         }
 
         // GET: Admin/Categories
-        public ActionResult Index()
+        public ActionResult Index(string category_name, int? page)
         {
-            var categories = this.ContestsData.Categories.All()
-                .OrderByDescending(c => c.IsActive)
-                .ThenBy(c => c.Name)
-                .Project()
-                .To<CategoryViewModel>()
-                .AsEnumerable();
+            this.TempData["category_name"] = category_name;
+            int currentPageIndex = page ?? 1;
+
+            var categoriesQuery = this.ContestsData.Categories.All();
+
+            if (!string.IsNullOrWhiteSpace(category_name))
+            {
+                categoriesQuery = categoriesQuery.Where(c => c.Name.Contains(category_name));
+
+            }
+
+            var categories = categoriesQuery
+                    .OrderByDescending(c => c.IsActive)
+                    .ThenBy(c => c.Name)
+                    .Project()
+                    .To<CategoryViewModel>()
+                    .ToPagedList(currentPageIndex, AppConfig.AdminPanelPageSize);
 
             return View(categories);
         }
@@ -112,7 +125,7 @@
                     return this.RedirectToAction("Index");
                 }
 
-                this.ModelState.AddModelError("Error", @"Category already exists!");
+                this.ModelState.AddModelError("", @"Category already exists!");
             }
 
             return View(model);

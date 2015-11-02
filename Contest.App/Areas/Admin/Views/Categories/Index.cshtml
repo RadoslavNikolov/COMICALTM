@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Contests.App.Areas.Admin.Models.ViewModels.CategoryViewModel>
+﻿@using MvcPaging
+@model IPagedList<Contests.App.Areas.Admin.Models.ViewModels.CategoryViewModel>
 
 @{
     ViewBag.Title = "Categories";
@@ -9,40 +10,92 @@
 <p>
     @Html.ActionLink("Create New", "Create", routeValues: new {area = "Admin"}, htmlAttributes: new {@class = "btn btn-primary"})
 </p>
-<table class="table">
-    <thead>
+                       
+
+@using (Html.BeginForm("Index", "Categories", FormMethod.Get))
+{
+	<div class="row">
+        <div class="col-md-4">
+            <div id="custom-search-input">
+                <div class="input-group col-md-12">
+                    <input type="text" class="form-control" name="category_name" placeholder="Name" value="@TempData["category_name"]" />
+                    <span class="input-group-btn">
+                        <a class="btn btn-default search-clear" href="@Url.Action("Index")" title="Clear">
+                            Clear
+                        </a>
+                        <button class="btn btn-info" type="submit">
+                            Search
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+	</div>
+    
+    <table class="table">
+        <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                N
+            </th>
+            <th>
+                Name
             </th>
             <th>Status</th>
             <th></th>
         </tr>
-    </thead>
-    <tbody>
-    @foreach (var item in Model)
-    {
-        var status = item.IsActive ? "Active" : "Inactive";
-        <tr class="category-active-@item.IsActive.ToString()">
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => @status)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new {id = item.Id}) |
-                @if (item.IsActive)
-                {
-                    @Html.ActionLink("Deactivate", "Deactivate", new {id = item.Id})
-                }
-                else
-                {
-                    @Html.ActionLink("Activate", "Activate", new {id = item.Id})
-                }
+        </thead>
+        <tbody>
 
-            </td>
-        </tr>
-    }
-    </tbody>
-</table>
+        @{int i = 0;}
+
+        @foreach (var item in Model)
+        {
+            var status = item.IsActive ? "Active" : "Inactive";
+            i +=  1;
+            var n = i + (@Model.PageNumber - 1) * @Model.PageSize;
+            <tr class="category-active-@item.IsActive.ToString()">
+                <td>
+                    @n
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => @status)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new {id = item.Id}) |
+                    @if (item.IsActive)
+                    {
+                        @Html.ActionLink("Deactivate", "Deactivate", new {id = item.Id})
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Activate", "Activate", new {id = item.Id})
+                    }
+
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    
+    <div class="pager">
+        @Html.Raw(Html.Pager(
+            new Options
+            {
+                PageSize = Model.PageSize,
+                TotalItemCount = Model.TotalItemCount,
+                CurrentPage = Model.PageNumber,
+                ItemTexts = new ItemTexts() { Next = "", Previous = "", First = "", Last = ""},
+                ItemIcon = new ItemIcon() { First = "icon-backward", Previous = "icon-chevron-left", Next = "icon-chevron-right", Last = "icon-forward" },
+                TooltipTitles = new TooltipTitles() { Next = "Next page {0}", Previous = "Previous page {0}", Page = "Go to page {0}" },
+                Size = Size.normal,
+                Alignment = Alignment.centered,
+                IsShowControls = true,
+                IsShowFirstLast = true,
+                IsShowPages = true
+            }, new { category_name = TempData["category_name"] }))
+    </div>
+}

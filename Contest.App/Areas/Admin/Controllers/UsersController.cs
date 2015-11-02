@@ -6,10 +6,12 @@
     using AutoMapper.QueryableExtensions;
     using Contest.App;
     using Data.UnitOfWork;
+    using Infrastructure;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.Owin;
     using Models.BindingModels;
     using Models.ViewModels;
+    using MvcPaging;
     using Toastr;
 
     public class UsersController : BaseAdminController
@@ -54,10 +56,22 @@
         }
 
         // GET: Admin/Users
-        public ActionResult Index()
+        public ActionResult Index(string user_fullname, int? page)
         {
-            var users = this.ContestsData.Users.All()
-                .Where(u => u.Id != this.UserProfile.Id)
+            this.TempData["user_fullname"] = user_fullname;
+            int currentPageIndex = page ?? 1;
+
+            var usersQuery = this.ContestsData.Users.All()
+                .Where(u => u.Id != this.UserProfile.Id);
+
+            if (!string.IsNullOrWhiteSpace(user_fullname))
+            {
+                usersQuery = usersQuery.Where(u => u.FullName.Contains(user_fullname));
+
+            }
+
+            var users = usersQuery
+                .OrderBy(u => u.FullName)
                 .Project()
                 .To<UserViewModel>()
                 .ToList();
@@ -68,12 +82,7 @@
                 user.Role = role;
             }
 
-            users = users
-                .OrderBy(u => u.Role)
-                .ThenBy(u => u.FullName)
-                .ToList();
-
-            return View(users);
+            return View(users.ToPagedList(currentPageIndex, AppConfig.AdminPanelPageSize));
         }
 
         // GET: Admin/Users/Edit

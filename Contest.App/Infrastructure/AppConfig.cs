@@ -3,6 +3,7 @@
     public static class AppConfig
     {
         public static string DirectoryName = "PhotoContests";
+        public const int AdminPanelPageSize = 10;
 
         // Roles
         public const string AdminRole = "Admin";

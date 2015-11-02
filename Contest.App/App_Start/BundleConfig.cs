@@ -30,6 +30,7 @@ namespace Contests.App
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
                       "~/Content/style.css",
+                      "~/Content/pager.css",
                       "~/Content/bootstrap-datetimepicker.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/custom").Include(
