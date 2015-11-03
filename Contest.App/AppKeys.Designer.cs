@@ -97,16 +97,7 @@ namespace Contests.App {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to https://dl.dropboxusercontent.com/1/view/vbycqsngzkqhdb5/PhotoContests/Resources/Thumbnails/Default-Profile-picture.png.
-        /// </summary>
-        internal static string ProfilePicThumbUrl {
-            get {
-                return ResourceManager.GetString("ProfilePicThumbUrl", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to https://dl.dropboxusercontent.com/1/view/l34bf0yo0w7qhwk/PhotoContests/Resources/Default-Profile-picture.png.
+        ///   Looks up a localized string similar to /Resources/Default-Profile-picture.png.
         /// </summary>
         internal static string ProfilePicUrl {
             get {
@@ -115,16 +106,7 @@ namespace Contests.App {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to https://dl.dropboxusercontent.com/1/view/0u2uq5r258ax8cs/PhotoContests/Resources/Thumbnails/Default-wallpaper.jpg.
-        /// </summary>
-        internal static string WallpaperThumbUrl {
-            get {
-                return ResourceManager.GetString("WallpaperThumbUrl", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to https://dl.dropboxusercontent.com/1/view/e3doy4paqng4sx6/PhotoContests/Resources/Default-wallpaper.jpg.
+        ///   Looks up a localized string similar to /Resources/Default-wallpaper.jpg.
         /// </summary>
         internal static string WallpaperUrl {
             get {

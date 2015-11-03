@@ -144,3 +144,9 @@ div.photo-contest-canvote {
 #custom-search-input .glyphicon-search{
     font-size: 23px;
 }
+
+img.cover {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}

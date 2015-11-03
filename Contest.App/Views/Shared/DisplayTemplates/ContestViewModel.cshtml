@@ -3,15 +3,8 @@
 <div class="col-md-3 photo-contests-photo-wrapper">
     <div class="photo-contest-photo">
         <a href="@Url.Action("Details", "Contest", routeValues: new {id = @Model.Id})" id="@Model.Id">
-            <img src="@Model.WallpaperUrl" class="gallery-item" width="100%"/>
+            <img src="@Model.WallpaperUrl" class="gallery-item cover"/>
         </a>
-
-        @if (@Model.CanVote)
-        {
-            <div class="photo-contest-canvote">
-                >> Can Vote
-            </div>
-        }
 
         @if (Model.CanParticipate)
         {         

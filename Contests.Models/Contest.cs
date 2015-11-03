@@ -35,6 +35,8 @@
 
         public DateTime CreatedOn { get; set; }
 
+        public DateTime? FinishedOn { get; set; }
+
         public string WallpaperPath { get; set; }
 
         public string WallpaperUrl { get; set; }

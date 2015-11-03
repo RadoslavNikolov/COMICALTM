@@ -178,7 +178,6 @@ namespace Contests.App.Controllers
                     else
                     {
                         user.ProfilePhotoUrl = AppKeys.ProfilePicUrl;
-                        user.ThumbnailUrl = AppKeys.ProfilePicThumbUrl;
                     }
 
                     var result = await UserManager.CreateAsync(user, model.Password);

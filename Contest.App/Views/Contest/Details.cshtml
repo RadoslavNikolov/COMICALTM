@@ -7,8 +7,6 @@
 
 <h2>Contest details</h2>
 
-
-
 <div class="container col-xs-5">
    @Html.DisplayForModel()
 </div>
@@ -18,16 +16,48 @@
 
     @if (Model.First().CanParticipate)
     {
-        @Html.ActionLink("Upload photo", "Upload", "Contest", routeValues: new { contestId = Model.First().Id, area = "" }, htmlAttributes: new { @class="btn btn-default", title = "Upload photo" })
+        @Html.ActionLink("Upload photo", "Upload", "Contest", routeValues: new {contestId = Model.First().Id, area = ""}, htmlAttributes: new {@class = "btn btn-default", title = "Upload photo"})
     }
 
-    @if (Model.First().CanVote)
+    @if (Model.First().HasVoted)
     {
-        <h2>Can vote</h2>
+        <h4>You have allready voted for this contest</h4>
     }
 
-    @Html.DisplayFor(x => x.First().Photos)
+
+    @foreach (var photo in @Model.First().Photos)
+    {
+        <div class="col-md-4">
+            <div class="col-md-3 photo-contests-photo-wrapper">
+                <div class="photo-contest-photo">
+                    <img src="@photo.Url" class="gallery-item" width="300"/>
+                </div>
+                <div class="photo-contest-photographer">
+                    @Html.ActionLink(photo.Owner.FullName, "Details", "Users", routeValues: new {id = photo.OwnerId, area = ""}, htmlAttributes: new {title = "Photographer profile"})
+                    <div class="photo-contest-category">@*@photo.Contest.Category.Name*@ Category</div>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <h3>Votes: <span id="photo-@photo.Id-votes">@photo.VotesCount</span></h3>
+                @if (@Model.First().CanVote)
+                {
+                    using (Ajax.BeginForm("Vote", "Contest", new {photoId = photo.Id, contestId = @Model.First().Id}, new AjaxOptions()
+                    {
+                        HttpMethod = "POST",
+                        InsertionMode = InsertionMode.Replace,
+                        UpdateTargetId = string.Format("photo-{0}-votes", photo.Id)
+                    }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="submit" name="name" value="+" class="btn btn-success"/>
+                    }
+                }
+            </div>
+        </div>
+    }
 
 
+    @*@Html.DisplayFor(x => x.First().Photos)*@
 </div>
+
 

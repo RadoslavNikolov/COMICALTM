@@ -6,12 +6,12 @@
         @Html.AntiForgeryToken()
 
         <ul class="nav navbar-nav navbar-right">
-            <li>
+            @*<li>
                 @Html.ActionLink("Upload Photo", "Upload", "Files", routeValues: new { area = "" }, htmlAttributes: new { title = "Upload Photo" })
             </li>
             <li>
                 @Html.ActionLink("List Photo", "List", "Files", routeValues: new { area = "" }, htmlAttributes: new { title = "List Photos" })
-            </li>
+            </li>*@
             
             @if (this.User.IsInRole("Admin"))
             {

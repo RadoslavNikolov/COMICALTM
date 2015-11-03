@@ -37,6 +37,8 @@
 
         public bool CanVote { get; set; }
 
+        public bool HasVoted { get; set; }
+
         public IEnumerable<PhotoViewModel> Photos { get; set; }
 
         public void CreateMappings(IConfiguration configuration)
@@ -45,11 +47,17 @@
                 .ForMember(n => n.OrganizatorName, opt => opt.MapFrom(n => n.Organizator.FullName))
                 .ForMember(n => n.OrganozatorId, opt => opt.MapFrom(n => n.OrganizatorId))
                 .ForMember(n => n.Category, opt => opt.MapFrom(n => n.Category.Name))
-                .ForMember(n => n.CanParticipate, opt => opt.MapFrom(src => (src.ParticipationType == ParticipationType.Open && HttpContext.Current.User.Identity.IsAuthenticated) || 
+                .ForMember(n => n.CanParticipate, opt => opt.MapFrom(src => (src.ParticipationType == ParticipationType.Open && 
+                    HttpContext.Current.User.Identity.IsAuthenticated &&
+                    src.Organizator.UserName != HttpContext.Current.User.Identity.Name) || 
                     (src.ParticipationType == ParticipationType.Close && src.Participants.Any(p => p.UserName == HttpContext.Current.User.Identity.Name))))
-                .ForMember(n => n.CanVote, opt => opt.MapFrom(src => (src.VotingType == VotingType.Open && HttpContext.Current.User.Identity.IsAuthenticated) || 
-                    (src.VotingType == VotingType.Close && src.Voters.Any(p => p.UserName == HttpContext.Current.User.Identity.Name))))
+                .ForMember(n => n.CanVote, opt => opt.MapFrom(src => (src.VotingType == VotingType.Open && 
+                    HttpContext.Current.User.Identity.IsAuthenticated && 
+                    src.Organizator.UserName != HttpContext.Current.User.Identity.Name) || 
+                    (src.VotingType == VotingType.Close 
+                    && src.Voters.Any(p => p.UserName == HttpContext.Current.User.Identity.Name))))
                 .ForMember(n => n.Photos, opt => opt.MapFrom(n => n.Photos))
+                .ForMember(n => n.HasVoted, opt => opt.MapFrom(src => src.Votes.Any(v => v.User.UserName == HttpContext.Current.User.Identity.Name)))
                 .ReverseMap();
         }
     }

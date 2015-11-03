@@ -24,6 +24,8 @@
 
         public virtual IDbSet<Contest> Contests { get; set; }
 
+        public virtual IDbSet<Vote> Votes { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();

@@ -283,6 +283,7 @@
     <Compile Include="Models\BindingModels\ContestBindingModel.cs" />
     <Compile Include="Models\BindingModels\PhotoBindingModel.cs" />
     <Compile Include="Models\BindingModels\UserEditBindingModel.cs" />
+    <Compile Include="Models\BindingModels\VoteBindingModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ViewModels\CategoryViewModel.cs" />
     <Compile Include="Models\ViewModels\ContestViewModel.cs" />
@@ -295,6 +296,7 @@
     <Compile Include="Toastr\ToastMessage.cs" />
     <Compile Include="Toastr\Toastr.cs" />
     <Compile Include="Toastr\ToastType.cs" />
+    <Compile Include="Validators\CustomValidators.cs" />
     <Compile Include="Validators\ValidateImageAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -450,6 +452,8 @@
     <Content Include="Areas\Admin\Views\Users\EditDetails.cshtml" />
     <Content Include="Areas\Admin\Views\Users\ChangeRole.cshtml" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
+    <Content Include="Resources\Default-Profile-picture.png" />
+    <Content Include="Resources\Default-wallpaper.jpg" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\bootstrap.js" />

@@ -45,6 +45,11 @@
             get { return this.GetRepository<Contest>(); }
         }
 
+        public IRepository<Vote> Votes
+        {
+            get { return this.GetRepository<Vote>(); }
+        }
+
         public IUserStore<User> UserStore
         {
             get

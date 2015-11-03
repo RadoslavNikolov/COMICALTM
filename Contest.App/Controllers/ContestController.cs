@@ -16,6 +16,7 @@
     using Models.BindingModels;
     using Models.ViewModels;
     using Toastr;
+    using Validators;
 
     [Authorize]
     public class ContestController : BaseController
@@ -70,7 +71,7 @@
 
         [HttpGet]
         [AllowAnonymous]
-        public ActionResult Details(int id)
+        public ActionResult Details(int? id)
         {
             var contest = this.ContestsData.Contests.All()
                 .Where(c => c.Id == id)
@@ -111,21 +112,19 @@
         [ValidateAntiForgeryToken]
         public ActionResult Upload(PhotoBindingModel model, int contestId)
         {
-            var test = contestId;
-
-            if (ModelState.IsValid)
+            if (this.ModelState != null && this.ModelState.IsValid)
             {
                 if (model.Upload != null)
                 {
-                    var paths = Helpers.UploadImages.UploadImage(model.Upload, false);
-                    var contest = this.ContestsData.Contests.Find(contestId);
+                    var contest = CustomValidators.IsContestValid(this.ContestsData, this.UserProfile, contestId);
 
                     if (contest == null)
                     {
-                        this.AddToastMessage("Error", "Non existing contest!", ToastType.Error);
+                        this.AddToastMessage("Error", "Something went wrong while uploading!", ToastType.Error);
                         return this.RedirectToAction("Index", "Contest");
                     }
 
+                    var paths = Helpers.UploadImages.UploadImage(model.Upload, false);                 
                     var newPhoto = new Photo
                     {
                         CreatedOn = DateTime.Now,
@@ -146,7 +145,7 @@
                 return this.RedirectToAction("Details", routeValues: new {id = contestId});
             }
 
-            this.AddToastMessage("Error", "Error while uploading", ToastType.Error);
+            this.AddToastMessage("Error", "Something went wrong while uploading!", ToastType.Error);
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Invalid model");
         }
         
@@ -197,7 +196,6 @@
                 else
                 {
                     contest.WallpaperUrl = AppKeys.WallpaperUrl;
-                    contest.WallpaperThumbUrl = AppKeys.WallpaperThumbUrl;
                 }
 
                 this.ContestsData.Contests.Add(contest);
@@ -209,28 +207,35 @@
             return this.View();
         }
 
-        private ICollection<IUser> GetParticipants(ICollection<string> participantsUsernames)
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Vote(VoteBindingModel model)
         {
-            ICollection<IUser> participants = new List<IUser>();
-
-            if (participantsUsernames == null)
+            if (model != null && this.ModelState.IsValid)
             {
-                return participants;
-            }
-
-            foreach (var username in participantsUsernames)
-            {
-                var user = this.ContestsData.Users.All().FirstOrDefault(u => u.UserName == username);
-                if (user == null)
+                var userId = this.User.Identity.GetUserId();
+                if (!this.ContestsData.Votes.All().Any(v => v.ContestId == model.ContestId && v.UserId == userId))
                 {
-                    throw new ArgumentException();
-                }
+                    var vote = new Vote
+                    {
+                        PhotoId = model.PhotoId,
+                        UserId = userId,
+                        ContestId = model.ContestId                      
+                    };
+                    this.ContestsData.Votes.Add(vote);
+                    this.ContestsData.SaveChanges();
 
-                participants.Add(user);
+                    var newVotes = this.ContestsData.Votes.All()
+                        .Count(v => v.PhotoId == model.PhotoId);
+                    return this.Json(newVotes);
+                }
             }
 
-            return participants;
+            var votes = this.ContestsData.Votes.All().Count(v => v.PhotoId== model.PhotoId);
+            return this.Json(votes);
         }
+
         
         public ActionResult GetAllCategories(int? catId)
         {

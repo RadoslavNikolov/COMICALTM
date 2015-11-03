@@ -11,7 +11,9 @@
 
         IRepository<Category> Categories { get; } 
 
-        IRepository<Contest> Contests { get; } 
+        IRepository<Contest> Contests { get; }
+
+        IRepository<Vote> Votes { get; } 
 
         void SaveChanges();
     }

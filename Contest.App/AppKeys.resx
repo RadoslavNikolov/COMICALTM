@@ -129,16 +129,10 @@
   <data name="DropboxFolder" xml:space="preserve">
     <value>PhotoContests</value>
   </data>
-  <data name="ProfilePicThumbUrl" xml:space="preserve">
-    <value>https://dl.dropboxusercontent.com/1/view/vbycqsngzkqhdb5/PhotoContests/Resources/Thumbnails/Default-Profile-picture.png</value>
-  </data>
   <data name="ProfilePicUrl" xml:space="preserve">
-    <value>https://dl.dropboxusercontent.com/1/view/l34bf0yo0w7qhwk/PhotoContests/Resources/Default-Profile-picture.png</value>
-  </data>
-  <data name="WallpaperThumbUrl" xml:space="preserve">
-    <value>https://dl.dropboxusercontent.com/1/view/0u2uq5r258ax8cs/PhotoContests/Resources/Thumbnails/Default-wallpaper.jpg</value>
+    <value>/Resources/Default-Profile-picture.png</value>
   </data>
   <data name="WallpaperUrl" xml:space="preserve">
-    <value>https://dl.dropboxusercontent.com/1/view/e3doy4paqng4sx6/PhotoContests/Resources/Default-wallpaper.jpg</value>
+    <value>/Resources/Default-wallpaper.jpg</value>
   </data>
 </root>
