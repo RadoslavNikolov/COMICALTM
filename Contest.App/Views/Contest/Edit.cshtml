@@ -1,12 +1,13 @@
-﻿@model Contests.App.Models.BindingModels.ContestBindingModel
+﻿@using Contests.Models.Enums
+@model Contests.App.Models.BindingModels.ContestBindingModel
 
 @{
-    ViewBag.Title = "Create contest";
+    ViewBag.Title = "Edit contest";
 }
 
 <h2>@ViewBag.Title</h2>
 
-@using (Html.BeginForm("Create", "Contest", new { area = "" }, FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Edit", "Contest", new {area = ""}, FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     <hr />
@@ -40,21 +41,46 @@
     <div class="form-group" id="voting-type">
         @Html.LabelFor(m => m.VotingType, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            <label> @Html.RadioButtonFor(m => m.VotingType, "Open", new { id = "voting-open", @checked = "checked", @class = "open-button" }) Open </label>
-            <label> @Html.RadioButtonFor(m => m.VotingType, "Close", new { id = "voting-close", @class = "close-button" }) Closed </label>
-            <div id="voters" class="hidden-element slide-toggle">
-                <select id='voters-select' multiple='multiple' name="voters[]"></select>
-            </div>
+           
+            @if (@Model.VotingType == VotingType.Open)
+            {
+                <label> @Html.RadioButtonFor(m => m.VotingType, "Open", new { id = "voting-open", @checked = "checked", @class = "open-button" }) Open </label>
+                <label> @Html.RadioButtonFor(m => m.VotingType, "Close", new { id = "voting-close", @class = "close-button" }) Closed </label>
+                <div id="voters" class="hidden-element slide-toggle">
+                    <select id='voters-select' multiple='multiple' name="voters[]"></select>
+                </div>
+            }
+            else
+            {
+                <label> @Html.RadioButtonFor(m => m.VotingType, "Open", new { id = "voting-open", @class = "open-button" }) Open </label>
+                <label> @Html.RadioButtonFor(m => m.VotingType, "Close", new { id = "voting-close", @checked = "checked", @class = "close-button" }) Closed </label>
+                <div id="voters" class="slide-toggle">
+                    <select id='voters-select' multiple='multiple' name="voters[]"></select>
+                </div>
+            }
+            
         </div>
     </div>
     <div class="form-group" id="participation-type">
-        @Html.LabelFor(m => m.ParticipationType, new {@class = "col-md-2 control-label"})
+        @Html.LabelFor(m => m.ParticipationType, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            <label> @Html.RadioButtonFor(m => m.ParticipationType, "Open", new {id = "voting-open", @checked = "checked", @class = "open-button"}) Open </label>
-            <label> @Html.RadioButtonFor(m => m.ParticipationType, "Close", new {id = "voting-close", @class = "close-button"}) Closed </label>
-            <div id="participators" class="hidden-element slide-toggle">
-                <select id='participants-select' multiple='multiple' name="participants[]"></select>
-            </div>
+
+            @if (@Model.ParticipationType == ParticipationType.Open)
+            {
+                <label> @Html.RadioButtonFor(m => m.ParticipationType, "Open", new { id = "voting-open", @checked = "checked", @class = "open-button" }) Open </label>
+                <label> @Html.RadioButtonFor(m => m.ParticipationType, "Close", new {id = "voting-close", @class = "close-button"}) Closed </label>
+                <div id="participators" class="hidden-element slide-toggle">
+                    <select id='participants-select' multiple='multiple' name="participants[]"></select>
+                </div>
+            }
+            else
+            {
+                <label> @Html.RadioButtonFor(m => m.ParticipationType, "Open", new { id = "voting-open", @class = "open-button" }) Open </label>
+                <label> @Html.RadioButtonFor(m => m.ParticipationType, "Close", new {id = "voting-close", @checked = "checked", @class = "close-button"}) Closed </label>               
+                <div id="participators" class="slide-toggle">
+                    <select id='participants-select' multiple='multiple' name="participants[]"></select>
+                </div>
+            }     
         </div>
     </div>
     <div class="form-group" id="deadline-type">
@@ -73,6 +99,14 @@
             </span>
         </div>
     </div>
+    if (@Model.WallpaperUrl != null)
+    {
+        <div class="media-top">
+            <a href="#">
+                <img src="@Model.WallpaperUrl" id="imgprw" class="media-object cover" width="250" alt="wallpaper image">
+            </a>
+        </div>
+    }
     <div class="form-group">
         @Html.Label("Wallpaper", new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -81,16 +115,13 @@
     </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Create" />
+            <input type="submit" class="btn btn-default" value="Edit" />
         </div>
     </div>
 }
-
 @Styles.Render("~/Content/multiselect")
-
 @section scripts{
     @Scripts.Render("~/bundles/multiselect")
-
     <script type="text/javascript">
 
         $(document).ready(function () {
@@ -103,7 +134,7 @@
                 var parent = $(this).parent().parent();
                 parent.find('.slide-toggle').hide();
             });
-            
+
             function fillUsers() {
                 $.ajax({
                     type: "GET",
@@ -122,4 +153,3 @@
         });
     </script>
 }
-

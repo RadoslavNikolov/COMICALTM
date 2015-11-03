@@ -8,7 +8,12 @@
 <h2>Contest details</h2>
 
 <div class="container col-xs-5">
-   @Html.DisplayForModel()
+    @Html.DisplayForModel()
+
+    @if (@Model.First().OrganozatorId == HttpContext.Current.User.Identity.GetUserId())
+    {
+        @Html.ActionLink("Edit Contest", "Edit", "Contest", routeValues: new { contestId = @Model.First().Id, area = ""}, htmlAttributes: null)
+    }
 </div>
 
 
