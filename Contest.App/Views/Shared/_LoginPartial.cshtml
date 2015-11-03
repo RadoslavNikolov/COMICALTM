@@ -25,7 +25,8 @@
                 </a>
                 <ul class="dropdown-menu" id="categories-menu">
                     <li>@Html.ActionLink("Create contest", "Create", "Contest", routeValues: new { area = "" }, htmlAttributes: new { title = "Create contest" })</li>
-                    <li>@Html.ActionLink("My contests", "My", "Contest", routeValues: new { area = "" }, htmlAttributes: new { title = "List my contests" })</li>
+                    <li>@Html.ActionLink("My contests", "Details", "Users", routeValues: new { area = "", id = User.Identity.GetUserId() }, htmlAttributes: new { title = "User info" })</li>
+
                 </ul>
             </li>
             <li role="presentation" class="dropdown">

@@ -1,9 +1,9 @@
 ﻿@model Contests.App.Models.ViewModels.UserInfoViewModel
 @{
-    ViewBag.Title = "User page";
+    ViewBag.Title = "My profile";
 }
 
-<h2>User Profile</h2>
+<h2>@ViewBag.Title</h2>
 
 <div class="container col-xs-4">
     @if (Request.IsAuthenticated)

@@ -31,24 +31,6 @@
             return this.View();
         }
 
-        public ActionResult My()
-        {
-            var currentUserId = this.UserProfile.Id;
-            var contests = this.ContestsData.Contests.All()
-               .Where(c => c.OrganizatorId == currentUserId && c.IsActive)
-               .OrderByDescending(c => c.CreatedOn)
-               .Project()
-               .To<ContestViewModel>();
-
-            if (!contests.Any())
-            {
-                this.AddToastMessage("Info", "No active contests created by you", ToastType.Info);
-                return this.RedirectToAction("Index", "Home", new { area = "" });
-            }
-
-            return View(contests);
-        }
-
         [HttpGet]
         [AllowAnonymous]
         public ActionResult All(bool latest)
@@ -81,7 +63,7 @@
             if (contest == null)
             {
                 this.AddToastMessage("Info", "No such contest found", ToastType.Info);
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Home", routeValues: new { area = "" });
             }
 
             return this.View(contest);
@@ -97,7 +79,7 @@
             if (contest == null)
             {
                 this.AddToastMessage("Error", "Non existing contest!", ToastType.Error);
-                return this.RedirectToAction("Index", "Contest");
+                return this.RedirectToAction("Index", "Home", routeValues: new {area = ""});
             }
 
             var model = PhotoBindingModel.CreateFrom(contest);
@@ -121,7 +103,7 @@
                     if (contest == null)
                     {
                         this.AddToastMessage("Error", "Something went wrong while uploading!", ToastType.Error);
-                        return this.RedirectToAction("Index", "Contest");
+                        return this.RedirectToAction("Index", "Home", routeValues: new { area = "" });
                     }
 
                     var paths = Helpers.UploadImages.UploadImage(model.Upload, false);                 
@@ -142,7 +124,7 @@
                     this.AddToastMessage("Success", "Photo uploaded.", ToastType.Success);
                 }
 
-                return this.RedirectToAction("Details", routeValues: new {id = contestId});
+                return this.RedirectToAction("Details", "Contest", routeValues: new {id = contestId});
             }
 
             this.AddToastMessage("Error", "Something went wrong while uploading!", ToastType.Error);
@@ -201,7 +183,7 @@
                 this.ContestsData.Contests.Add(contest);
                 this.ContestsData.SaveChanges();
                 this.AddToastMessage("Success", "Contest created.", ToastType.Success);
-                return this.RedirectToAction("My");
+                return this.RedirectToAction("Details", "Users", routeValues: new { id = this.UserProfile.Id, area = "" });
             }
 
             return this.View();
@@ -215,7 +197,7 @@
             if (contest == null)
             {
                 this.AddToastMessage("Error", "Non existing contest!", ToastType.Error);
-                return this.RedirectToAction("My", "Contest");
+                return this.RedirectToAction("Details", "Users", routeValues: new { id = this.UserProfile.Id, area = "" });
             }
 
             var model = ContestBindingModel.CreateFromContest(contest);
@@ -264,7 +246,7 @@
                 //this.ContestsData.Contests.Add(contest);
                 this.ContestsData.SaveChanges();
                 this.AddToastMessage("Success", "Contest edited.", ToastType.Success);
-                return this.RedirectToAction("My");
+                return this.RedirectToAction("Details", "Users", routeValues: new {id = this.UserProfile.Id, area = ""});
             }
 
             return this.View(model);
@@ -278,6 +260,7 @@
             if (model != null && this.ModelState.IsValid)
             {
                 var userId = this.User.Identity.GetUserId();
+
                 if (!this.ContestsData.Votes.All().Any(v => v.ContestId == model.ContestId && v.UserId == userId))
                 {
                     var vote = new Vote

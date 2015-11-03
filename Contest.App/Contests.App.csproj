@@ -538,7 +538,6 @@
     <Content Include="Views\Contest\Index.cshtml" />
     <Content Include="Views\Shared\_Toastr.cshtml" />
     <Content Include="Views\Shared\Partial\_CategoriesSelect.cshtml" />
-    <Content Include="Views\Contest\My.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\ContestViewModel.cshtml" />
     <Content Include="Views\Shared\Partial\_Contests.cshtml" />
     <Content Include="Views\Contest\All.cshtml" />
