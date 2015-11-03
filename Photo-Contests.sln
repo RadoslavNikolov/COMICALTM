@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{6E0B2A92-A4A1-4A54-8498-CB2B3BDEEF49}"
 EndProject
@@ -12,6 +12,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contests.Data", "Contests.Data\Contests.Data.csproj", "{17B99C52-EE19-4B2A-AD27-0E5773A0007B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contests.Models", "Contests.Models\Contests.Models.csproj", "{96E38987-D70B-41FA-B144-40C2BEEAEDB8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{EE636661-4B9A-4457-B2DB-87F4F7226FAF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contests.Tests", "Contests.Tests\Contests.Tests.csproj", "{1F6D252D-03B3-4E4C-9959-571851B60831}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +35,10 @@ Global
 		{96E38987-D70B-41FA-B144-40C2BEEAEDB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{96E38987-D70B-41FA-B144-40C2BEEAEDB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{96E38987-D70B-41FA-B144-40C2BEEAEDB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F6D252D-03B3-4E4C-9959-571851B60831}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F6D252D-03B3-4E4C-9959-571851B60831}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F6D252D-03B3-4E4C-9959-571851B60831}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F6D252D-03B3-4E4C-9959-571851B60831}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -39,5 +47,6 @@ Global
 		{79277D4B-C0E3-4D43-B22B-F4367A64BDF1} = {AEBCBCFB-CEEE-40E9-AB6C-3190DA142D7C}
 		{17B99C52-EE19-4B2A-AD27-0E5773A0007B} = {6E0B2A92-A4A1-4A54-8498-CB2B3BDEEF49}
 		{96E38987-D70B-41FA-B144-40C2BEEAEDB8} = {6E0B2A92-A4A1-4A54-8498-CB2B3BDEEF49}
+		{1F6D252D-03B3-4E4C-9959-571851B60831} = {EE636661-4B9A-4457-B2DB-87F4F7226FAF}
 	EndGlobalSection
 EndGlobal
