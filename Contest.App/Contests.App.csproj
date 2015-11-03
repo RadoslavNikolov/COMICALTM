@@ -253,6 +253,7 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\BaseAdminController.cs" />
     <Compile Include="Areas\Admin\Controllers\CategoriesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ContestsController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
     <Compile Include="Areas\Admin\Models\BindingModels\CategoryBindingModel.cs" />
@@ -265,6 +266,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\ContestController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\FilesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -453,6 +455,7 @@
     <Content Include="Areas\Admin\Views\Users\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Users\EditDetails.cshtml" />
     <Content Include="Areas\Admin\Views\Users\ChangeRole.cshtml" />
+    <Content Include="Areas\Admin\Views\Contests\Index.cshtml" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Resources\Default-Profile-picture.png" />
     <Content Include="Resources\Default-wallpaper.jpg" />
@@ -498,7 +501,7 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
+    <None Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
@@ -553,6 +556,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Temp\" />
     <Folder Include="Views\Base\" />
+    <Folder Include="Views\Errpr\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
