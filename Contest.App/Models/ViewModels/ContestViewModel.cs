@@ -52,9 +52,9 @@
                     src.Organizator.UserName != HttpContext.Current.User.Identity.Name) || 
                     (src.ParticipationType == ParticipationType.Close && src.Participants.Any(p => p.UserName == HttpContext.Current.User.Identity.Name))))
                 .ForMember(n => n.CanVote, opt => opt.MapFrom(src => (src.VotingType == VotingType.Open && 
-                    HttpContext.Current.User.Identity.IsAuthenticated && 
-                    src.Organizator.UserName != HttpContext.Current.User.Identity.Name) || 
-                    (src.VotingType == VotingType.Close 
+                    HttpContext.Current.User.Identity.IsAuthenticated)  || 
+                    (src.VotingType == VotingType.Close &&
+                    HttpContext.Current.User.Identity.IsAuthenticated 
                     && src.Voters.Any(p => p.UserName == HttpContext.Current.User.Identity.Name))))
                 .ForMember(n => n.Photos, opt => opt.MapFrom(n => n.Photos))
                 .ForMember(n => n.HasVoted, opt => opt.MapFrom(src => src.Votes.Any(v => v.User.UserName == HttpContext.Current.User.Identity.Name)))

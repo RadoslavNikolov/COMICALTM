@@ -60,6 +60,13 @@
                     uf.ToTable("ContestsWinners");
                 });
 
+            //modelBuilder.Entity<Vote>()
+            //    .HasRequired(v => v.Photo)
+            //    .WithMany()
+            //    .WillCascadeOnDelete(true);
+                
+                
+
             base.OnModelCreating(modelBuilder);
         }
     }

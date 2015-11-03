@@ -10,9 +10,12 @@
 
     public class BaseController : Controller
     {
+
+
         public BaseController(IContestsData data)
             : this(data, new AspNetUserIdProvider())
         {
+            this.ContestsData = data;
         }
 
         public BaseController(IContestsData data, IUserIdProvider userIdProvider)
@@ -38,6 +41,11 @@
             }
 
             return base.BeginExecute(requestContext, callback, state);
+        }
+
+        protected bool IsAdmin()
+        {
+            return this.User.IsInRole("Admin");
         }
     }
 }

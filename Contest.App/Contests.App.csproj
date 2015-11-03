@@ -267,9 +267,9 @@
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\ContestController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
-    <Compile Include="Controllers\FilesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PhotoController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
@@ -501,6 +501,7 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Photo\Upload.cshtml" />
     <None Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
@@ -532,15 +533,12 @@
     <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Shared\Partial\UserInfo.cshtml" />
     <Content Include="Views\Shared\_Messages.cshtml" />
-    <Content Include="Views\Files\Upload.cshtml" />
-    <Content Include="Views\Files\List.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\PhotoViewModel.cshtml" />
     <Content Include="Views\Categories\Index.cshtml" />
     <Content Include="Views\Shared\Partial\MultipleSelectPartial.cshtml" />
     <Content Include="Views\Shared\Partial\_Categories.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\CategoryViewModel.cshtml" />
     <Content Include="Views\Contest\Create.cshtml" />
-    <Content Include="Views\Contest\Index.cshtml" />
     <Content Include="Views\Shared\_Toastr.cshtml" />
     <Content Include="Views\Shared\Partial\_CategoriesSelect.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\ContestViewModel.cshtml" />
@@ -548,7 +546,6 @@
     <Content Include="Views\Contest\All.cshtml" />
     <Content Include="Views\Contest\Details.cshtml" />
     <Content Include="Seed\users.json" />
-    <Content Include="Views\Contest\Upload.cshtml" />
     <Content Include="Views\Shared\Partial\_UploadPhoto.cshtml" />
     <Content Include="Views\Contest\Edit.cshtml" />
   </ItemGroup>

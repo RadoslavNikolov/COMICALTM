@@ -27,11 +27,12 @@
         {
         }
 
-        public ActionResult Index()
-        {
-            return this.View();
-        }
 
+        // <summary>
+        /// This action take all or latest(5) active contests
+        /// </summary>
+        /// <param name="latest">This argument show if we want all or latest active contests</param>
+        /// <returns>Return default vew for this action</returns>
         [HttpGet]
         [AllowAnonymous]
         public ActionResult All(bool latest)
@@ -70,68 +71,6 @@
             return this.View(contest);
 
         }
-
-        [HttpGet]
-        [Authorize]
-        public ActionResult Upload(int contestId)
-        {
-            var contest = this.ContestsData.Contests.Find(contestId);
-
-            if (contest == null)
-            {
-                this.AddToastMessage("Error", "Non existing contest!", ToastType.Error);
-                return this.RedirectToAction("Index", "Home", routeValues: new {area = ""});
-            }
-
-            var model = PhotoBindingModel.CreateFrom(contest);
-
-            return View(model);
-
-        }
-
-
-        [HttpPost]
-        [Authorize]
-        [ValidateAntiForgeryToken]
-        public ActionResult Upload(PhotoBindingModel model, int contestId)
-        {
-            if (this.ModelState != null && this.ModelState.IsValid)
-            {
-                if (model.Upload != null)
-                {
-                    var contest = CustomValidators.IsContestValid(this.ContestsData, this.UserProfile, contestId);
-
-                    if (contest == null)
-                    {
-                        this.AddToastMessage("Error", "Something went wrong while uploading!", ToastType.Error);
-                        return this.RedirectToAction("Index", "Home", routeValues: new { area = "" });
-                    }
-
-                    var paths = Helpers.UploadImages.UploadImage(model.Upload, false);                 
-                    var newPhoto = new Photo
-                    {
-                        CreatedOn = DateTime.Now,
-                        Owner = this.UserProfile,
-                        Path = paths[0],
-                        ThumbPath = paths[1],
-                        Url = Dropbox.Download(paths[0]),
-                        ThumbnailUrl = Dropbox.Download(paths[1], "Thumbnails"),
-                        ContestId = contestId
-                    };
-
-                    contest.Photos.Add(newPhoto);
-                    this.ContestsData.SaveChanges();
-                    //this.TempData["Success"] = new[] { "Upload successfull" };
-                    this.AddToastMessage("Success", "Photo uploaded.", ToastType.Success);
-                }
-
-                return this.RedirectToAction("Details", "Contest", routeValues: new {id = contestId});
-            }
-
-            this.AddToastMessage("Error", "Something went wrong while uploading!", ToastType.Error);
-            return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Invalid model");
-        }
-        
 
         [HttpGet]
         public ActionResult Create()
@@ -253,7 +192,11 @@
             return this.View(model);
         }
 
-
+        /// <summary>
+        /// This action adds vote to concrete Photo 
+        /// </summary>
+        /// <param name="model">Take arguments need to make successfull vote for concrete Photo </param>
+        /// <returns>Return Json result with actual count of votes for this Photo</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Vote(VoteBindingModel model)
@@ -262,7 +205,7 @@
             {
                 var userId = this.User.Identity.GetUserId();
 
-                if (!this.ContestsData.Votes.All().Any(v => v.ContestId == model.ContestId && v.UserId == userId))
+                if (!this.ContestsData.Votes.All().Any(v => v.ContestId == model.ContestId && v.UserId == userId && (v.Photo.OwnerId != userId)))
                 {
                     var vote = new Vote
                     {
@@ -317,6 +260,51 @@
             }
 
             return users;
+        }
+
+        public ActionResult Finalize(int contestid)
+        {
+            var contest = this.IsContestClosable(contestid);
+
+            if (contest == null)
+            {
+                this.AddToastMessage("Error", "Error with closing this contest!", ToastType.Error);
+                return this.RedirectToAction("Details", "Users", routeValues: new { id = this.UserProfile.Id, area = "" });
+            }
+
+            //TODO  Implement the rest of finalization method
+
+
+            this.AddToastMessage("Success", "You finalized this contest successfully!", ToastType.Success);
+            return this.RedirectToAction("Details", "Users", routeValues: new { id = this.UserProfile.Id, area = "" });
+
+        }
+
+        public ActionResult Dismiss(int contestid)
+        {
+            var contest = this.IsContestClosable(contestid);
+
+            if (contest == null)
+            {
+                this.AddToastMessage("Error", "Error with closing this contest!", ToastType.Error);
+                return this.RedirectToAction("Details", "Users", routeValues: new { id = this.UserProfile.Id, area = "" });
+            }
+
+            //contest.IsActive = false;
+            //this.ContestsData.SaveChanges();
+
+            this.AddToastMessage("Success", "You dismissed this contest successfully!", ToastType.Success);
+            return this.RedirectToAction("Details", "Users", routeValues: new { id = this.UserProfile.Id, area = "" });
+        }
+
+        private Contest IsContestClosable(int contestId)
+        {
+            var userId = this.UserProfile.Id;
+            var isAdmin = this.IsAdmin();
+            var contest = this.ContestsData.Contests.All()
+                .FirstOrDefault(c => c.Id == contestId && c.IsActive && (c.OrganizatorId == userId || isAdmin));
+
+            return contest;
         }
     }
 }

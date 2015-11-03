@@ -3,7 +3,7 @@
 
 <div class="result"></div>
 
-@using (Html.BeginForm("Upload", "Contest", new { UserId = User.Identity.GetUserId() , ContestId = Model.ContetsId }, FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Upload", "Photo", new { UserId = User.Identity.GetUserId() , ContestId = Model.ContetsId }, FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     <div class="form-horizontal">
