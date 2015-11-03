@@ -227,13 +227,14 @@
         }
 
         
-        public ActionResult GetAllCategories(int? catId)
+        public ActionResult GetAllCategories(int? catId, int? selectedId)
         {
             var categories = this.ContestsData.Categories.All()
                 .Where(c => c.IsActive && c.Id != catId)
                 .OrderBy(c => c.Name)
                 .Select(c => new SelectListItem
                 {
+                    Selected = (c.Id == selectedId),
                     Text = c.Name,
                     Value = c.Id.ToString()
                 });

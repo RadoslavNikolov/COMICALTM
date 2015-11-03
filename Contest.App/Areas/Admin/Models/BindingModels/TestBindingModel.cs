@@ -4,6 +4,6 @@
 
     public class TestBindingModel
     {
-        public ICollection<int> Elements { get; set; }
+        public IEnumerable<int> Elements { get; set; }
     }
 }

@@ -1,17 +1,17 @@
 ﻿@using MvcPaging
-@model IPagedList<Contests.App.Areas.Admin.Models.ViewModels.UserViewModel>
+@model IPagedList<Contests.App.Areas.Admin.Models.ViewModels.ContestPreviewViewModel>
     @{
         ViewBag.Title = "User page";
     }
     <h1>Users</h1>
 
-    @using (Html.BeginForm("Index", "Users", FormMethod.Get))
+    @using (Html.BeginForm("Index", "Contests", FormMethod.Get))
     {
         <div class="row">
             <div class="col-md-4">
                 <div id="custom-search-input">
                     <div class="input-group col-md-12">
-                        <input type="text" class="form-control" name="user_fullname" placeholder="Name" value="@TempData["user_fullname"]" />
+                        <input type="text" class="form-control" name="contest_title" placeholder="Name" value="@TempData["contest_title"]" />
                         <span class="input-group-btn">
                             <a class="btn btn-default search-clear" href="@Url.Action("Index")" title="Clear">
                                 Clear
@@ -30,19 +30,28 @@
                 <tr>
                     <th>N</th>
                     <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().FullName)
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Title)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().UserName)
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Category)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().Email)
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Organizator)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().Role)
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Status)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().PhoneNumber)
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().VotingType)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().ParticipationType)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().RewardType)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().DeadlineType)
                     </th>
                     <th></th>
                 </tr>
@@ -58,23 +67,31 @@
                             @n
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.FullName)
+                            @Html.DisplayFor(modelItem => item.Title)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.UserName)
+                            @Html.DisplayFor(modelItem => item.Category)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Email)
+                            @Html.DisplayFor(modelItem => item.Organizator)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Role)
+                            @Html.DisplayFor(modelItem => item.Status)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.PhoneNumber)
+                            @Html.DisplayFor(modelItem => item.VotingType)
                         </td>
                         <td>
-                            @Html.ActionLink("Edit details", "EditDetails", new { id = item.Id }) |
-                            @Html.ActionLink("Change Role", "ChangeRole", new { id = item.Id })
+                            @Html.DisplayFor(modelItem => item.ParticipationType)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RewardType)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DeadlineType)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Id })
                         </td>
                     </tr>
                 }
@@ -96,6 +113,6 @@
                 IsShowControls = true,
                 IsShowFirstLast = true,
                 IsShowPages = true
-            }, new { user_fullname = TempData["user_fullname"] }))
+            }, new { contest_title = TempData["contest_title"] }))
         </div>
     }

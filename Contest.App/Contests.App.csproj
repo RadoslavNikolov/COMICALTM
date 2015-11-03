@@ -258,8 +258,11 @@
     <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
     <Compile Include="Areas\Admin\Models\BindingModels\CategoryBindingModel.cs" />
     <Compile Include="Areas\Admin\Models\BindingModels\ChangeRoleBindingModel.cs" />
+    <Compile Include="Areas\Admin\Models\BindingModels\ContestBindingModel.cs" />
     <Compile Include="Areas\Admin\Models\BindingModels\TestBindingModel.cs" />
     <Compile Include="Areas\Admin\Models\BindingModels\UserEditBindingModel.cs" />
+    <Compile Include="Areas\Admin\Models\ViewModels\ContestViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\ViewModels\ContestPreviewViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ViewModels\UserViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ViewModels\CategoryViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -456,6 +459,7 @@
     <Content Include="Areas\Admin\Views\Users\EditDetails.cshtml" />
     <Content Include="Areas\Admin\Views\Users\ChangeRole.cshtml" />
     <Content Include="Areas\Admin\Views\Contests\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Contests\Edit.cshtml" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Resources\Default-Profile-picture.png" />
     <Content Include="Resources\Default-wallpaper.jpg" />
@@ -553,7 +557,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Temp\" />
     <Folder Include="Views\Base\" />
-    <Folder Include="Views\Errpr\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
