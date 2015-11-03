@@ -1,6 +1,7 @@
 ﻿namespace Contests.App.Controllers
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
     using System.Web.Routing;
@@ -46,6 +47,27 @@
         protected bool IsAdmin()
         {
             return this.User.IsInRole("Admin");
+        }
+
+        protected ICollection<User> GetUsers(ICollection<string> usersId)
+        {
+            ICollection<User> users = new HashSet<User>();
+
+            if (usersId != null)
+            {
+                foreach (string id in usersId)
+                {
+                    User wantedUser = this.ContestsData.Users.Find(id);
+                    if (wantedUser == null)
+                    {
+                        throw new NullReferenceException();
+                    }
+
+                    users.Add(wantedUser);
+                }
+            }
+
+            return users;
         }
     }
 }

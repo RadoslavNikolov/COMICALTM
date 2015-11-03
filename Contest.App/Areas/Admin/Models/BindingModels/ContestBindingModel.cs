@@ -40,7 +40,7 @@
 
         public ICollection<string> Voters { get; set; }
 
-        public int CategoryId { get; set; }
+        public int Category { get; set; }
 
         public string WallpaperPath { get; set; }
 

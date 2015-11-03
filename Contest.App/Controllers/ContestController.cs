@@ -147,12 +147,12 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(ContestBindingModel model)
+        public ActionResult Edit(int id, ContestBindingModel model)
         {
             
             if (this.ModelState != null && this.ModelState.IsValid)
             {
-                var contest = this.ContestsData.Contests.Find(model.ContestId);
+                var contest = this.ContestsData.Contests.Find(id);
 
                 ICollection<User> voters = model.VotingType == VotingType.Close ? this.GetUsers(model.Voters) : new HashSet<User>();
                 ICollection<User> participants = model.ParticipationType == ParticipationType.Close ? this.GetUsers(model.Participants) : new HashSet<User>();
@@ -240,27 +240,6 @@
                 });
 
             return this.PartialView("Partial/_CategoriesSelect", categories);
-        }
-
-        private ICollection<User> GetUsers(string[] usersId)
-        {
-            ICollection<User> users = new HashSet<User>();
-
-            if (usersId != null)
-            {
-                foreach (string id in usersId)
-                {
-                    User wantedUser = this.ContestsData.Users.Find(id);
-                    if (wantedUser == null)
-                    {
-                        throw new NullReferenceException();
-                    }
-
-                    users.Add(wantedUser);
-                }
-            }
-
-            return users;
         }
 
         public ActionResult Finalize(int contestid)

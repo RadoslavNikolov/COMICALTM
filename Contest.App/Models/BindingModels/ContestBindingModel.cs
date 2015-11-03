@@ -1,6 +1,7 @@
 ﻿namespace Contests.App.Models.BindingModels
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Web;
     using Contests.Models;
@@ -32,11 +33,11 @@
 
         public int? ParticipantsNumberDeadline { get; set; }
 
-        public string[] Participants { get; set; }
+        public ICollection<string> Participants { get; set; }
 
         public DateTime? DeadLine { get; set; }
 
-        public string[] Voters { get; set; }
+        public ICollection<string> Voters { get; set; }
 
         public int Category { get; set; }
 

@@ -7,7 +7,7 @@
 
 <h2>@ViewBag.Title</h2>
 
-@using (Html.BeginForm("Edit", "Contest", new {area = "Admin"}, FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Edit", "Contests", new {area = "Admin", id = @Model.Id}, FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     <hr />
@@ -25,7 +25,7 @@
         </div>
     </div>
 
-    Html.RenderAction("GetAllCategories", "Contest", routeValues: new { area = "", selectedId = @Model.CategoryId });
+    Html.RenderAction("GetAllCategories", "Contest", routeValues: new { area = "", selectedId = @Model.Category });
 
     <div class="form-group" id="reward-type">
         @Html.LabelFor(m => m.RewardType, new { @class = "col-md-2 control-label" })
