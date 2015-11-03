@@ -12,6 +12,7 @@
     using Contests.Models.Strategies.RewardStrategy;
     using Data.UnitOfWork;
     using Helpers;
+    using Infrastructure.UserIdProvider;
     using Microsoft.AspNet.Identity;
     using Models.BindingModels;
     using Models.ViewModels;
@@ -21,8 +22,8 @@
     [Authorize]
     public class ContestController : BaseController
     {
-        public ContestController(IContestsData data)
-            : base(data)
+        public ContestController(IContestsData data, IUserIdProvider userIdProvider)
+            : base(data, userIdProvider)
         {
         }
 

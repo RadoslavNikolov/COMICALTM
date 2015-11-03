@@ -10,6 +10,7 @@
     public class ContestBindingModel
     {
         public int? ContestId { get; set; }
+       
         [Required]
         public string Title { get; set; }
 

@@ -6,23 +6,27 @@
     using System.Web.Routing;
     using Contests.Models;
     using Data.UnitOfWork;
+    using Infrastructure.UserIdProvider;
 
     public class BaseController : Controller
     {
         public BaseController(IContestsData data)
+            : this(data, new AspNetUserIdProvider())
         {
-            this.ContestsData = data;
         }
 
-        public BaseController(IContestsData data, User user)
-            : this(data)
+        public BaseController(IContestsData data, IUserIdProvider userIdProvider)
         {
-            this.UserProfile = user;
+            this.ContestsData = data;
+            this.UserIdProvider = userIdProvider;
+            this.UserProfile = new User();
         }
 
         public IContestsData ContestsData { get; private set; }
 
         public User UserProfile { get; set; }
+
+        protected IUserIdProvider UserIdProvider { get; set; }
 
         protected override IAsyncResult BeginExecute(RequestContext requestContext, AsyncCallback callback, object state)
         {

@@ -16,6 +16,8 @@ using Ninject.Web.Common;
 
 namespace Contests.App
 {
+    using Infrastructure.UserIdProvider;
+
     public static class NinjectWebCommon 
     {
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();
@@ -65,6 +67,10 @@ namespace Contests.App
             kernel.Bind<IUserStore<User>>().To<UserStore<User>>()
                 .InRequestScope()
                 .WithConstructorArgument("context", kernel.Get<ContestsDbContext>());
+
+            kernel.Bind<IUserIdProvider>().To<AspNetUserIdProvider>()
+               .InRequestScope()
+               .WithConstructorArgument("context", kernel.Get<ContestsDbContext>());
 
             kernel.Bind<IAuthenticationManager>()
                 .ToMethod<IAuthenticationManager>(context => HttpContext.Current.GetOwinContext().Authentication)
