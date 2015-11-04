@@ -4,6 +4,7 @@
     {
         public static string DirectoryName = "PhotoContests";
         public const int AdminPanelPageSize = 5;
+        public const int NotificationsPageSize = 3;
 
         // Roles
         public const string AdminRole = "Admin";

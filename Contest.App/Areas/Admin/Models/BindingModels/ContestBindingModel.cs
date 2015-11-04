@@ -50,6 +50,10 @@
 
         public string WallpaperThumbUrl { get; set; }
 
+        public bool IsActive { get; set; }
+
+        public bool IsFinalized { get; set; }
+
         [ValidateImage(ErrorMessage = "Please select an image smaller than 4MB")]
         public HttpPostedFileBase Upload { get; set; }
 

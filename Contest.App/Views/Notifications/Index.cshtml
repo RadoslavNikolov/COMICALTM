@@ -1,17 +1,39 @@
-﻿@model IEnumerable<Contests.App.Models.ViewModels.NotificationViewModel>
+﻿@using MvcPaging
+@model MvcPaging.IPagedList<Contests.App.Models.ViewModels.NotificationViewModel>
 
 @{
     ViewBag.Title = "Notifications";
 }
 
-<table class="table">
-    <thead>
+@using (Html.BeginForm("Index", "Notifications", FormMethod.Get))
+{
+    <table class="table table-striped">
+        <thead>
         <tr>
             <th>Notification</th>
             <th>Date</th>
         </tr>
-    </thead>
-    <tbody>
+        </thead>
+        <tbody>
         @Html.DisplayForModel()
-    </tbody>
-</table>
+        </tbody>
+    </table>
+
+    <div class="pager">
+        @Html.Raw(Html.Pager(
+            new Options
+            {
+                PageSize = Model.PageSize,
+                TotalItemCount = Model.TotalItemCount,
+                CurrentPage = Model.PageNumber,
+                ItemTexts = new ItemTexts() { Next = "", Previous = "", First = "", Last = "" },
+                ItemIcon = new ItemIcon() { First = "icon-backward", Previous = "icon-chevron-left", Next = "icon-chevron-right", Last = "icon-forward" },
+                TooltipTitles = new TooltipTitles() { Next = "Next page {0}", Previous = "Previous page {0}", Page = "Go to page {0}" },
+                Size = Size.normal,
+                Alignment = Alignment.centered,
+                IsShowControls = true,
+                IsShowFirstLast = true,
+                IsShowPages = true
+            }, null))
+    </div>
+}

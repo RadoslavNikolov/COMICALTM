@@ -443,7 +443,7 @@
                 var notification = new Notification
                 {
                     UserId = participant.Key,
-                    Message = string.Format("Contest you have participated have been finalized. See contest result <a href=\"Winners/Details/{0}\">here</a>", contest.Id),
+                    Message = string.Format("A contest you participated in was finalized. See contest result <a href=\"Winners/Details/{0}\">here</a>", contest.Id),
                     Date = DateTime.Now,
                     IsRead = false
                 };

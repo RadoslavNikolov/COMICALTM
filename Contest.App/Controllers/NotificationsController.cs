@@ -1,13 +1,12 @@
 ﻿namespace Contests.App.Controllers
 {
-    using System;
     using System.Linq;
     using System.Web.Mvc;
     using AutoMapper.QueryableExtensions;
-    using Contests.Models;
     using Data.UnitOfWork;
+    using Infrastructure;
     using Models.ViewModels;
-    using RestSharp.Validation;
+    using MvcPaging;
 
     public class NotificationsController : BaseController
     {
@@ -16,34 +15,12 @@
         {
         }
 
-        [HttpPost]
-        [Authorize]
-        public ActionResult AddNotification(string userId, string message)
-        {
-            var targetUser = this.ContestsData.Users.Find(userId);
-
-            if (targetUser == null)
-            {
-                return this.HttpNotFound();
-            }
-
-            var notification = new Notification
-            {
-                Message = message,
-                IsRead = false,
-                Date = DateTime.Now
-            };
-
-            targetUser.Notifications.Add(notification);
-            this.ContestsData.SaveChanges();
-
-            return this.Content("true");
-        }
-
         [Authorize]
         // GET: Notifications
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
+            int currentPageIndex = page ?? 1;
+
             var notifications = this.ContestsData.Notifications.All()
                 .Where(n => n.UserId == this.UserProfile.Id)
                 .OrderByDescending(n => n.Date);
@@ -58,7 +35,8 @@
 
             var result = notifications
                 .Project()
-                .To<NotificationViewModel>();
+                .To<NotificationViewModel>()
+                .ToPagedList(currentPageIndex, AppConfig.NotificationsPageSize);
 
             return View(result);
         }

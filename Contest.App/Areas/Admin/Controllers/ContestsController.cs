@@ -64,7 +64,7 @@
                 .Project()
                 .To<ContestBindingModel>()
                 .FirstOrDefault();
-
+                
             if (contest == null)
             {
                 this.AddToastMessage("Error", "Non existing contest!", ToastType.Error);
@@ -72,6 +72,13 @@
                 return this.RedirectToAction("Index");
             }
 
+            if (contest.IsFinalized && !contest.IsActive)
+            {
+                this.AddToastMessage("Warning", "You are not allowed to edit this contest.", ToastType.Warning);
+
+                return this.RedirectToAction("Index");
+            }
+                
             return View(contest);
         }
 

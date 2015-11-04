@@ -97,7 +97,10 @@
                             @Html.DisplayFor(modelItem => item.DeadlineType)
                         </td>
                         <td>
-                            @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+                            @if (item.Status == "Active" && item.Finalized == "Not finalized")
+                            {
+                                @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+                            }
                         </td>
                     </tr>
                 }
