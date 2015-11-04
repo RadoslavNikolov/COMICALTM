@@ -59,12 +59,12 @@
                 return false;
             }
 
-            if (model.ParticipationType == ParticipationType.Close && model.Participants == null)
+            if (model.ParticipationType == ParticipationType.Closed && model.Participants == null)
             {
                 return false;
             }
 
-            if (model.VotingType == VotingType.Close && model.Voters == null)
+            if (model.VotingType == VotingType.Closed && model.Voters == null)
             {
                 return false;
             }

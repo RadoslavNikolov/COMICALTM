@@ -53,7 +53,7 @@
                     HttpContext.Current.User.Identity.IsAuthenticated &&
                     src.Organizator.UserName != HttpContext.Current.User.Identity.Name)
                     ||
-                    (src.ParticipationType == ParticipationType.Close &&
+                    (src.ParticipationType == ParticipationType.Closed &&
                     src.Participants.Any(p => p.UserName == HttpContext.Current.User.Identity.Name)))
                     &&
                     ((src.DeadlineType == DeadlineType.ByParticipants &&
@@ -64,7 +64,7 @@
                     ))
                 .ForMember(n => n.CanVote, opt => opt.MapFrom(src => (src.VotingType == VotingType.Open && 
                     HttpContext.Current.User.Identity.IsAuthenticated)  || 
-                    (src.VotingType == VotingType.Close &&
+                    (src.VotingType == VotingType.Closed &&
                     HttpContext.Current.User.Identity.IsAuthenticated 
                     && src.Voters.Any(p => p.UserName == HttpContext.Current.User.Identity.Name))))
                 .ForMember(n => n.Photos, opt => opt.MapFrom(src => src.Photos.Where(p => p.IsDeleted == false)))

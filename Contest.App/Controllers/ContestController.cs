@@ -95,8 +95,8 @@
                     return View(model);
                 }
 
-                ICollection<User> voters = model.VotingType == VotingType.Close ? this.GetUsers(model.Voters) : new HashSet<User>();
-                ICollection<User> participants = model.ParticipationType == ParticipationType.Close ? this.GetUsers(model.Participants) : new HashSet<User>();
+                ICollection<User> voters = model.VotingType == VotingType.Closed ? this.GetUsers(model.Voters) : new HashSet<User>();
+                ICollection<User> participants = model.ParticipationType == ParticipationType.Closed ? this.GetUsers(model.Participants) : new HashSet<User>();
 
                 var contest = new Contest
                 {
@@ -165,8 +165,8 @@
             {
                 var contest = this.ContestsData.Contests.Find(id);
 
-                ICollection<User> voters = model.VotingType == VotingType.Close ? this.GetUsers(model.Voters) : new HashSet<User>();
-                ICollection<User> participants = model.ParticipationType == ParticipationType.Close ? this.GetUsers(model.Participants) : new HashSet<User>();
+                ICollection<User> voters = model.VotingType == VotingType.Closed ? this.GetUsers(model.Voters) : new HashSet<User>();
+                ICollection<User> participants = model.ParticipationType == ParticipationType.Closed ? this.GetUsers(model.Participants) : new HashSet<User>();
 
                 contest.Title = model.Title;
                 contest.Description = model.Description;
