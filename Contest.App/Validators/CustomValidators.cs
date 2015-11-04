@@ -7,12 +7,12 @@
     using Contests.Models.Enums;
     using Data.UnitOfWork;
     using Microsoft.Ajax.Utilities;
+    using Models.BindingModels;
 
     public static class CustomValidators
     {
         public static Contest IsContestValid(IContestsData context, User creator, int contestId)
         {
-
             var contest = context.Contests.All()
                 .FirstOrDefault(c => c.IsActive && c.Id == contestId);
 
@@ -40,6 +40,36 @@
             }
 
             return contest;
+        }
+
+        public static bool IsContestModelValid(Category category, ContestBindingModel model)
+        {
+            if (category == null)
+            {
+                return false;
+            }
+
+            if (model.ParticipantsNumberDeadline == null && model.DeadLine == null)
+            {
+                return false;
+            }
+
+            if (model.RewardType == RewardType.TopNWinners && model.WinnersNumber == null)
+            {
+                return false;
+            }
+
+            if (model.ParticipationType == ParticipationType.Close && model.Participants == null)
+            {
+                return false;
+            }
+
+            if (model.VotingType == VotingType.Close && model.Voters == null)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

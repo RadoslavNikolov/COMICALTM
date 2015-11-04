@@ -87,6 +87,14 @@
         {
             if (this.ModelState != null && this.ModelState.IsValid)
             {
+                Category category = this.ContestsData.Categories.Find(model.Category);
+                bool isModelValid = CustomValidators.IsContestModelValid(category, model);
+                if (!isModelValid)
+                {
+                    this.AddToastMessage("Error", "Invalid data.", ToastType.Error);
+                    return View(model);
+                }
+
                 ICollection<User> voters = model.VotingType == VotingType.Close ? this.GetUsers(model.Voters) : new HashSet<User>();
                 ICollection<User> participants = model.ParticipationType == ParticipationType.Close ? this.GetUsers(model.Participants) : new HashSet<User>();
 
