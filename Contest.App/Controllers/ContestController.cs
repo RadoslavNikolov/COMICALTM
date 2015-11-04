@@ -1,10 +1,7 @@
 ﻿namespace Contests.App.Controllers
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Net;
-    using System.Web;
     using System.Web.Mvc;
     using AutoMapper.QueryableExtensions;
     using Common;
@@ -18,7 +15,6 @@
     using Microsoft.AspNet.Identity;
     using Models.BindingModels;
     using Models.ViewModels;
-    using Ninject.Infrastructure.Language;
     using Toastr;
     using Validators;
 

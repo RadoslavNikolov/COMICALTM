@@ -41,7 +41,7 @@
         @Html.LabelFor(m => m.VotingType, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
             <label> @Html.RadioButtonFor(m => m.VotingType, "Open", new { id = "voting-open", @checked = "checked", @class = "open-button" }) Open </label>
-            <label> @Html.RadioButtonFor(m => m.VotingType, "Close", new { id = "voting-close", @class = "close-button" }) Closed </label>
+            <label> @Html.RadioButtonFor(m => m.VotingType, "Closed", new { id = "voting-close", @class = "close-button" }) Closed </label>
             <div id="voters" class="hidden-element slide-toggle">
                 <select id='voters-select' multiple='multiple' name="voters[]"></select>
             </div>
@@ -51,7 +51,7 @@
         @Html.LabelFor(m => m.ParticipationType, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
             <label> @Html.RadioButtonFor(m => m.ParticipationType, "Open", new { id = "voting-open", @checked = "checked", @class = "open-button" }) Open </label>
-            <label> @Html.RadioButtonFor(m => m.ParticipationType, "Close", new { id = "voting-close", @class = "close-button" }) Closed </label>
+            <label> @Html.RadioButtonFor(m => m.ParticipationType, "Closed", new { id = "voting-close", @class = "close-button" }) Closed </label>
             <div id="participators" class="hidden-element slide-toggle">
                 <select id='participants-select' multiple='multiple' name="participants[]"></select>
             </div>

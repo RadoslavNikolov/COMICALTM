@@ -212,8 +212,7 @@ namespace Contests.App.Controllers
 
             return View(model);
         }
-
-        [HttpGet]
+        
         public ActionResult GetUsersSelect(string idAttribute, string nameAttribute, ICollection<string> selectedUsers)
         {
             var users = this.ContestsData.Users.All()
