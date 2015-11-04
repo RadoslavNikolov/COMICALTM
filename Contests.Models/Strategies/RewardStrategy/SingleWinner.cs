@@ -17,6 +17,7 @@
                 .Take(WinnersCount)
                 .ToList();
 
+            winningPhoto.First().IsWinner = true;
             ICollection<User> winners = winningPhoto.Select(p => p.Owner).ToList();
             contest.Winners = winners;
             contest.WinningPhotosId = winningPhoto.Select(p => p.Id).ToList();
