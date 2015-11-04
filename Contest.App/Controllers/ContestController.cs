@@ -277,40 +277,12 @@
                 return this.RedirectToAction("Details", "Users", routeValues: new { id = this.UserProfile.Id, area = "" });
             }
 
-            //RewardModel model = new RewardModel { WinnersCount = contest.WinnersCount };
+            RewardModel model = new RewardModel { WinnersCount = contest.WinnersCount };
 
-            //RewardStrategy strategy = RewardFactory.CreateStrategy(contest.RewardType, model);
-            //strategy.DetermineWinners(contest);
+            RewardStrategy strategy = RewardFactory.CreateStrategy(contest.RewardType, model);
+            strategy.DetermineWinners(contest);
            
-            var query = contest.Photos.Where(p => p.IsDeleted == false && p.Votes.Count > 0)
-                    .OrderByDescending(p => p.Votes.Count)
-                    .ThenBy(p => p.CreatedOn)
-                    .Select(n => new
-                    {
-                        n.OwnerId,
-                        n.Id
-                    });
-
-            if (contest.RewardType == RewardType.SingleWinner)
-            {                            
-                query = query.Take(1);
-            }
-            else
-            {
-                byte toTake = (contest.WinnersCount ?? 0);
-                query = query.Take(toTake);
-            }
-
-            ICollection<string> winnersIds = query.ToList().Select(voter => voter.OwnerId).ToList();
-            ICollection<User> winners = this.GetUsers(winnersIds);
-            contest.Winners = winners;
-            contest.WinningPhotosId = query.ToList().Select(p => p.Id).ToList();
-            contest.IsFinalized = true;
-            contest.IsActive = false;
-            contest.FinishedOn = DateTime.Now;
-            contest.WallpaperUrl = this.ContestsData.Photos.Find(contest.WinningPhotosId.First()).Url;
             this.ContestsData.SaveChanges();
-
 
             this.AddToastMessage("Success", "You finalized this contest successfully!", ToastType.Success);
             return this.RedirectToAction("Details", "Users", routeValues: new { id = this.UserProfile.Id, area = "" });

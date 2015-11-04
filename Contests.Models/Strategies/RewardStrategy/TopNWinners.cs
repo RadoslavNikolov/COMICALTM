@@ -1,5 +1,6 @@
 ﻿namespace Contests.Models.Strategies.RewardStrategy
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Interfaces;
@@ -13,11 +14,22 @@
 
         public byte WinnersCount { get; set; }
 
-        public override IEnumerable<Photo> DetermineWinners(Contest contest)
+        public override void DetermineWinners(Contest contest)
         {
-            IEnumerable<Photo> winners = contest.Photos.OrderByDescending(p => p.Votes.Count).Take(this.WinnersCount);
+            var winningPhotos = contest.Photos
+                .Where(p => p.IsDeleted == false && p.Votes.Count > 0)
+                .OrderByDescending(p => p.Votes.Count)
+                .ThenBy(p => p.CreatedOn)
+                .Take(this.WinnersCount)
+                .ToList();
 
-            return winners;
+            ICollection<User> winners = winningPhotos.Select(p => p.Owner).ToList();
+            contest.Winners = winners;
+            contest.WinningPhotosId = winningPhotos.Select(p => p.Id).ToList();
+            contest.IsFinalized = true;
+            contest.IsActive = false;
+            contest.FinishedOn = DateTime.Now;
+            contest.WallpaperUrl = winningPhotos.First().Url;
         }
     }
 }

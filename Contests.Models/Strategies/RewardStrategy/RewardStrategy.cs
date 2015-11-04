@@ -23,6 +23,6 @@
             set { this.contests = value; }
         }
 
-        public abstract IEnumerable<Photo> DetermineWinners(Contest contest);
+        public abstract void DetermineWinners(Contest contest);
     }
 }
