@@ -10,10 +10,15 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.Label("Photo", new { @class = "control-label col-md-2" })
+            <div class="media-top">
+                <a href="#">
+                    <img src="#" id="imgprw" class="media-object, cover" width="250" alt="upload picture">
+                </a>
+            </div>
+            @Html.Label("Photo", new {@class = "control-label col-md-2"})
             <div class="col-md-10">
-                <input type="file" id="photo" name="upload" />
-                @Html.ValidationMessageFor(model => model.Upload, "", new { @class = "text-danger" })
+                <input type="file" id="photo" name="upload" onchange="imagepreview(this)" />
+                @Html.ValidationMessageFor(model => model.Upload, "", new {@class = "text-danger"})
             </div>
         </div>
 

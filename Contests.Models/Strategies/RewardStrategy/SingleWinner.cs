@@ -8,8 +8,7 @@
         public override void DetermineWinners(Contest contest)
         {
             IEnumerable<Photo> winner = contest.Photos.OrderByDescending(p => p.Votes.Count).FirstOrDefault() as IEnumerable<Photo>;
-
-            
+        
         }
     }
 }
