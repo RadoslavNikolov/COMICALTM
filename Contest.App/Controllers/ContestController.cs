@@ -332,8 +332,8 @@
                 return this.RedirectToAction("Details", "Users", routeValues: new { id = this.UserProfile.Id, area = "" });
             }
 
-            //contest.IsActive = false;
-            //this.ContestsData.SaveChanges();
+            contest.IsActive = false;
+            this.ContestsData.SaveChanges();
 
             this.AddToastMessage("Success", "You dismissed this contest successfully!", ToastType.Success);
             return this.RedirectToAction("Details", "Users", routeValues: new { id = this.UserProfile.Id, area = "" });

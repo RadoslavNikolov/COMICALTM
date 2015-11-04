@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.Linq;
     using System.Linq.Expressions;
     using AutoMapper;
     using Contests.Models;
@@ -37,7 +38,7 @@
         public void CreateMappings(IConfiguration configuration)
         {
             configuration.CreateMap<User, UserInfoViewModel>()
-                .ForMember(u => u.Contest, opt => opt.MapFrom(u => u.ContestsCreated))
+                .ForMember(u => u.Contest, opt => opt.MapFrom(u => u.ContestsCreated.Where(c => c.IsActive)))
                 .ReverseMap();
         }
     }
