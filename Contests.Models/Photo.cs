@@ -43,6 +43,8 @@
 
         public bool IsDeleted { get; set; }
 
+        public bool IsWinner { get; set; }
+
         public virtual ICollection<Vote> Votes
         {
             get { return this.votes; }

@@ -23,6 +23,11 @@
                 .Take(this.WinnersCount)
                 .ToList();
 
+            foreach (var photo in winningPhotos)
+            {
+                photo.IsWinner = true;
+            }
+
             ICollection<User> winners = winningPhotos.Select(p => p.Owner).ToList();
             contest.Winners = winners;
             contest.WinningPhotosId = winningPhotos.Select(p => p.Id).ToList();

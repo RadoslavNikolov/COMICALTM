@@ -30,6 +30,11 @@
             @foreach (var photo in @Model.First().Photos)
             {
                 <div class="col-md-5">
+                    @if (photo.IsWinner)
+                    {
+                        
+                        <h2 class="text-danger">Winner</h2>
+                    }
                     <div class="col-md-12 photo-contests-photo-wrapper">
                         <div class="photo-contest-photo">
                             <img src="@photo.Url" class="gallery-item" width="300"/>
