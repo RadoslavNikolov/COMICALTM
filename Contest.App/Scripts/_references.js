@@ -18,3 +18,4 @@
 /// <reference path="jquery.quicksearch.js" />
 /// <reference path="jquery.unobtrusive-ajax.js" />
 /// <reference path="jquery.signalr-2.2.0.min.js" />
+/// <reference path="lightbox.js" />

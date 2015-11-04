@@ -338,6 +338,7 @@
     <Content Include="Content\images\glyphicons-halflings-white.png" />
     <Content Include="Content\images\glyphicons-halflings.png" />
     <Content Include="Content\images\switch.png" />
+    <Content Include="Content\lightbox.css" />
     <Content Include="Content\multi-select.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\pager.css" />
@@ -485,6 +486,10 @@
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Resources\Default-Profile-picture.png" />
     <Content Include="Resources\Default-wallpaper.jpg" />
+    <Content Include="Resources\lightbox\close.png" />
+    <Content Include="Resources\lightbox\loading.gif" />
+    <Content Include="Resources\lightbox\next.png" />
+    <Content Include="Resources\lightbox\prev.png" />
     <Content Include="Resources\winner.jpg" />
     <Content Include="Resources\winners.png" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
@@ -509,6 +514,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\lightbox.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\moment-with-locales.js" />
     <Content Include="Scripts\moment-with-locales.min.js" />

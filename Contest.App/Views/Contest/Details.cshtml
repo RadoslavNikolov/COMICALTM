@@ -58,7 +58,9 @@
                 <div class="col-md-5">
                     <div class="col-md-12 photo-contests-photo-wrapper">
                         <div class="photo-contest-photo">
-                            <img src="@photo.Url" class="gallery-item" width="300"/>
+                            <a href="@photo.Url" data-lightbox="roadtrip">
+                                <img src="@photo.Url" class="gallery-item" width="300" />
+                            </a>
                         </div>
                         <div class="photo-contest-photographer">
                             @Html.ActionLink(photo.Owner.FullName, "Details", "Users", routeValues: new {id = photo.OwnerId, area = ""}, htmlAttributes: new {title = "Photographer profile"})

@@ -34,10 +34,12 @@ namespace Contests.App
                       "~/Content/site.css",
                       "~/Content/style.css",
                       "~/Content/pager.css",
+                      "~/Content/lightbox.css",
                       "~/Content/bootstrap-datetimepicker.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/custom").Include(
-                "~/Scripts/CustomScripts/new-contest-options.js"));
+                "~/Scripts/CustomScripts/new-contest-options.js",
+                "~/Scripts/lightbox.js"));
 
             bundles.Add(new StyleBundle("~/content/toastr", "http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css")
                 .Include("~/Content/toastr.css"));
