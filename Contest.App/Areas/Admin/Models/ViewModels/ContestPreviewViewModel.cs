@@ -23,5 +23,7 @@
         public DeadlineType DeadlineType { get; set; }
 
         public string Status { get; set; }
+
+        public string Finalized { get; set; }
     }
 }

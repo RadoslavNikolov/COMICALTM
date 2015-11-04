@@ -20,7 +20,7 @@
         @if (@Model.First().OrganozatorId == HttpContext.Current.User.Identity.GetUserId())
         {
             <div class="btn-group btn-group-justified">
-                @Html.ActionLink("Edit Contest", "Edit", "Contest", routeValues: new { contestId = @Model.First().Id, area = "" }, htmlAttributes: new { @class = "btn btn-warning", title = "Edit contest" })
+                @Html.ActionLink("Edit Contest", "Edit", "Contest", routeValues: new { Id = @Model.First().Id, area = "" }, htmlAttributes: new { @class = "btn btn-warning", title = "Edit contest" })
                 @Html.ActionLink("Finalize", "Finalize", "Contest", routeValues: new { contestId = @Model.First().Id, area = "" }, htmlAttributes: new { @class = "btn btn-success", title = "Finalize constest" })
                 @Html.ActionLink("Dismiss", "Dismiss", "Contest", routeValues: new { contestId = @Model.First().Id, area = "" }, htmlAttributes: new { @class = "btn btn-danger", title = "Dismiss contest" })
 

@@ -3,7 +3,7 @@
     @{
         ViewBag.Title = "User page";
     }
-    <h1>Users</h1>
+    <h1>Contests</h1>
 
     @using (Html.BeginForm("Index", "Contests", FormMethod.Get))
     {
@@ -11,7 +11,7 @@
             <div class="col-md-4">
                 <div id="custom-search-input">
                     <div class="input-group col-md-12">
-                        <input type="text" class="form-control" name="contest_title" placeholder="Name" value="@TempData["contest_title"]" />
+                        <input type="text" class="form-control" name="contest_title" placeholder="Title ..." value="@TempData["contest_title"]" />
                         <span class="input-group-btn">
                             <a class="btn btn-default search-clear" href="@Url.Action("Index")" title="Clear">
                                 Clear
@@ -40,6 +40,9 @@
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.FirstOrDefault().Status)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Finalized)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.FirstOrDefault().VotingType)
@@ -77,6 +80,9 @@
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Status)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Finalized)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.VotingType)
