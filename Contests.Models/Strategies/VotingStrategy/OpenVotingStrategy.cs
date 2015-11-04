@@ -1,13 +1,10 @@
 ﻿namespace Contests.Models.Strategies.VotingStrategy
 {
-    using Interfaces;
-    using Microsoft.AspNet.Identity;
-
-    public class OpenVotingStrategy : IVotingStrategy
+    public class OpenVotingStrategy : VotingStrategy
     {
-        public bool CanVote(IUser user)
+        public OpenVotingStrategy(Contest contest, Photo photo, string userId)
+            : base(contest, photo, userId)
         {
-            return true;
         }
     }
 }

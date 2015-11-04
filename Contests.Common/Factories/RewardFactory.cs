@@ -1,12 +1,10 @@
-﻿namespace Contests.Models.Factories
+﻿namespace Contests.Common.Factories
 {
     using System;
     using Common;
-    using Enums;
-    using Interfaces;
-    using Strategies;
-    using Strategies.RewardStrategy;
-   
+    using Models.Enums;
+    using Models.Strategies.RewardStrategy;
+
     public class RewardFactory
     {
         public static RewardStrategy CreateStrategy(RewardType strategyType, RewardModel model)
@@ -17,7 +15,7 @@
                     return new SingleWinner();
                 case RewardType.TopNWinners:
                     // ReSharper disable once PossibleInvalidOperationException
-                    byte winnersCount = (byte) model.WinnersCount;
+                    byte winnersCount = (byte)model.WinnersCount;
                     return new TopNWinners(winnersCount);
                 default:
                     throw new ArgumentException();

@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Interfaces;
 
     public class TopNWinners : RewardStrategy
     {
@@ -22,11 +21,6 @@
                 .ThenBy(p => p.CreatedOn)
                 .Take(this.WinnersCount)
                 .ToList();
-
-            foreach (var photo in winningPhotos)
-            {
-                photo.IsWinner = true;
-            }
 
             ICollection<User> winners = winningPhotos.Select(p => p.Owner).ToList();
             contest.Winners = winners;

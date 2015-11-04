@@ -1,7 +1,6 @@
 ﻿namespace Contests.Models.Strategies.DeadlineStrategy
 {
     using System;
-    using Interfaces;
 
     public class ByTime : DeadlineStrategy
     {

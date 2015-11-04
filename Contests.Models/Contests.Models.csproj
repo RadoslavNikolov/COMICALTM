@@ -61,12 +61,6 @@
     <Compile Include="Enums\ParticipationType.cs" />
     <Compile Include="Enums\RewardType.cs" />
     <Compile Include="Enums\VotingType.cs" />
-    <Compile Include="Factories\ParticipationFactory.cs" />
-    <Compile Include="Factories\RewardFactory.cs" />
-    <Compile Include="Interfaces\IDeadlineStrategy.cs" />
-    <Compile Include="Interfaces\IParticipationStrategy.cs" />
-    <Compile Include="Interfaces\IRewardStrategy.cs" />
-    <Compile Include="Interfaces\IVotingStrategy.cs" />
     <Compile Include="Photo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Strategies\DeadlineStrategy\ByParticipantsNumber.cs" />
@@ -87,12 +81,6 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Contests.Common\Contests.Common.csproj">
-      <Project>{976EDCE1-E5CC-4E34-8DA5-19011DD34012}</Project>
-      <Name>Contests.Common</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
