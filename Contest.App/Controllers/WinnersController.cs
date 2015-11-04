@@ -43,7 +43,7 @@ namespace Contests.App.Controllers
             if (contest == null)
             {
                 this.AddToastMessage("Info", "No such contest found", ToastType.Info);
-                return RedirectToAction("Index", "Home", routeValues: new { area = "" });
+                return this.RedirectToAction("Index", "Home", routeValues: new { area = "" });
             }
 
             return this.View(contest);
