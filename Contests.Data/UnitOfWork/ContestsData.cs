@@ -50,6 +50,11 @@
             get { return this.GetRepository<Vote>(); }
         }
 
+        public IRepository<Notification> Notifications
+        {
+            get { return this.GetRepository<Notification>(); }
+        }
+
         public IUserStore<User> UserStore
         {
             get

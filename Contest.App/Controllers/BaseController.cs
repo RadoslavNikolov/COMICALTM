@@ -40,6 +40,7 @@
                 var username = requestContext.HttpContext.User.Identity.Name;
                 var user = this.ContestsData.Users.All().FirstOrDefault(u => u.UserName == username);
                 this.UserProfile = user;
+                this.ViewBag.notifications = this.UserProfile.Notifications.Count(n => n.IsRead == false);
             }
 
             return base.BeginExecute(requestContext, callback, state);

@@ -31,56 +31,56 @@
             </div>
         </div>
 	</div>
-    
-    <table class="table">
+
+    <table class="table table-striped">
         <thead>
-        <tr>
-            <th>
-                N
-            </th>
-            <th>
-                Name
-            </th>
-            <th>Status</th>
-            <th></th>
-        </tr>
+            <tr>
+                <th>
+                    N
+                </th>
+                <th>
+                    Name
+                </th>
+                <th>Status</th>
+                <th></th>
+            </tr>
         </thead>
         <tbody>
 
-        @{int i = 0;}
+            @{int i = 0;}
 
-        @foreach (var item in Model)
-        {
-            var status = item.IsActive ? "Active" : "Inactive";
-            i +=  1;
-            var n = i + (@Model.PageNumber - 1) * @Model.PageSize;
-            <tr class="category-active-@item.IsActive.ToString()">
-                <td>
-                    @n
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => @status)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new {id = item.Id}) |
-                    @if (item.IsActive)
-                    {
-                        @Html.ActionLink("Deactivate", "Deactivate", new {id = item.Id})
-                    }
-                    else
-                    {
-                        @Html.ActionLink("Activate", "Activate", new {id = item.Id})
-                    }
+            @foreach (var item in Model)
+            {
+                var status = item.IsActive ? "Active" : "Inactive";
+                i += 1;
+                var n = i + (@Model.PageNumber - 1) * @Model.PageSize;
+                <tr class="category-active-@item.IsActive.ToString()">
+                    <td>
+                        @n
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => @status)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                        @if (item.IsActive)
+                        {
+                            @Html.ActionLink("Deactivate", "Deactivate", new { id = item.Id })
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Activate", "Activate", new { id = item.Id })
+                        }
 
-                </td>
-            </tr>
-        }
+                    </td>
+                </tr>
+            }
         </tbody>
     </table>
-    
+
     <div class="pager">
         @Html.Raw(Html.Pager(
             new Options

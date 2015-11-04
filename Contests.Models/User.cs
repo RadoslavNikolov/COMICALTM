@@ -13,6 +13,7 @@
         private ICollection<Photo> photos;
         private ICollection<Contest> contestsCreated;
         private ICollection<Contest> contestsParticipated;
+        private ICollection<Notification> notifications; 
 
         public User()
         {
@@ -20,6 +21,7 @@
             this.contestsCreated = new HashSet<Contest>();
             this.contestsParticipated = new HashSet<Contest>();
             this.RegisteredOn = DateTime.Now;
+            this.notifications = new HashSet<Notification>();
         }
 
         [Required]
@@ -56,6 +58,12 @@
         {
             get { return this.contestsParticipated; }
             set { this.contestsParticipated = value; }
+        }
+
+        public virtual ICollection<Notification> Notifications
+        {
+            get { return this.notifications; }
+            set { this.notifications = value; }
         }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager)

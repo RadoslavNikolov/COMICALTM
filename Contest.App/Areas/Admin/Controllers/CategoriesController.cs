@@ -33,8 +33,7 @@
             }
 
             var categories = categoriesQuery
-                    .OrderByDescending(c => c.IsActive)
-                    .ThenBy(c => c.Name)
+                    .OrderBy(c => c.Name)
                     .Project()
                     .To<CategoryViewModel>()
                     .ToPagedList(currentPageIndex, AppConfig.AdminPanelPageSize);

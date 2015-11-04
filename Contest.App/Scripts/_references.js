@@ -17,3 +17,4 @@
 /// <reference path="jquery.multi-select.js" />
 /// <reference path="jquery.quicksearch.js" />
 /// <reference path="jquery.unobtrusive-ajax.js" />
+/// <reference path="jquery.signalr-2.2.0.min.js" />

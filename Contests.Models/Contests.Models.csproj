@@ -61,6 +61,7 @@
     <Compile Include="Enums\ParticipationType.cs" />
     <Compile Include="Enums\RewardType.cs" />
     <Compile Include="Enums\VotingType.cs" />
+    <Compile Include="Notification.cs" />
     <Compile Include="Photo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Strategies\DeadlineStrategy\ByParticipantsNumber.cs" />
