@@ -1,21 +1,23 @@
 ﻿namespace Contests.Models.Strategies.VotingStrategy
 {
-    using System.Collections.Generic;
-    using Interfaces;
-    using Microsoft.AspNet.Identity;
+    using System.Linq;
 
-    public class ClosedVotingStrategy : IVotingStrategy
+    public class ClosedVotingStrategy : VotingStrategy
     {
-        public ClosedVotingStrategy(ICollection<IUser> participants)
+        public ClosedVotingStrategy(Contest contest, Photo photo, string userId)
+            : base(contest, photo, userId)
         {
-            this.Participants = participants;
         }
 
-        public ICollection<IUser> Participants { get; set; }
-
-        public bool CanVote(IUser user)
+        public override bool CanVote()
         {
-            return this.Participants.Contains(user);
+            bool canVote = this.Contest.Voters.Any(v => v.Id == this.UserId);
+            if (!canVote || base.CanVote() == false)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

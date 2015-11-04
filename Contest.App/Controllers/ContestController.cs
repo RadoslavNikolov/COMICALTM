@@ -6,10 +6,11 @@
     using AutoMapper;
     using AutoMapper.QueryableExtensions;
     using Common;
+    using Common.Factories;
     using Contests.Models;
     using Contests.Models.Enums;
-    using Contests.Models.Factories;
     using Contests.Models.Strategies.RewardStrategy;
+    using Contests.Models.Strategies.VotingStrategy;
     using Data.UnitOfWork;
     using Helpers;
     using Infrastructure;
@@ -219,13 +220,32 @@
             {
                 var userId = this.User.Identity.GetUserId();
 
-                if (!this.ContestsData.Votes.All().Any(v => v.ContestId == model.ContestId && v.UserId == userId && (v.Photo.OwnerId != userId) && !v.Photo.IsDeleted))
+                var contest = this.ContestsData.Contests.Find(model.ContestId);
+                if (contest == null)
+                {
+                    this.AddToastMessage("Error", "Non existing contest!", ToastType.Error);
+                    var currentVotesNumber = this.ContestsData.Votes.All().Count(v => v.PhotoId == model.PhotoId && !v.Photo.IsDeleted);
+                    return this.Json(currentVotesNumber);
+                }
+
+                var photo = this.ContestsData.Photos.Find(model.PhotoId);
+                if (photo == null)
+                {
+                    this.AddToastMessage("Error", "Non existing photo!", ToastType.Error);
+                    var currentVotesNumber = this.ContestsData.Votes.All().Count(v => v.PhotoId == model.PhotoId && !v.Photo.IsDeleted);
+                    return this.Json(currentVotesNumber);
+                }
+
+                VotingModel votingModel = new VotingModel { Contest = contest, Photo = photo, UserId = userId };
+                VotingStrategy strategy = VotingFactory.CreateStrategy(contest.VotingType, votingModel);
+                bool canVote = strategy.CanVote();
+                if (canVote)
                 {
                     var vote = new Vote
                     {
                         PhotoId = model.PhotoId,
                         UserId = userId,
-                        ContestId = model.ContestId                      
+                        ContestId = model.ContestId
                     };
                     this.ContestsData.Votes.Add(vote);
                     this.ContestsData.SaveChanges();

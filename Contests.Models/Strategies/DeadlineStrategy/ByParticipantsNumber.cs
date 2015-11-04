@@ -1,10 +1,9 @@
 ﻿namespace Contests.Models.Strategies.DeadlineStrategy
 {
     using System.Collections.Generic;
-    using Interfaces;
     using Microsoft.AspNet.Identity;
 
-    public class ByParticipantsNumber : IDeadlineStrategy
+    public class ByParticipantsNumber : DeadlineStrategy
     {
         public ByParticipantsNumber(int participantsNumber)
         {

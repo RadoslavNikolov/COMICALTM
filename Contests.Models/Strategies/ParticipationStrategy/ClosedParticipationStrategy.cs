@@ -1,10 +1,9 @@
 ﻿namespace Contests.Models.Strategies.ParticipationStrategy
 {
     using System.Collections.Generic;
-    using Interfaces;
     using Microsoft.AspNet.Identity;
 
-    public class ClosedParticipationStrategy : IParticipationStrategy
+    public class ClosedParticipationStrategy : ParticipationStrategy
     {
         public ClosedParticipationStrategy(ICollection<IUser> participants)
         {

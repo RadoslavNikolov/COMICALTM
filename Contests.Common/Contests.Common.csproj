@@ -39,8 +39,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Factories\VotingStrategy.cs" />
+    <Compile Include="Factories\RewardFactory.cs" />
     <Compile Include="RewardModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VotingModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Contests.Models\Contests.Models.csproj">
+      <Project>{96e38987-d70b-41fa-b144-40c2beeaedb8}</Project>
+      <Name>Contests.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
