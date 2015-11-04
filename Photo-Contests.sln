@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{6E0B2A92-A4A1-4A54-8498-CB2B3BDEEF49}"
 EndProject
@@ -16,6 +16,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{EE636661-4B9A-4457-B2DB-87F4F7226FAF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contests.Tests", "Contests.Tests\Contests.Tests.csproj", "{1F6D252D-03B3-4E4C-9959-571851B60831}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{C3D138E9-BDE7-4112-A7FD-9E100430111B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contests.Common", "Contests.Common\Contests.Common.csproj", "{976EDCE1-E5CC-4E34-8DA5-19011DD34012}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +43,10 @@ Global
 		{1F6D252D-03B3-4E4C-9959-571851B60831}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F6D252D-03B3-4E4C-9959-571851B60831}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F6D252D-03B3-4E4C-9959-571851B60831}.Release|Any CPU.Build.0 = Release|Any CPU
+		{976EDCE1-E5CC-4E34-8DA5-19011DD34012}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{976EDCE1-E5CC-4E34-8DA5-19011DD34012}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{976EDCE1-E5CC-4E34-8DA5-19011DD34012}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{976EDCE1-E5CC-4E34-8DA5-19011DD34012}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -48,5 +56,6 @@ Global
 		{17B99C52-EE19-4B2A-AD27-0E5773A0007B} = {6E0B2A92-A4A1-4A54-8498-CB2B3BDEEF49}
 		{96E38987-D70B-41FA-B144-40C2BEEAEDB8} = {6E0B2A92-A4A1-4A54-8498-CB2B3BDEEF49}
 		{1F6D252D-03B3-4E4C-9959-571851B60831} = {EE636661-4B9A-4457-B2DB-87F4F7226FAF}
+		{976EDCE1-E5CC-4E34-8DA5-19011DD34012} = {C3D138E9-BDE7-4112-A7FD-9E100430111B}
 	EndGlobalSection
 EndGlobal

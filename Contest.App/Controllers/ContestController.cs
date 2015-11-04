@@ -7,8 +7,10 @@
     using System.Web;
     using System.Web.Mvc;
     using AutoMapper.QueryableExtensions;
+    using Common;
     using Contests.Models;
     using Contests.Models.Enums;
+    using Contests.Models.Factories;
     using Contests.Models.Strategies.RewardStrategy;
     using Data.UnitOfWork;
     using Helpers;
@@ -274,6 +276,11 @@
                 this.AddToastMessage("Error", "Error with closing this contest!", ToastType.Error);
                 return this.RedirectToAction("Details", "Users", routeValues: new { id = this.UserProfile.Id, area = "" });
             }
+
+            //RewardModel model = new RewardModel { WinnersCount = contest.WinnersCount };
+
+            //RewardStrategy strategy = RewardFactory.CreateStrategy(contest.RewardType, model);
+            //strategy.DetermineWinners(contest);
            
             var query = contest.Photos.Where(p => p.IsDeleted == false && p.Votes.Count > 0)
                     .OrderByDescending(p => p.Votes.Count)

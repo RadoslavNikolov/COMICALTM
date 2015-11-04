@@ -13,9 +13,9 @@
 
         public byte WinnersCount { get; set; }
 
-        public override IEnumerable<Photo> DetermineWinners(IList<Photo> photos)
+        public override IEnumerable<Photo> DetermineWinners(Contest contest)
         {
-            IEnumerable<Photo> winners = photos.OrderByDescending(p => p.Votes.Count).Take(this.WinnersCount);
+            IEnumerable<Photo> winners = contest.Photos.OrderByDescending(p => p.Votes.Count).Take(this.WinnersCount);
 
             return winners;
         }

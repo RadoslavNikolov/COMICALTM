@@ -582,6 +582,10 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Contests.Common\Contests.Common.csproj">
+      <Project>{976EDCE1-E5CC-4E34-8DA5-19011DD34012}</Project>
+      <Name>Contests.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Contests.Data\Contests.Data.csproj">
       <Project>{17b99c52-ee19-4b2a-ad27-0e5773a0007b}</Project>
       <Name>Contests.Data</Name>

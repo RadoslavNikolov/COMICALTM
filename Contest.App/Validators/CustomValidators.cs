@@ -33,7 +33,7 @@
                     return null;
                 }
 
-                if (contest.DeadlineType == DeadlineType.ByTime && DateTime.Now <= contest.DeadLine)
+                if (contest.DeadlineType == DeadlineType.ByTime && DateTime.Now >= contest.DeadLine)
                 {
                     return null;
                 }

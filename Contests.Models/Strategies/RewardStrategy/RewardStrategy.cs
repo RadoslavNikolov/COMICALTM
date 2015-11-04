@@ -23,6 +23,6 @@
             set { this.contests = value; }
         }
 
-        public abstract IEnumerable<Photo> DetermineWinners(IList<Photo> photos);
+        public abstract IEnumerable<Photo> DetermineWinners(Contest contest);
     }
 }

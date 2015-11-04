@@ -47,22 +47,20 @@
                 .ForMember(n => n.OrganizatorName, opt => opt.MapFrom(n => n.Organizator.FullName))
                 .ForMember(n => n.OrganozatorId, opt => opt.MapFrom(n => n.OrganizatorId))
                 .ForMember(n => n.Category, opt => opt.MapFrom(n => n.Category.Name))
-                .ForMember(n => n.CanParticipate, opt => opt.MapFrom(src => 
+                .ForMember(n => n.CanParticipate, opt => opt.MapFrom(src =>
                     (
-                    (src.ParticipationType == ParticipationType.Open && 
+                    (src.ParticipationType == ParticipationType.Open &&
                     HttpContext.Current.User.Identity.IsAuthenticated &&
-                    src.Organizator.UserName != HttpContext.Current.User.Identity.Name) 
-                    || 
-                    (src.ParticipationType == ParticipationType.Close && 
-                    src.Participants.Any(p => p.UserName == HttpContext.Current.User.Identity.Name))) 
-                    //&& 
-                    //(src.DeadlineType == DeadlineType.ByParticipants &&
-                    //src.Photos.Where(p => !p.IsDeleted).GroupBy(p => p.OwnerId)
-                    //    .Select(p => new {ParticipatorId = p.Key, Count = p.Count()}).Distinct().Count()
-                    //    <= src.
-                    //&&
-                    //(src.DeadlineType == DeadlineType.ByTime &&
-                    //src.DeadLine >= DateTime.Now)
+                    src.Organizator.UserName != HttpContext.Current.User.Identity.Name)
+                    ||
+                    (src.ParticipationType == ParticipationType.Close &&
+                    src.Participants.Any(p => p.UserName == HttpContext.Current.User.Identity.Name)))
+                    &&
+                    ((src.DeadlineType == DeadlineType.ByParticipants &&
+                    src.Photos.Where(p => !p.IsDeleted).GroupBy(p => p.OwnerId).Count() <= src.ParticipantsNumberDeadline)
+                    ||
+                    (src.DeadlineType == DeadlineType.ByTime &&
+                    src.DeadLine >= DateTime.Now))
                     ))
                 .ForMember(n => n.CanVote, opt => opt.MapFrom(src => (src.VotingType == VotingType.Open && 
                     HttpContext.Current.User.Identity.IsAuthenticated)  || 

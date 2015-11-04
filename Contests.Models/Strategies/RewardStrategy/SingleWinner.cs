@@ -5,9 +5,9 @@
 
     public class SingleWinner : RewardStrategy
     {
-        public override IEnumerable<Photo> DetermineWinners(IList<Photo> photos)
+        public override IEnumerable<Photo> DetermineWinners(Contest contest)
         {
-            IEnumerable<Photo> winner = photos.OrderByDescending(p => p.Votes.Count).FirstOrDefault() as IEnumerable<Photo>;
+            IEnumerable<Photo> winner = contest.Photos.OrderByDescending(p => p.Votes.Count).FirstOrDefault() as IEnumerable<Photo>;
 
             return winner;
         }
