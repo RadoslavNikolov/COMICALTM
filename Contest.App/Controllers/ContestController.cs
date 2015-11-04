@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
+    using AutoMapper;
     using AutoMapper.QueryableExtensions;
     using Common;
     using Contests.Models;
@@ -137,9 +138,18 @@
         }
 
         [HttpGet]
-        public ActionResult Edit(int? contestId)
+        public ActionResult Edit(int id)
         {
-            var contest = this.ContestsData.Contests.Find(contestId);
+            Mapper.CreateMap<Contest, ContestBindingModel>()
+                .ForMember(dest => dest.Participants, opts => opts.MapFrom(src => src.Participants.Select(p => p.Id)))
+                .ForMember(dest => dest.Voters, opts => opts.MapFrom(src => src.Voters.Select(v => v.Id)))
+                .ForMember(dest => dest.Category, opts => opts.MapFrom(src => src.Category.Id));
+
+            var contest = this.ContestsData.Contests.All()
+                .Where(c => c.Id == id)
+                .Project()
+                .To<ContestBindingModel>()
+                .FirstOrDefault();
 
             if (contest == null)
             {
@@ -147,22 +157,19 @@
                 return this.RedirectToAction("Details", "Users", routeValues: new { id = this.UserProfile.Id, area = "" });
             }
 
-            var model = ContestBindingModel.CreateFromContest(contest);
-
-            return View(model);
+            return this.View(contest);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, ContestBindingModel model)
         {
-            
             if (this.ModelState != null && this.ModelState.IsValid)
             {
                 var contest = this.ContestsData.Contests.Find(id);
 
-                ICollection<User> voters = model.VotingType == VotingType.Closed ? this.GetUsers(model.Voters) : new HashSet<User>();
-                ICollection<User> participants = model.ParticipationType == ParticipationType.Closed ? this.GetUsers(model.Participants) : new HashSet<User>();
+                //ICollection<User> voters = model.VotingType == VotingType.Closed ? this.GetUsers(model.Voters) : new HashSet<User>();
+                //ICollection<User> participants = model.ParticipationType == ParticipationType.Closed ? this.GetUsers(model.Participants) : new HashSet<User>();
 
                 contest.Title = model.Title;
                 contest.Description = model.Description;
@@ -170,12 +177,15 @@
                 contest.DeadLine = model.DeadLine;
                 contest.ParticipationType = model.ParticipationType;
                 contest.VotingType = model.VotingType;
-                contest.Voters = voters;
+                //contest.Voters = voters;
                 contest.WinnersCount = model.WinnersNumber;
                 contest.ParticipantsNumberDeadline = model.ParticipantsNumberDeadline;
-                contest.Participants = participants;
+                //contest.Participants = participants;
                 contest.DeadLine = model.DeadLine;
                 contest.CategoryId = model.Category;
+
+                this.FillVoters(contest, model.Voters, model.VotingType);
+                this.FillPacticipants(contest, model.Participants, model.ParticipationType);
 
                 if (model.Upload != null && model.Upload.ContentLength > 0)
                 {
@@ -340,6 +350,64 @@
                 .FirstOrDefault(c => c.Id == contestId && c.IsActive && (c.OrganizatorId == userId || isAdmin));
 
             return contest;
+        }
+
+        private void FillVoters(Contest contest, ICollection<string> votersIds, VotingType votingType)
+        {
+            if (votersIds == null || votingType == VotingType.Open)
+            {
+                contest.Voters.Clear();
+            }
+            else
+            {
+                var voters = contest.Voters.ToList();
+
+                foreach (var voterId in votersIds)
+                {
+                    if (contest.Voters.All(v => v.Id != voterId))
+                    {
+                        var voter = this.ContestsData.Users.Find(voterId);
+                        contest.Voters.Add(voter);
+                    }
+                }
+
+                foreach (var voter in voters)
+                {
+                    if (!votersIds.Contains(voter.Id))
+                    {
+                        contest.Voters.Remove(voter);
+                    }
+                }
+            }
+        }
+
+        private void FillPacticipants(Contest contest, ICollection<string> participantsIds, ParticipationType participationType)
+        {
+            if (participantsIds == null || participationType == ParticipationType.Open)
+            {
+                contest.Participants.Clear();
+            }
+            else
+            {
+                var participants = contest.Participants.ToList();
+
+                foreach (var participantId in participantsIds)
+                {
+                    if (contest.Participants.All(p => p.Id != participantId))
+                    {
+                        var participant = this.ContestsData.Users.Find(participantId);
+                        contest.Participants.Add(participant);
+                    }
+                }
+
+                foreach (var participant in participants)
+                {
+                    if (!participantsIds.Contains(participant.Id))
+                    {
+                        contest.Participants.Remove(participant);
+                    }
+                }
+            }
         }
     }
 }

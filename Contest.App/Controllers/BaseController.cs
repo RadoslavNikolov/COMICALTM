@@ -7,6 +7,7 @@
     using System.Web.Routing;
     using Contests.Models;
     using Data.UnitOfWork;
+    using Infrastructure;
     using Infrastructure.UserIdProvider;
 
     public class BaseController : Controller
@@ -46,7 +47,7 @@
 
         protected bool IsAdmin()
         {
-            return this.User.IsInRole("Admin");
+            return this.User.IsInRole(AppConfig.AdminRole);
         }
 
         protected ICollection<User> GetUsers(ICollection<string> usersId)

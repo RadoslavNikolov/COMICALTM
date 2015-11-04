@@ -10,7 +10,7 @@
 
     public class ContestBindingModel
     {
-        public int? ContestId { get; set; }
+        public int Id { get; set; }
        
         [Required]
         public string Title { get; set; }
@@ -52,29 +52,29 @@
         [ValidateImage(ErrorMessage = "Please select an image smaller than 4MB")]
         public HttpPostedFileBase Upload { get; set; }
 
-        public static ContestBindingModel CreateFromContest(Contest contest)
-        {
-            var newContest = new ContestBindingModel
-            {
-                ContestId = contest.Id,
-                Title = contest.Title,
-                Description = contest.Description,
-                RewardType = contest.RewardType,
-                VotingType = contest.VotingType,
-                DeadlineType = contest.DeadlineType,
-                ParticipationType = contest.ParticipationType,
-                WinnersNumber = contest.WinnersCount,
-                ParticipantsNumberDeadline = contest.ParticipantsNumberDeadline,
-                DeadLine = contest.DeadLine,
-                Category = contest.CategoryId,
-                Upload = null,
-                WallpaperPath = contest.WallpaperPath,
-                WallpaperUrl = contest.WallpaperUrl,
-                WallpaperThumbPath = contest.WallpaperThumbPath,
-                WallpaperThumbUrl = contest.WallpaperThumbUrl
-            };
+        //public static ContestBindingModel CreateFromContest(Contest contest)
+        //{
+        //    var newContest = new ContestBindingModel
+        //    {
+        //        ContestId = contest.Id,
+        //        Title = contest.Title,
+        //        Description = contest.Description,
+        //        RewardType = contest.RewardType,
+        //        VotingType = contest.VotingType,
+        //        DeadlineType = contest.DeadlineType,
+        //        ParticipationType = contest.ParticipationType,
+        //        WinnersNumber = contest.WinnersCount,
+        //        ParticipantsNumberDeadline = contest.ParticipantsNumberDeadline,
+        //        DeadLine = contest.DeadLine,
+        //        Category = contest.CategoryId,
+        //        Upload = null,
+        //        WallpaperPath = contest.WallpaperPath,
+        //        WallpaperUrl = contest.WallpaperUrl,
+        //        WallpaperThumbPath = contest.WallpaperThumbPath,
+        //        WallpaperThumbUrl = contest.WallpaperThumbUrl
+        //    };
 
-            return newContest;
-        }
+        //    return newContest;
+        //}
     }
 }

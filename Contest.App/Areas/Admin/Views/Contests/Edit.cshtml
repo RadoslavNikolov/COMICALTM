@@ -79,7 +79,7 @@
                 <div id="participators" class="hidden-element slide-toggle">
                     @*<select id='participants-select' multiple='multiple' name="participants[]"></select>*@
                     @{
-                Html.RenderAction("GetUsersSelect", "Users", routeValues: new { area = "", selectedUsers = Model.Participants, idAttribute = "participants-select", nameAttribute = "participants" });
+                        Html.RenderAction("GetUsersSelect", "Users", routeValues: new { area = "", selectedUsers = Model.Participants, idAttribute = "participants-select", nameAttribute = "participants" });
                     }
                 </div>
             }
