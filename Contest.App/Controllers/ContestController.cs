@@ -1,5 +1,6 @@
 ﻿namespace Contests.App.Controllers
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
@@ -13,16 +14,18 @@
     using Contests.Models.Strategies.VotingStrategy;
     using Data.UnitOfWork;
     using Helpers;
+    using Hubs;
     using Infrastructure;
-    using Infrastructure.UserIdProvider;
     using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.SignalR;
     using Models.BindingModels;
     using Models.ViewModels;
     using PagedList;
     using Toastr;
     using Validators;
+    using IUserIdProvider = Infrastructure.UserIdProvider.IUserIdProvider;
 
-    [Authorize]
+    [System.Web.Mvc.Authorize]
     public class ContestController : BaseController
     {
         public ContestController(IContestsData data, IUserIdProvider userIdProvider)
@@ -63,7 +66,7 @@
             if (contest == null)
             {
                 this.AddToastMessage("Info", "No such contest found", ToastType.Info);
-                return RedirectToAction("Index", "Home", routeValues: new { area = "" });
+                return this.RedirectToAction("Index", "Home", routeValues: new { area = "" });
             }
 
             return this.View(contest);
@@ -312,13 +315,15 @@
 
             RewardStrategy strategy = RewardFactory.CreateStrategy(contest.RewardType, model);
             strategy.DetermineWinners(contest);
-           
+
             this.ContestsData.SaveChanges();
+
+            this.SendParticipantsNotification(contest);
 
             this.AddToastMessage("Success", "You finalized this contest successfully!", ToastType.Success);
             return this.RedirectToAction("Details", "Users", routeValues: new { id = this.UserProfile.Id, area = "" });
         }
-
+        
         [HttpGet]
         public ActionResult Dismiss(int contestId)
         {
@@ -425,6 +430,29 @@
                     }
                 }
             }
+        }
+
+        private void SendParticipantsNotification(Contest contest)
+        {
+            var hubContext = GlobalHost.ConnectionManager.GetHubContext<NotificationsHub>();
+
+            var participants = contest.Photos.GroupBy(f => f.OwnerId);
+
+            foreach (var participant in participants)
+            {
+                var notification = new Notification
+                {
+                    UserId = participant.Key,
+                    Message = string.Format("Contest you have participated have been finalized. See contest result <a href=\"Winners/Details/{0}\">here</a>", contest.Id),
+                    Date = DateTime.Now,
+                    IsRead = false
+                };
+
+                this.ContestsData.Notifications.Add(notification);
+                hubContext.Clients.Group(participant.Key).receiveNotification();
+            }
+
+            this.ContestsData.SaveChanges();
         }
     }
 }

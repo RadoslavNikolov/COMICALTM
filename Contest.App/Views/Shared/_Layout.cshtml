@@ -83,18 +83,17 @@
     @Scripts.Render("~/bundles/custom")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/signalr")
+    <script src="/signalr/hubs"></script>
     @RenderSection("Scripts", required: false)
     @Html.Partial("_Toastr")
     <script>
-    $(document).ready(function () {
-        var notificationsHub = $.connection.notifications;
-        notificationsHub.client.receiveNotification = function () {
-            $('#notifications').html(parseInt($('#notifications').html(), 10) + 1);
-        };
-        $.connection.hub.start();
-
-    });
-    </script>
-
+        $(document).ready(function () {
+            var notificationsHub = $.connection.notifications;
+            notificationsHub.client.receiveNotification = function () {
+                $('#notifications').html(parseInt($('#notifications').html(), 10) + 1);
+            };
+            $.connection.hub.start();
+        });
+    </script>s
 </body>
 </html>

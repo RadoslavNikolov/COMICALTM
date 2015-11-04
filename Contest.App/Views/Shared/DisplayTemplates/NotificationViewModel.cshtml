@@ -1,6 +1,6 @@
 ﻿@model Contests.App.Models.ViewModels.NotificationViewModel
 
 <tr>
-    <td>@Model.Message</td>
+    <td>@Html.Raw(Model.Message)</td>
     <td>@Model.Date</td>
 </tr>
