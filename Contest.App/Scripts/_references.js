@@ -16,3 +16,4 @@
 /// <reference path="customscripts/multiselect.js" />
 /// <reference path="jquery.multi-select.js" />
 /// <reference path="jquery.quicksearch.js" />
+/// <reference path="jquery.unobtrusive-ajax.js" />
