@@ -36,7 +36,7 @@
             }
 
             Mapper.CreateMap<Contest, ContestPreviewViewModel>()
-                .ForMember(dest => dest.Status, opts => opts.MapFrom(src => src.IsActive ? "Active" : "Finalized"))
+                .ForMember(dest => dest.Status, opts => opts.MapFrom(src => src.IsActive ? "Active" : "Inactive"))
                 .ForMember(dest => dest.Finalized, opts => opts.MapFrom(src => src.IsFinalized ? "Finalized" : "Not finalized"))
                 .ForMember(dest => dest.Organizator, opts => opts.MapFrom(src => src.Organizator.FullName))
                 .ForMember(dest => dest.Category, opts => opts.MapFrom(src => src.Category.Name));
