@@ -4,7 +4,9 @@
     using System.Web.Mvc;
     using AutoMapper.QueryableExtensions;
     using Data.UnitOfWork;
+    using Infrastructure;
     using Models.ViewModels;
+    using PagedList;
     using Toastr;
 
     public class HomeController : BaseController
@@ -15,13 +17,14 @@
         }
 
 
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
             var contests = this.ContestsData.Contests.All()
                .Where(c => c.IsActive)
                .OrderByDescending(c => c.CreatedOn)
                .Project()
-               .To<ContestViewModel>();
+               .To<ContestViewModel>()
+               .ToPagedList(pageNumber: page ?? 1, pageSize: AppConfig.AdminPanelPageSize);
 
             if (!contests.Any())
             {

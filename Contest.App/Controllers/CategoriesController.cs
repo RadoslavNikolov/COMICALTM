@@ -8,7 +8,9 @@ namespace Contests.App.Controllers
 {
     using AutoMapper.QueryableExtensions;
     using Data.UnitOfWork;
+    using Infrastructure;
     using Models.ViewModels;
+    using PagedList;
     using Toastr;
 
     public class CategoriesController : BaseController
@@ -19,17 +21,18 @@ namespace Contests.App.Controllers
         }
 
 
-        public ActionResult Index(int id)
+        public ActionResult Index(string catName, int? page)
         {
             var contests = this.ContestsData.Contests.All()
-                .Where(c => c.CategoryId == id && c.IsActive)
+                .Where(c => c.Category.Name == catName && c.IsActive)
                 .OrderByDescending(c => c.CreatedOn)
                 .Project()
-                .To<ContestViewModel>();
+                .To<ContestViewModel>()
+                .ToPagedList(pageNumber: page ?? 1, pageSize: AppConfig.AdminPanelPageSize); ;
 
             if (!contests.Any())
             {
-                this.AddToastMessage("Info", "No contest in " + this.ContestsData.Categories.Find(id).Name + " category", ToastType.Info);
+                this.AddToastMessage("Info", "No contest in " + catName + " category", ToastType.Warning);
                 return this.RedirectToAction("Index", "Home", new { area = "" });
             }
 

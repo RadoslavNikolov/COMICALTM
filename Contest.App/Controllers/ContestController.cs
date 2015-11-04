@@ -11,10 +11,12 @@
     using Contests.Models.Strategies.RewardStrategy;
     using Data.UnitOfWork;
     using Helpers;
+    using Infrastructure;
     using Infrastructure.UserIdProvider;
     using Microsoft.AspNet.Identity;
     using Models.BindingModels;
     using Models.ViewModels;
+    using PagedList;
     using Toastr;
     using Validators;
 
@@ -34,21 +36,16 @@
         /// <returns>Return default vew for this action</returns>
         [HttpGet]
         [AllowAnonymous]
-        public ActionResult All(bool latest)
+        public ActionResult All(int? page)
         {
             var contest = this.ContestsData.Contests.All()
                 .Where(c => c.IsActive)
                 .OrderByDescending(c => c.CreatedOn)
                 .Project()
-                .To<ContestViewModel>();
+                .To<ContestViewModel>()
+                .ToPagedList(pageNumber: page ?? 1, pageSize: AppConfig.AdminPanelPageSize);
 
-            if (latest)
-            {
-                this.ViewBag.Latest = "Latest contests";
-                contest = contest.Take(5);
-            }
-
-            this.ViewBag.Latest = "All contests";
+            this.ViewBag.Title = "All contests";
             return View(contest);
         }
 

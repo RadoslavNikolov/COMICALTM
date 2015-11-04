@@ -43,13 +43,12 @@
                             Photo Contest <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" id="categories-menu">
-                            <li>@Html.ActionLink("CATEGORIES", "Index", "Categories", routeValues: new {area = ""}, htmlAttributes: new {title = "Create contest"})</li>
+                            <li>@Html.ActionLink("CATEGORIES", "All", "Contest", routeValues: new { area = "" }, htmlAttributes: new { title = "Create contest" })</li>
                             @{
-                                Html.RenderAction("GetAllCategories", "Categories", routeValues: new {area = ""});
+                                Html.RenderAction("GetAllCategories", "Categories", routeValues: new { area = "" });
                             }
                             <li class="divider" role="separator"></li>
-                            <li>@Html.ActionLink("LATEST", "All", "Contest", routeValues: new {latest = true, area = ""}, htmlAttributes: new {title = "Create contest"})</li>
-                            <li>@Html.ActionLink("ALL", "All", "Contest", routeValues: new { latest = false, area = "" }, htmlAttributes: new { title = "Create contest" })</li>
+                            <li>@Html.ActionLink("ALL", "All", "Contest", routeValues: new { area = "" }, htmlAttributes: new { title = "Create contest" })</li>
                         </ul>
                     </li>
 

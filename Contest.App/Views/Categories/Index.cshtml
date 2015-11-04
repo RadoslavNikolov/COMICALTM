@@ -1,9 +1,15 @@
-﻿@model IEnumerable<Contests.App.Models.ViewModels.ContestViewModel>
+﻿@using PagedList.Mvc
+@model PagedList.IPagedList<Contests.App.Models.ViewModels.ContestViewModel>
 
 @{
     ViewBag.Title = "List contests by category";
 }
 
-<h2>Category: @Model.First().Category</h2>
+<h2>@ViewBag.Title</h2>
+<div class="row">
+    @Html.DisplayForModel()
+</div>
 
-@Html.DisplayForModel()
+<div class="row">
+    @Html.PagedListPager(Model, page => Url.Action("Index", "Categories", new { catName = @Model.First().Category, page }))
+</div>

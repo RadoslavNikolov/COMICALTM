@@ -1,12 +1,18 @@
-﻿@model IEnumerable<Contests.App.Models.ViewModels.ContestViewModel>
+﻿@using PagedList.Mvc
+@model PagedList.IPagedList<Contests.App.Models.ViewModels.ContestViewModel>
 
 @{
     ViewBag.Title = "Home Page";
 }
 
-<h2>Home page</h2>
-@Html.DisplayForModel()
+<h2>@ViewBag.Title</h2>
+<div class="row">
+    @Html.DisplayForModel()
+</div>
 
+<div class="row">
+    @Html.PagedListPager(Model, page => Url.Action("Index", "Home", new { page }))
+</div>
 
 
 
