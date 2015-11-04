@@ -481,6 +481,7 @@
     <Content Include="Areas\Admin\Views\Users\ChangeRole.cshtml" />
     <Content Include="Areas\Admin\Views\Contests\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Contests\Edit.cshtml" />
+    <None Include="Properties\PublishProfiles\photo-contest.pubxml" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Resources\Default-Profile-picture.png" />
     <Content Include="Resources\Default-wallpaper.jpg" />
