@@ -32,7 +32,7 @@
     {
         <div class="row">
             <div class="col-md-12">
-                @Html.ActionLink("Upload photo", "Upload", "Photo", routeValues: new { contestId = Model.First().Id, area = "" }, htmlAttributes: new { @class = "btn btn-default", title = "Upload photo" })
+                @Html.ActionLink("Upload photo", "Upload", "Photo", routeValues: new { contestId = Model.First().Id, area = "" }, htmlAttributes: new { @class = "btn btn-primary", title = "Upload photo" })
             </div>
         </div>
     }
@@ -84,7 +84,7 @@
 
                         @if (photo.OwnerId == this.User.Identity.GetUserId() || HttpContext.Current.User.IsInRole("Admin"))
                         {
-                            using (Ajax.BeginForm("Delete", "Photo", new { photoId = photo.Id, contestId = photo.ContestId }, new AjaxOptions()
+                            @*using (Ajax.BeginForm("Delete", "Photo", new { photoId = photo.Id, contestId = photo.ContestId }, new AjaxOptions()
                             {
                                 HttpMethod = "POST",
                                 InsertionMode = InsertionMode.Replace,
@@ -93,7 +93,9 @@
                             {
                                 @Html.AntiForgeryToken()
                                 <input type="submit" name="name" value="X" class="btn btn-danger" title="Delete photo?" />
-                            }
+                            }*@
+                            
+                            @Html.ActionLink("X", "Delete", "Photo", routeValues: new { photoId = photo.Id}, htmlAttributes: new { @class = "inline-item btn btn-danger", @title = "Delete photo?" })
                         }
 
                         <div class="inline-item">

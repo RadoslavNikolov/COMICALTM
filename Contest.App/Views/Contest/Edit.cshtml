@@ -114,8 +114,16 @@
         </div>
     </div>
     <div class="form-group">
+
+        @*<div class="btn-group btn-group-justified">
+            <input type="submit" class="btn btn-primary" value="Edit" />
+            @Html.ActionLink("Cancel", "Details", "Contest", routeValues: new { id = @Model.ContestId, area = "" }, htmlAttributes: new { @class = "btn btn-default" })
+        </div>*@
+
+
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Edit" />
+            <input type="submit" class="btn btn-primary" value="Edit contest"/>
+            @Html.ActionLink("Cancel", "Details", "Contest", routeValues: new { id = @Model.ContestId, area = "" }, htmlAttributes: new { @class = "btn btn-default" })
         </div>
     </div>
 }

@@ -56,7 +56,7 @@
                     (src.VotingType == VotingType.Close &&
                     HttpContext.Current.User.Identity.IsAuthenticated 
                     && src.Voters.Any(p => p.UserName == HttpContext.Current.User.Identity.Name))))
-                .ForMember(n => n.Photos, opt => opt.MapFrom(n => n.Photos))
+                .ForMember(n => n.Photos, opt => opt.MapFrom(src => src.Photos.Where(p => p.IsDeleted == false)))
                 .ForMember(n => n.HasVoted, opt => opt.MapFrom(src => src.Votes.Any(v => v.User.UserName == HttpContext.Current.User.Identity.Name)))
                 .ReverseMap();
         }

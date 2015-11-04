@@ -85,6 +85,7 @@ div.photo-contest-category {
 
 div.photo-contest-participate {
     color: white;
+    border-radius: 3px 0 0 0;
     background-color: #1bc8e2;
     font-weight: bold;
     font-size: 10px;

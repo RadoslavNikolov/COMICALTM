@@ -41,6 +41,8 @@
 
         public Contest Contest { get; set; }
 
+        public bool IsDeleted { get; set; }
+
         public virtual ICollection<Vote> Votes
         {
             get { return this.votes; }

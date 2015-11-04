@@ -17,7 +17,7 @@
     </div>
     <div class="photo-contest-photographer">
         @Html.ActionLink(@Model.OrganizatorName, "Details", "Users", routeValues: new { id = Model.OrganozatorId, area = ""}, htmlAttributes: new { title = "Photographer profile" })
-        <div class="photo-contest-category">@Model.Category</div>
+        <div class="photo-contest-category">Category: @Model.Category</div>
     </div>
 </div>
 

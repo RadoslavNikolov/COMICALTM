@@ -1,0 +1,26 @@
+﻿@model Contests.App.Models.ViewModels.PhotoViewModel
+@{
+    ViewBag.Title = "Delte photo";
+}
+<h2>@ViewBag.Title</h2>
+@using (Html.BeginForm("Delete", "Photo", new { photoId = @Model.Id, contestId = @Model.ContestId, area = "" }, FormMethod.Post, null))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.DisplayForModel()
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Delete" class="btn btn-danger"/>
+                @Html.ActionLink("Cancel", "Details", "Contest", routeValues: new { id = @Model.ContestId, area = "" }, htmlAttributes: new { @class = "btn btn-default" })
+            </div>
+        </div>
+    </div>
+}
+
+

@@ -1,0 +1,25 @@
+﻿@model Contests.App.Models.ViewModels.ContestViewModel
+@{
+    ViewBag.Title = "Finalize contest";
+}
+<h2>@ViewBag.Title</h2>
+@using (Html.BeginForm("Finalize", "Contest", new { contestId = @Model.Id, area = "" }, FormMethod.Post, null))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.DisplayForModel()
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Finalize" class="btn btn-success" />
+                @Html.ActionLink("Cancel", "Details", "Contest", routeValues: new { id = @Model.Id, area = "" }, htmlAttributes: new { @class = "btn btn-default" })
+            </div>
+        </div>
+    </div>
+}
+

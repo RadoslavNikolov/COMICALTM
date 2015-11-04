@@ -4,10 +4,11 @@
     using System.Web;
     using System.Web.UI.WebControls;
     using Contests.Models;
+    using Infrastructure.Mapping;
     using Microsoft.AspNet.Identity;
     using Validators;
 
-    public class PhotoBindingModel
+    public class PhotoBindingModel : IMapFrom<Photo>
     {
         [Required]
         public string UserId { get; set; }

@@ -205,7 +205,7 @@
             {
                 var userId = this.User.Identity.GetUserId();
 
-                if (!this.ContestsData.Votes.All().Any(v => v.ContestId == model.ContestId && v.UserId == userId && (v.Photo.OwnerId != userId)))
+                if (!this.ContestsData.Votes.All().Any(v => v.ContestId == model.ContestId && v.UserId == userId && (v.Photo.OwnerId != userId) && !v.Photo.IsDeleted))
                 {
                     var vote = new Vote
                     {
@@ -217,12 +217,12 @@
                     this.ContestsData.SaveChanges();
 
                     var newVotes = this.ContestsData.Votes.All()
-                        .Count(v => v.PhotoId == model.PhotoId);
+                        .Count(v => v.PhotoId == model.PhotoId && !v.Photo.IsDeleted);
                     return this.Json(newVotes);
                 }
             }
 
-            var votes = this.ContestsData.Votes.All().Count(v => v.PhotoId== model.PhotoId);
+            var votes = this.ContestsData.Votes.All().Count(v => v.PhotoId== model.PhotoId && !v.Photo.IsDeleted);
             return this.Json(votes);
         }
 
@@ -242,7 +242,29 @@
             return this.PartialView("Partial/_CategoriesSelect", categories);
         }
 
-        public ActionResult Finalize(int contestid)
+        [HttpGet]
+        public ActionResult Finalize(int contestId)
+        {
+            var contest = this.ContestsData.Contests.All()
+                .Where(c => c.Id == contestId)
+                .Project()
+                .To<ContestViewModel>()
+                .FirstOrDefault();
+
+            if (contest == null)
+            {
+                this.AddToastMessage("Error", "Non existing contest!", ToastType.Error);
+
+                return this.RedirectToAction("Details", "Contest", routeValues: new { area = "" });
+            }
+
+            return View(contest);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ActionName("Finalize")]
+        public ActionResult FinalizePost(int contestid)
         {
             var contest = this.IsContestClosable(contestid);
 
@@ -260,7 +282,30 @@
 
         }
 
-        public ActionResult Dismiss(int contestid)
+        [HttpGet]
+        public ActionResult Dismiss(int contestId)
+        {
+            var contest = this.ContestsData.Contests.All()
+                .Where(c => c.Id == contestId)
+                .Project()
+                .To<ContestViewModel>()
+                .FirstOrDefault();
+
+            if (contest == null)
+            {
+                this.AddToastMessage("Error", "Non existing contest!", ToastType.Error);
+
+                return this.RedirectToAction("Details", "Contest", routeValues: new { area = "" });
+            }
+
+            return View(contest);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ActionName("Dismiss")]
+        public ActionResult DismissPost(int contestid)
         {
             var contest = this.IsContestClosable(contestid);
 

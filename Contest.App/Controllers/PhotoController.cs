@@ -7,10 +7,12 @@ using System.Web.Mvc;
 namespace Contests.App.Controllers
 {
     using System.Net;
+    using AutoMapper.QueryableExtensions;
     using Contests.Models;
     using Data.UnitOfWork;
     using Helpers;
     using Models.BindingModels;
+    using Models.ViewModels;
     using Toastr;
     using Validators;
 
@@ -80,6 +82,25 @@ namespace Contests.App.Controllers
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Invalid model");
         }
 
+        [HttpGet]
+        public ActionResult Delete(int photoId)
+        {
+            var photoToDel = this.ContestsData.Photos.All()
+                .Where(p => p.Id == photoId)
+                .Project()
+                .To<PhotoViewModel>()
+                .FirstOrDefault();
+
+            if (photoToDel == null)
+            {
+                this.AddToastMessage("Error", "Non existing photo!", ToastType.Error);
+
+                return this.RedirectToAction("Details", "Contest", routeValues: new { area = "" });
+            }
+
+            return View(photoToDel);
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int photoId, int contestId)
@@ -88,7 +109,8 @@ namespace Contests.App.Controllers
 
             if (photoToDel.OwnerId == this.UserProfile.Id && photoToDel.ContestId == contestId)
             {
-                this.ContestsData.Photos.Remove(photoToDel);
+                photoToDel.IsDeleted = true;
+                //this.ContestsData.Photos.Remove(photoToDel);
                 this.ContestsData.SaveChanges();
                 this.AddToastMessage("Success", "You deleted this contest successfully!", ToastType.Success);
                 return this.RedirectToAction("Details", "Contest", routeValues: new { id = contestId, area = "" });
