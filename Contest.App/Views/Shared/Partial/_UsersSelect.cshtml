@@ -1,0 +1,4 @@
+﻿@using Contests.Models
+@model Contests.App.Models.ViewModels.UsersSelectViewModel
+
+@Html.DropDownList("users", Model.Items, htmlAttributes: new { id = Model.IdAttribute, @class = "form-control", Name = Model.NameAttribute, @multiple= "multiple" })

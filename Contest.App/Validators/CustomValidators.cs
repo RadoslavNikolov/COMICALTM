@@ -23,7 +23,7 @@
                     return null;
                 }
 
-                if (contest.ParticipationType == ParticipationType.Close && !(contest.Participants.Any(p => p.Id == creator.Id)))
+                if (contest.ParticipationType == ParticipationType.Closed && !(contest.Participants.Any(p => p.Id == creator.Id)))
                 {
                     return null;
                 }

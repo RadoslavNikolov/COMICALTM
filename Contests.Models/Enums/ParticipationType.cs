@@ -3,6 +3,6 @@
     public enum ParticipationType
     {
         Open,
-        Close
+        Closed
     }
 }

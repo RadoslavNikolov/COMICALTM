@@ -3,6 +3,6 @@
     public enum VotingType
     {
         Open,
-        Close
+        Closed
     }
 }

@@ -213,6 +213,29 @@ namespace Contests.App.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        public ActionResult GetUsersSelect(string idAttribute, string nameAttribute, ICollection<string> selectedUsers)
+        {
+            var users = this.ContestsData.Users.All()
+                .Where(u => u.Id != this.UserProfile.Id)
+                .OrderBy(u => u.UserName)
+                .Select(u => new SelectListItem
+                {
+                    Selected = (selectedUsers.Contains(u.Id)),
+                    Text = u.UserName,
+                    Value = u.Id.ToString()
+                });
+
+            var viewModel = new UsersSelectViewModel
+            {
+                IdAttribute = idAttribute,
+                NameAttribute = nameAttribute,
+                Items = users
+            };
+
+            return this.PartialView("Partial/_UsersSelect", viewModel);
+        }
+
         //// POST: Users/Edit/5
         //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -272,7 +295,6 @@ namespace Contests.App.Controllers
             }
             return View(user);
         }
-
 
         // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]

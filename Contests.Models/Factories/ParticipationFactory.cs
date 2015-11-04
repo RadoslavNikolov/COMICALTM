@@ -15,7 +15,7 @@
             {
                 case ParticipationType.Open:
                     return new OpenParticipationStrategy();
-                case ParticipationType.Close:
+                case ParticipationType.Closed:
                     return new ClosedParticipationStrategy(participants);
                 default:
                     throw new ArgumentException();
