@@ -1,0 +1,55 @@
+﻿@using Microsoft.AspNet.Identity
+@model IEnumerable<Contests.App.Models.ViewModels.WinningContestViewModel>
+
+@{
+    ViewBag.Title = "Winner details";
+}
+
+<h1>@ViewBag.Title</h1>
+
+
+<div class="grid col-md-4">
+    <div class="row">
+        <h3>Contest:</h3>
+    </div>
+    <div class="row">
+        @Html.DisplayForModel()
+    </div>
+</div>
+
+
+<div class="col-md-8">
+    <div class="row">
+        <div class="col-md-12">
+            <img src="/Resources/winners.png" class="gallery-item cover"/>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            @foreach (var photo in @Model.First().Photos)
+            {
+                <div class="col-md-5">
+                    <div class="col-md-12 photo-contests-photo-wrapper">
+                        <div class="photo-contest-photo">
+                            <img src="@photo.Url" class="gallery-item" width="300"/>
+                        </div>
+                        <div class="photo-contest-photographer">
+                            @Html.ActionLink(photo.Owner.FullName, "Details", "Users", routeValues: new {id = photo.OwnerId, area = ""}, htmlAttributes: new {title = "Photographer profile"})
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="inline-item">
+                            <h3>Votes: <span id="photo-@photo.Id-votes">@photo.VotesCount</span></h3>
+                        </div>
+                        <hr/>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+

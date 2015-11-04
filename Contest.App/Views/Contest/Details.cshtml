@@ -83,18 +83,7 @@
                         }
 
                         @if (photo.OwnerId == this.User.Identity.GetUserId() || HttpContext.Current.User.IsInRole("Admin"))
-                        {
-                            @*using (Ajax.BeginForm("Delete", "Photo", new { photoId = photo.Id, contestId = photo.ContestId }, new AjaxOptions()
-                            {
-                                HttpMethod = "POST",
-                                InsertionMode = InsertionMode.Replace,
-                                UpdateTargetId = string.Format("photo-{0}-votes", photo.Id)
-                            }, htmlAttributes: new { @class = "inline-item" }))
-                            {
-                                @Html.AntiForgeryToken()
-                                <input type="submit" name="name" value="X" class="btn btn-danger" title="Delete photo?" />
-                            }*@
-                            
+                        {                        
                             @Html.ActionLink("X", "Delete", "Photo", routeValues: new { photoId = photo.Id}, htmlAttributes: new { @class = "inline-item btn btn-danger", @title = "Delete photo?" })
                         }
 

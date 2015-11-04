@@ -33,6 +33,8 @@
 
         public bool IsActive { get; set; }
 
+        public bool IsFinalized { get; set; }
+
         public DateTime CreatedOn { get; set; }
 
         public DateTime? FinishedOn { get; set; }
@@ -67,6 +69,8 @@
         public int CategoryId { get; set; }
 
         public Category Category { get; set; }
+
+        public ICollection<int> WinningPhotosId { get; set; } 
 
         public virtual ICollection<Photo> Photos
         {

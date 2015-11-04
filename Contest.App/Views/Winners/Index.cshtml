@@ -1,0 +1,14 @@
+﻿@using PagedList
+@using PagedList.Mvc
+@model PagedList.IPagedList<Contests.App.Models.ViewModels.WinningContestViewModel>
+
+@{
+    ViewBag.Title = "Winners";
+}
+<h2>@ViewBag.Title</h2>
+
+@Html.DisplayForModel()
+@Html.PagedListPager(Model, page => Url.Action("Index", "Winners", new { page }))
+
+
+

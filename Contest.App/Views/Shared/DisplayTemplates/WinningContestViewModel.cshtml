@@ -1,0 +1,13 @@
+﻿@model Contests.App.Models.ViewModels.WinningContestViewModel
+
+<div class="col-md-3 photo-contests-photo-wrapper">
+    <div class="photo-contest-photo">
+        <a href="@Url.Action("Details", "Winners", routeValues: new {id = @Model.Id})" id="@Model.Id">
+            <img src="@Model.WallpaperUrl" class="gallery-item cover" />
+        </a>
+    </div>
+    <div class="photo-contest-photographer">
+        @Html.ActionLink("test", "Details", "Users", routeValues: new { id = "7", area = "" }, htmlAttributes: new { title = "Photographer profile" })
+        @*<div class="photo-contest-category">Category: @Model.Category</div>*@
+    </div>
+</div>
