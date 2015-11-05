@@ -95,5 +95,52 @@
             Assert.IsInstanceOfType(response, typeof(RedirectToRouteResult));
             Assert.AreEqual(newContest.Description, contestFromRepo.Description);
         }
+
+        [TestMethod]
+        public void CreateContest_WithInvalidData_ShouldReturnViewWithoutCreatingNewContest()
+        {
+            IList<Contest> contests = new List<Contest>();
+            var organizator = this.mocks
+                .UserRepositoryMock
+                .Object
+                .All()
+                .FirstOrDefault();
+            if (organizator == null)
+            {
+                Assert.Fail("Cannot perform test - no users available");
+            }
+
+            this.mocks.ContestRepositoryMock.Setup(c => c.Add(It.IsAny<Contest>()))
+                .Callback((Contest contest) =>
+                {
+                    contests.Add(contest);
+                });
+
+            var mockContext = new Mock<IContestsData>();
+            mockContext.Setup(c => c.Contests)
+                .Returns(this.mocks.ContestRepositoryMock.Object);
+            mockContext.Setup(c => c.Categories)
+                .Returns(this.mocks.CategoryRepositoryMock.Object);
+            mockContext.Setup(c => c.Users)
+                .Returns(this.mocks.UserRepositoryMock.Object);
+
+            var mockIdProvider = new Mock<IUserIdProvider>();
+            mockIdProvider.Setup(ip => ip.GetUserId())
+                .Returns(organizator.Id);
+
+            var contestController = new ContestController(mockContext.Object, mockIdProvider.Object);
+
+            var newContest = new ContestBindingModel
+            {
+                Description = "Test contest",
+                Category = -1
+            };
+
+            contestController.Create(newContest);
+
+            mockContext.Verify(m => m.SaveChanges(), Times.Never);
+
+            Assert.AreEqual(0, contests.Count);
+        }
     }
 }
