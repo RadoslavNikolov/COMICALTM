@@ -36,7 +36,7 @@ namespace Contests.App.Controllers
         public ActionResult Details(int? id)
         {
             var contest = this.ContestsData.Contests.All()
-                .Where(c => c.Id == id)
+                .Where(c => c.Id == id && c.IsFinalized)
                 .Project()
                 .To<WinningContestViewModel>();
 
