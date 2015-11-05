@@ -24,9 +24,9 @@ namespace Contests.App.Controllers
         }
 
         [HttpGet]
-        public ActionResult Upload(int contestId)
+        public ActionResult Upload(int id)
         {
-            var contest = this.ContestsData.Contests.Find(contestId);
+            var contest = this.ContestsData.Contests.Find(id);
 
             if (contest == null)
             {
@@ -43,13 +43,13 @@ namespace Contests.App.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Upload(PhotoBindingModel model, int contestId)
+        public ActionResult Upload(PhotoBindingModel model, int id)
         {
             if (this.ModelState != null && this.ModelState.IsValid)
             {
                 if (model.Upload != null)
                 {
-                    var contest = CustomValidators.IsContestValid(this.ContestsData, this.UserProfile, contestId);
+                    var contest = CustomValidators.IsContestValid(this.ContestsData, this.UserProfile, id);
 
                     if (contest == null)
                     {
@@ -66,7 +66,7 @@ namespace Contests.App.Controllers
                         ThumbPath = paths[1],
                         Url = Dropbox.Download(paths[0]),
                         ThumbnailUrl = Dropbox.Download(paths[1], "Thumbnails"),
-                        ContestId = contestId
+                        ContestId = id
                     };
 
                     contest.Photos.Add(newPhoto);
@@ -75,7 +75,7 @@ namespace Contests.App.Controllers
                     this.AddToastMessage("Success", "Photo uploaded.", ToastType.Success);
                 }
 
-                return this.RedirectToAction("Details", "Contest", routeValues: new { id = contestId });
+                return this.RedirectToAction("Details", "Contest", routeValues: new { id = id });
             }
 
             this.AddToastMessage("Error", "Something went wrong while uploading!", ToastType.Error);
@@ -83,10 +83,10 @@ namespace Contests.App.Controllers
         }
 
         [HttpGet]
-        public ActionResult Delete(int photoId)
+        public ActionResult Delete(int id)
         {
             var photoToDel = this.ContestsData.Photos.All()
-                .Where(p => p.Id == photoId)
+                .Where(p => p.Id == id)
                 .Project()
                 .To<PhotoViewModel>()
                 .FirstOrDefault();
@@ -103,16 +103,16 @@ namespace Contests.App.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int photoId, int contestId)
+        public ActionResult Delete(int id, int contestId)
         {
-            var photoToDel = this.ContestsData.Photos.Find(photoId);
+            var photoToDel = this.ContestsData.Photos.Find(id);
 
-            if (photoToDel.OwnerId == this.UserProfile.Id && photoToDel.ContestId == contestId)
+            if ((photoToDel.OwnerId == this.UserProfile.Id || this.IsAdmin()) && photoToDel.ContestId == contestId)
             {
                 photoToDel.IsDeleted = true;
                 //this.ContestsData.Photos.Remove(photoToDel);
                 this.ContestsData.SaveChanges();
-                this.AddToastMessage("Success", "You deleted this contest successfully!", ToastType.Success);
+                this.AddToastMessage("Success", "You deleted this photo successfully!", ToastType.Success);
                 return this.RedirectToAction("Details", "Contest", routeValues: new { id = contestId, area = "" });
             }
 

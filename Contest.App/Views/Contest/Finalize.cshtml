@@ -3,7 +3,7 @@
     ViewBag.Title = "Finalize contest";
 }
 <h2>@ViewBag.Title</h2>
-@using (Html.BeginForm("Finalize", "Contest", new { contestId = @Model.Id, area = "" }, FormMethod.Post, null))
+@using (Html.BeginForm("Finalize", "Contest", new { id = @Model.Id, area = "" }, FormMethod.Post, null))
 {
     @Html.AntiForgeryToken()
 

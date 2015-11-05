@@ -8,7 +8,7 @@
     using Contests.Models;
     using Infrastructure.Mapping;
 
-    public class WinningContestViewModel : IMapFrom<Contest>
+    public class WinningContestViewModel : IMapFrom<Contest>, IHaveCustomMappings
     {
         public int Id { get; set; }
 
@@ -35,7 +35,7 @@
                 //.ForMember(n => n.OrganizatorName, opt => opt.MapFrom(n => n.Organizator.FullName))
                 //.ForMember(n => n.OrganozatorId, opt => opt.MapFrom(n => n.Organizator.Id))
                 //.ForMember(n => n.Category, opt => opt.MapFrom(n => n.Category.Name))
-                .ForMember(n => n.Photos, opt => opt.MapFrom(src => src.Photos.Where(p => p.IsDeleted == false)))
+                .ForMember(n => n.Photos, opt => opt.MapFrom(src => src.Photos.Where(p => !p.IsDeleted)))
                 .ReverseMap();
         } 
     }

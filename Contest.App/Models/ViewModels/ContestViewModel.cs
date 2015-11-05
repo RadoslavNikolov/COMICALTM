@@ -65,10 +65,10 @@
                 .ForMember(n => n.CanVote, opt => opt.MapFrom(src => (src.VotingType == VotingType.Open && 
                     HttpContext.Current.User.Identity.IsAuthenticated)  || 
                     (src.VotingType == VotingType.Closed &&
-                    HttpContext.Current.User.Identity.IsAuthenticated 
-                    && src.Voters.Any(p => p.UserName == HttpContext.Current.User.Identity.Name))))
+                    HttpContext.Current.User.Identity.IsAuthenticated
+                    && src.Voters.Any(v => v.UserName == HttpContext.Current.User.Identity.Name))))
                 .ForMember(n => n.Photos, opt => opt.MapFrom(src => src.Photos.Where(p => p.IsDeleted == false)))
-                .ForMember(n => n.HasVoted, opt => opt.MapFrom(src => src.Votes.Any(v => v.User.UserName == HttpContext.Current.User.Identity.Name)))
+                .ForMember(n => n.HasVoted, opt => opt.MapFrom(src => src.Photos.Any(p => !p.IsDeleted && p.Votes.Any(v => v.User.UserName == HttpContext.Current.User.Identity.Name))))
                 .ReverseMap();
         }
     }

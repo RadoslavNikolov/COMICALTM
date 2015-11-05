@@ -20,9 +20,9 @@
         @if (@Model.First().OrganozatorId == HttpContext.Current.User.Identity.GetUserId())
         {
             <div class="btn-group btn-group-justified">
-                @Html.ActionLink("Edit Contest", "Edit", "Contest", routeValues: new { Id = @Model.First().Id, area = "" }, htmlAttributes: new { @class = "btn btn-warning", title = "Edit contest" })
-                @Html.ActionLink("Finalize", "Finalize", "Contest", routeValues: new { contestId = @Model.First().Id, area = "" }, htmlAttributes: new { @class = "btn btn-success", title = "Finalize constest" })
-                @Html.ActionLink("Dismiss", "Dismiss", "Contest", routeValues: new { contestId = @Model.First().Id, area = "" }, htmlAttributes: new { @class = "btn btn-danger", title = "Dismiss contest" })
+                @Html.ActionLink("Edit Contest", "Edit", "Contest", routeValues: new { id = @Model.First().Id, area = "" }, htmlAttributes: new { @class = "btn btn-warning", title = "Edit contest" })
+                @Html.ActionLink("Finalize", "Finalize", "Contest", routeValues: new { id = @Model.First().Id, area = "" }, htmlAttributes: new { @class = "btn btn-success", title = "Finalize constest" })
+                @Html.ActionLink("Dismiss", "Dismiss", "Contest", routeValues: new { id = @Model.First().Id, area = "" }, htmlAttributes: new { @class = "btn btn-danger", title = "Dismiss contest" })
 
             </div>
         }
@@ -32,7 +32,7 @@
     {
         <div class="row">
             <div class="col-md-12">
-                @Html.ActionLink("Upload photo", "Upload", "Photo", routeValues: new { contestId = Model.First().Id, area = "" }, htmlAttributes: new { @class = "btn btn-primary", title = "Upload photo" })
+                @Html.ActionLink("Upload photo", "Upload", "Photo", routeValues: new { id = Model.First().Id, area = "" }, htmlAttributes: new { @class = "btn btn-primary", title = "Upload photo" })
             </div>
         </div>
     }
@@ -70,7 +70,7 @@
 
                     <div class="col-md-12">
 
-                        @if (@Model.First().CanVote && photo.OwnerId != this.User.Identity.GetUserId())
+                        @if (@Model.First().CanVote && !@Model.First().HasVoted && photo.OwnerId != this.User.Identity.GetUserId())
                         {
                             using (Ajax.BeginForm("Vote", "Contest", new {photoId = photo.Id, contestId = photo.ContestId}, new AjaxOptions()
                             {
@@ -86,7 +86,7 @@
 
                         @if (photo.OwnerId == this.User.Identity.GetUserId() || HttpContext.Current.User.IsInRole("Admin"))
                         {
-                            @Html.ActionLink("X", "Delete", "Photo", routeValues: new {photoId = photo.Id}, htmlAttributes: new {@class = "inline-item btn btn-danger", @title = "Delete photo?"})
+                            @Html.ActionLink("X", "Delete", "Photo", routeValues: new {id = photo.Id}, htmlAttributes: new {@class = "inline-item btn btn-danger", @title = "Delete photo?"})
                         }
 
                         <div class="inline-item">

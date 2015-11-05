@@ -40,6 +40,8 @@ namespace Contests.App.Controllers
                 .Project()
                 .To<WinningContestViewModel>();
 
+            var test = contest.ToList();
+
             if (contest == null)
             {
                 this.AddToastMessage("Info", "No such contest found", ToastType.Info);

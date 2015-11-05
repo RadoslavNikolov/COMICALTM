@@ -3,7 +3,7 @@
     ViewBag.Title = "Delte photo";
 }
 <h2>@ViewBag.Title</h2>
-@using (Html.BeginForm("Delete", "Photo", new { photoId = @Model.Id, contestId = @Model.ContestId, area = "" }, FormMethod.Post, null))
+@using (Html.BeginForm("Delete", "Photo", new { id = @Model.Id, contestId = @Model.ContestId, area = "" }, FormMethod.Post, null))
 {
     @Html.AntiForgeryToken()
 

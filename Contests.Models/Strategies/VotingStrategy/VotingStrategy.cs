@@ -19,7 +19,7 @@
 
         public virtual bool CanVote()
         {
-            bool hasAlreadyVoted = this.Contest.Votes.Any(v => v.UserId == this.UserId);
+            bool hasAlreadyVoted = this.Contest.Photos.Any(p =>!p.IsDeleted && p.Votes.Any(v => v.UserId == this.UserId));
             bool isPhotoOwner = this.Photo.OwnerId == this.UserId;
             bool isPhotoDeleted = this.Photo.IsDeleted;
 

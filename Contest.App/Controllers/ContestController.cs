@@ -56,7 +56,7 @@
 
         [HttpGet]
         [AllowAnonymous]
-        public ActionResult Details(int? id)
+        public ActionResult Details(int id)
         {
             var contest = this.ContestsData.Contests.All()
                 .Where(c => c.Id == id)
@@ -158,6 +158,14 @@
                 return this.RedirectToAction("Details", "Users", routeValues: new { id = this.UserProfile.Id, area = "" });
             }
 
+
+            if (contest.IsFinalized && !contest.IsActive)
+            {
+                this.AddToastMessage("Warning", "You are not allowed to edit this contest.", ToastType.Warning);
+
+                return this.RedirectToAction("Details", "Users", routeValues: new { id = this.UserProfile.Id, area = "" });
+            }
+
             return this.View(contest);
         }
 
@@ -165,23 +173,18 @@
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, ContestBindingModel model)
         {
-            if (this.ModelState != null && this.ModelState.IsValid)
+            if (model != null && this.ModelState.IsValid)
             {
                 var contest = this.ContestsData.Contests.Find(id);
-
-                //ICollection<User> voters = model.VotingType == VotingType.Closed ? this.GetUsers(model.Voters) : new HashSet<User>();
-                //ICollection<User> participants = model.ParticipationType == ParticipationType.Closed ? this.GetUsers(model.Participants) : new HashSet<User>();
-
+                
                 contest.Title = model.Title;
                 contest.Description = model.Description;
                 contest.RewardType = model.RewardType;
                 contest.DeadLine = model.DeadLine;
                 contest.ParticipationType = model.ParticipationType;
                 contest.VotingType = model.VotingType;
-                //contest.Voters = voters;
                 contest.WinnersCount = model.WinnersNumber;
                 contest.ParticipantsNumberDeadline = model.ParticipantsNumberDeadline;
-                //contest.Participants = participants;
                 contest.DeadLine = model.DeadLine;
                 contest.CategoryId = model.Category;
 
@@ -199,9 +202,7 @@
                     contest.WallpaperThumbPath = wallpaperPaths[1];
                     contest.WallpaperThumbUrl = wallpaperThumbUrl;
                 }
-
-
-                //this.ContestsData.Contests.Add(contest);
+                
                 this.ContestsData.SaveChanges();
                 this.AddToastMessage("Success", "Contest edited.", ToastType.Success);
                 return this.RedirectToAction("Details", "Users", routeValues: new {id = this.UserProfile.Id, area = ""});
@@ -227,6 +228,13 @@
                 if (contest == null)
                 {
                     this.AddToastMessage("Error", "Non existing contest!", ToastType.Error);
+                    var currentVotesNumber = this.ContestsData.Votes.All().Count(v => v.PhotoId == model.PhotoId && !v.Photo.IsDeleted);
+                    return this.Json(currentVotesNumber);
+                }
+
+                if (contest.IsFinalized && !contest.IsActive)
+                {
+                    this.AddToastMessage("Warning", "You are not allowed to vote for this contest.", ToastType.Warning);
                     var currentVotesNumber = this.ContestsData.Votes.All().Count(v => v.PhotoId == model.PhotoId && !v.Photo.IsDeleted);
                     return this.Json(currentVotesNumber);
                 }
@@ -280,10 +288,10 @@
         }
 
         [HttpGet]
-        public ActionResult Finalize(int contestId)
+        public ActionResult Finalize(int id)
         {
             var contest = this.ContestsData.Contests.All()
-                .Where(c => c.Id == contestId)
+                .Where(c => c.Id == id)
                 .Project()
                 .To<ContestViewModel>()
                 .FirstOrDefault();
@@ -301,9 +309,9 @@
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ActionName("Finalize")]
-        public ActionResult FinalizePost(int contestid)
+        public ActionResult FinalizePost(int id)
         {
-            var contest = this.IsContestClosable(contestid);
+            var contest = this.IsContestClosable(id);
             
             if (contest == null)
             {
@@ -325,10 +333,10 @@
         }
         
         [HttpGet]
-        public ActionResult Dismiss(int contestId)
+        public ActionResult Dismiss(int id)
         {
             var contest = this.ContestsData.Contests.All()
-                .Where(c => c.Id == contestId)
+                .Where(c => c.Id == id)
                 .Project()
                 .To<ContestViewModel>()
                 .FirstOrDefault();
@@ -347,9 +355,9 @@
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ActionName("Dismiss")]
-        public ActionResult DismissPost(int contestid)
+        public ActionResult DismissPost(int id)
         {
-            var contest = this.IsContestClosable(contestid);
+            var contest = this.IsContestClosable(id);
 
             if (contest == null)
             {

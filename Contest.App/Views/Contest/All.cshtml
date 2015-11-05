@@ -1,4 +1,5 @@
-﻿@using PagedList.Mvc
+﻿@using MvcPaging
+@using PagedList.Mvc
 @model PagedList.IPagedList<Contests.App.Models.ViewModels.ContestViewModel>
 
 @{
@@ -10,7 +11,22 @@
     @Html.DisplayForModel()
 </div>
 
-<div class="row">
-    @Html.PagedListPager(Model, page => Url.Action("All", "Contest", new { page }))
+<div class="pager">
+    @*@Html.PagedListPager(Model, page => Url.Action("Index", "Home", new { page }))*@
+    @Html.Raw(Html.Pager(
+        new Options
+        {
+            PageSize = Model.PageSize,
+            TotalItemCount = Model.TotalItemCount,
+            CurrentPage = Model.PageNumber,
+            ItemTexts = new ItemTexts() { Next = "", Previous = "", First = "", Last = "" },
+            ItemIcon = new ItemIcon() { First = "icon-backward", Previous = "icon-chevron-left", Next = "icon-chevron-right", Last = "icon-forward" },
+            TooltipTitles = new TooltipTitles() { Next = "Next page {0}", Previous = "Previous page {0}", Page = "Go to page {0}" },
+            Size = Size.normal,
+            Alignment = Alignment.centered,
+            IsShowControls = true,
+            IsShowFirstLast = true,
+            IsShowPages = true
+        }, null))
 </div>
 
